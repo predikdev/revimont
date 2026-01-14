@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+:root {
+  /* Colors */
+  --background: oklch(0.86 0 0);
+  --background-dark: oklch(32.11% 0 0);
+  --text-primary: oklch(0.9846 0.0017 247.84);
+  --text-secondary: oklch(98.46% 0.0017 247.84 / 0.75);
+  --text-black: oklch(25.2% 0 0);
+  --orange-primary: oklch(67.66% 0.1838 40.03);
+  --orange-secondary: oklch(67.66% 0.1838 40.03 / 0.15);
+  --overlay: oklch(0.22 0 0 / 0.9);
+  --border-color: oklch(83.9% 0 0);
+
+  /* Font sizes */
+  --font-small: 0.875rem;
+  /*Small body bold*/
+  --font-body: 1rem;
+  /*Font body medium*/
+  --font-heading: 2.9375rem;
+  --font-heading-2: 2.5rem;
+
+  /* Line heights */
+  --lh-small: 1.5;
+  --lh-body: 1.75;
+  --lh-heading: 1.25;
+}
+
+@theme {
+  /* Colors */
+  --color-background: var(--background);
+  --color-background-dark: var(--background-dark);
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-black: var(--text-black);
+  --color-accent-primary: var(--orange-primary);
+  --color-accent-secondary: var(--orange-secondary);
+  --color-overlay: var(--overlay);
+  --color-border: var(--border-color);
+
+  /* Font sizes */
+  --text-small: var(--font-small);
+  --text-body: var(--font-body);
+  --text-heading: var(--font-heading);
+  --text-heading-2: var(--font-heading-2);
+
+  /* Line heights */
+  --leading-small: var(--lh-small);
+  --leading-body: var(--lh-body);
+  --leading-heading: var(--lh-heading);
+}
