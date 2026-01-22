@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Inter";
+  src: url("../assets/fonts/Inter.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("../assets/fonts/PlayfairDisplay.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* Colors */
   --background: oklch(0.86 0 0);
@@ -13,12 +28,11 @@
   --border-color: oklch(83.9% 0 0);
 
   /* Font sizes */
-  --font-small: 0.875rem;
-  /*Small body bold*/
-  --font-body: 1rem;
-  /*Font body medium*/
-  --font-heading: 2.9375rem;
-  --font-heading-2: 2.5rem;
+  --font-small: clamp(0.8125rem, 0.78rem + 0.15vw, 0.875rem);
+  --font-body: clamp(0.9375rem, 0.9rem + 0.2vw, 1rem);
+  --font-lead: clamp(1.125rem, 0.95rem + 0.9vw, 1.5rem);
+  --font-heading: clamp(1.875rem, 1.35rem + 2.5vw, 2.9375rem);
+  --font-heading-2: clamp(1.625rem, 1.25rem + 1.9vw, 2.5rem);
 
   /* Line heights */
   --lh-small: 1.5;
@@ -38,14 +52,26 @@
   --color-overlay: var(--overlay);
   --color-border: var(--border-color);
 
-  /* Font sizes */
-  --text-small: var(--font-small);
-  --text-body: var(--font-body);
-  --text-heading: var(--font-heading);
-  --text-heading-2: var(--font-heading-2);
-
   /* Line heights */
   --leading-small: var(--lh-small);
   --leading-body: var(--lh-body);
   --leading-heading: var(--lh-heading);
+
+  /* Font sizes */
+  --text-small: var(--font-small);
+  --text-body: var(--font-body);
+  --text-lead: var(--font-lead);
+  --text-heading: var(--font-heading);
+  --text-heading-2: var(--font-heading-2);
+
+  /* Fonts */
+  --font-inter: "Inter", system-ui, sans-serif;
+  --font-playfair: "Playfair Display", system-ui, sans-serif;
+}
+
+.container {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1152px;
+  padding-inline: 1.5rem;
 }

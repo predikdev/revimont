@@ -1,0 +1,44 @@
+---
+const links = [
+  { href: "/", label: "Domů" },
+  { href: "/sluzby", label: "Služby" },
+  { href: "/galerie", label: "Galerie" },
+  { href: "/kontakt", label: "Kontakt" },
+];
+
+const pathname = Astro.url.pathname;
+const { class: className = "" } = Astro.props;
+
+const isActive = (href: string) => {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(href + "/");
+};
+---
+
+<nav aria-label="Hlavní navigace" class="hidden">
+  <ul class="inline-flex gap-6">
+    {
+      links.map((link) => {
+        const active = isActive(link.href);
+
+        return (
+          <li class="">
+            <a
+              href={link.href}
+              aria-current={active ? "page" : undefined}
+              class:list={[
+                // base
+                "group relative inline-flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors text-primary/75 hover:text-primary",
+
+                // focus (accessibility)
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>

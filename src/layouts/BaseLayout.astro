@@ -1,0 +1,50 @@
+---
+import "../styles/globals.css";
+import Header from "../components/sections/Header.astro";
+import MobileNavigation from "../components/ui/MobileNavigation.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body class="bg-[#1C1C1C] text-black">
+    <MobileNavigation />
+    <div class="hero-wrapper">
+      <Header />
+      <slot name="hero" />
+    </div>
+    <main>
+      <slot />
+    </main>
+    <footer></footer>
+  </body>
+</html>
+
+<style>
+  :global(.hero-wrapper) {
+    position: relative;
+    isolation: isolate;
+    background-image: url("/path/to/hero-bg.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+
+  :global(.hero-wrapper::before) {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--overlay);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  :global(.hero-wrapper > *) {
+    position: relative;
+    z-index: 1;
+  }
+</style>

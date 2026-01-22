@@ -1,0 +1,129 @@
+---
+import PhoneIcon from "../../assets/icons/phone.svg";
+import CloseMenu from "../../assets/icons/square-x.svg";
+
+import Logo from "../../components/ui/Logo.astro";
+import Navigation from "../../components/ui/Navigation.astro";
+import Button from "../../components/ui/Button.astro";
+
+const links = [
+  { href: "/", label: "Domů" },
+  { href: "/sluzby", label: "Služby" },
+  { href: "/galerie", label: "Galerie" },
+  { href: "/kontakt", label: "Kontakt" },
+];
+---
+
+<div class="mobile-menu lg:hidden h-full w-full" id="mobile-menu" data-open="false">
+  <div class="mobile-menu__backdrop" data-menu-backdrop></div>
+  <div class="mobile-menu__panel w-full h-full flex flex-col gap-24 bg-background-dark">
+    <div class="flex items-center justify-between px-6 pt-4">
+      <Logo class="w-48" />
+      <button type="button" aria-label="Zavřít menu" data-menu-close class="lg:hidden text-primary">
+        <CloseMenu class="text-primary" />
+      </button>
+    </div>
+    <div class="flex flex-col gap-24 px-6">
+      <ul class="flex flex-col items-center justify-center gap-6">
+        {
+          links.map((link) => {
+            return (
+              <li class="">
+                <a
+                  href={link.href}
+                  class:list={[
+                    // base
+                    "group relative inline-flex items-center rounded-lg px-3 py-2 text-lead font-medium transition-colors text-primary hover:text-primary",
+
+                    // focus (accessibility)
+                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                  ]}
+                >
+                  {link.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+      <div class="mt-6 flex flex-col gap-4">
+        <div class="flex justify-center gap-2 text-body text-primary">
+          <img src={PhoneIcon.src} alt="Telefon ikona" class="w-5" />
+          +420 775 736 112
+        </div>
+        <Button variant="primary" href="/kontakt">Poptávka</Button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+  }
+
+  .mobile-menu[data-open="true"] {
+    pointer-events: auto;
+  }
+
+  .mobile-menu__backdrop {
+    position: absolute;
+    inset: 0;
+    background: oklch(0 0 0 / 0.5);
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+
+  .mobile-menu[data-open="true"] .mobile-menu__backdrop {
+    opacity: 1;
+  }
+
+  .mobile-menu__panel {
+    position: absolute;
+    right: 0;
+    transform: translateX(100%);
+    transition: transform 250ms ease;
+  }
+
+  .mobile-menu[data-open="true"] .mobile-menu__panel {
+    transform: translateX(0);
+  }
+</style>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const menu = document.querySelector(".mobile-menu");
+    const panel = document.querySelector(".mobile-menu__panel");
+    const openBtn = document.querySelector("[data-menu-open]");
+    const closeBtn = document.querySelector("[data-menu-close]");
+    const backdrop = document.querySelector("[data-menu-backdrop]");
+
+    if (!menu || !panel || !openBtn) return;
+
+    const openMenu = () => {
+      menu?.setAttribute("data-open", "true");
+      document.body.style.overflow = "hidden";
+    };
+
+    const closeMenu = () => {
+      menu?.setAttribute("data-open", "false");
+      document.body.style.overflow = "";
+    };
+
+    openBtn?.addEventListener("click", openMenu);
+    closeBtn?.addEventListener("click", closeMenu);
+    backdrop?.addEventListener("click", closeMenu);
+
+    panel?.addEventListener("click", (e) => {
+      if (!(e.target instanceof Element)) return;
+      if (e.target.closest("a,button, [data-menu-close]")) closeMenu();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
+    });
+  });
+</script>
