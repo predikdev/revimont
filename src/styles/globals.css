@@ -10,7 +10,6 @@
 @font-face {
   font-family: "Playfair Display";
   src: url("../assets/fonts/PlayfairDisplay.ttf") format("truetype");
-  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
@@ -30,9 +29,9 @@
   /* Font sizes */
   --font-small: clamp(0.8125rem, 0.78rem + 0.15vw, 0.875rem);
   --font-body: clamp(0.9375rem, 0.9rem + 0.2vw, 1rem);
-  --font-lead: clamp(1.125rem, 0.95rem + 0.9vw, 1.5rem);
-  --font-heading: clamp(1.875rem, 1.35rem + 2.5vw, 2.9375rem);
-  --font-heading-2: clamp(1.625rem, 1.25rem + 1.9vw, 2.5rem);
+  --font-lead: clamp(1.325rem, 0.95rem + 0.9vw, 1.5rem);
+  --font-heading: clamp(2rem, 1.35rem + 2.5vw, 2.9375rem);
+  --font-heading-2: clamp(1.825rem, 1.25rem + 1.9vw, 2.5rem);
 
   /* Line heights */
   --lh-small: 1.5;
@@ -73,5 +72,5 @@
   margin-inline: auto;
   width: 100%;
   max-width: 1152px;
-  padding-inline: 1.5rem;
+  padding-inline: 1rem;
 }

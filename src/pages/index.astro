@@ -3,13 +3,15 @@ import Badge from "../assets/icons/badge-check.svg";
 import HeroIllustration from "../assets/images/hero_illustration.svg";
 import Button from "../components/ui/Button.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+import Services from "../components/sections/Services.astro";
 ---
 
 <BaseLayout>
-  <section slot="hero" id="hero" class="flex items-center pt-24">
+  <section slot="hero" id="hero" class="flex items-center py-24">
     <div class="container flex flex-col">
       <div class="content text-primary">
-        <h1 class="font-playfair text-heading mb-8">
+        <h1 class="font-playfair font-bold text-heading mb-8">
           Profesionální
           <span class="text-accent-primary">revize</span> a <span class="text-accent-primary"
             >elektroinstalace</span
@@ -43,7 +45,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <img src={HeroIllustration.src} alt="Ilustrace" class="hidden" />
     </div>
   </section>
-  <section id="services"></section>
+  <Services />
   <section id="why-revimont"></section>
   <section id="our-work"></section>
   <section id="faq"></section>
