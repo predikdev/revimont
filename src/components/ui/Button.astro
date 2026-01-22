@@ -2,7 +2,7 @@
 import { clsx } from "clsx";
 
 interface Props {
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "ternary";
   size?: "sm" | "md";
   href?: string;
   class?: string;
@@ -18,11 +18,13 @@ const variants = {
     "bg-accent-primary text-primary hover:bg-accent-primary/90 hover:ring-2 hover:ring-offset-2 hover:ring-offset-background hover:ring-accent-primary/90",
   secondary:
     "bg-background-dark text-primary hover:bg-background-dark/90 hover:bg-background-dark/90 hover:ring-2 hover:ring-offset-2 hover:ring-offset-background hover:ring-background-dark/90",
+  ternary:
+    "border border-accent-primary text-accent-primary hover:bg-accent-primary/10 hover:border-accent-primary focus-visible:ring-2 focus-visible:ring-accent-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
 };
 
 const sizes = {
-  sm: "h-9 px-4 text-sm",
-  md: "h-11 px-6 text-sm",
+  sm: "py-2 px-4 text-sm",
+  md: "py-3 px-6 text-sm",
 };
 
 const classes = clsx(base, variants[variant], sizes[size], className);
