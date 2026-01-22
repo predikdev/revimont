@@ -1,0 +1,54 @@
+---
+import ServiceCard from "../ui/ServiceCard.astro";
+
+import Elektroinstalace from "../../assets/images/elektroinstalace.png";
+import Revize from "../../assets/images/revize.png";
+import Rekonstrukce from "../../assets/images/rekonstrukce.png";
+import Zap from "../../assets/icons/zap.svg";
+import ClipboardCheck from "../../assets/icons/clipboard-check.svg";
+import Hammer from "../../assets/icons/hammer.svg";
+---
+
+<section id="services" class="flex items-center py-24 bg-primary">
+  <div class="container">
+    <div class="section-header flex flex-col items-center gap-4 text-center pb-8">
+      <p class="uppercase text-accent-primary text-sm font-medium">Naše služby</p>
+      <h2 class="font-playfair font-bold text-heading-2">Komplexní řešení pro vaši nemovitost</h2>
+      <p>Nabízíme širokou škálu služeb od elektroinstalace přes revize až po rekonstrukce.</p>
+    </div>
+
+    <ul role="list" class="flex flex-col">
+      <li>
+        <ServiceCard
+          href="/sluzby"
+          title="Elektroinstalační práce"
+          description="Provádíme kompletní elektroinstalace v bytových a rodinných domech, včetně přípojek, rekonstrukcí a revizní dokumentace."
+          image={Elektroinstalace.src}
+          imageAlt=""
+        >
+          <Zap slot="icon" class="w-4 h-4 text-primary" />
+        </ServiceCard>
+
+        <ServiceCard
+          href="/sluzby"
+          title="Opravy a montáže domácích systémů"
+          description="Zajišťujeme montáže a opravy domácích telefonů, zvonků a modernizaci starších systémů."
+          image={Revize.src}
+          imageAlt=""
+        >
+          <Hammer slot="icon" class="w-4 h-4 text-primary" />
+        </ServiceCard>
+
+        <ServiceCard
+          href="/sluzby"
+          title="Revizní činnost"
+          description="Provádíme revize elektroinstalací a hromosvodů včetně kompletní revizní dokumentace."
+          image={Rekonstrukce.src}
+          imageAlt=""
+        >
+          <ClipboardCheck slot="icon" class="w-4 h-4 text-primary" />
+        </ServiceCard>
+      </li>
+    </ul>
+  </div>
+</section>
