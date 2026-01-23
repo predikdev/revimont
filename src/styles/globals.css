@@ -82,6 +82,4 @@ body {
 
 .site-header {
   background-color: #1c1c1c;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
