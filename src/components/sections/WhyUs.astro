@@ -1,0 +1,74 @@
+---
+import WhyUsListItem from "../ui/WhyUsListItem.astro";
+
+import WhyUsImage from "../../assets/images/whyus_image.png";
+import ShieldCheck from "../../assets/icons/shield-check.svg";
+import Clock from "../../assets/icons/clock.svg";
+import Users from "../../assets/icons/users.svg";
+import Star from "../../assets/icons/star.svg";
+---
+
+<section id="why-us" class="flex items-center py-24 bg-background-dark">
+  <div class="container">
+    <!-- Text Content -->
+    <div class="section-header flex flex-col items-center gap-4 text-center pb-8">
+      <p class="uppercase text-accent-primary text-sm font-medium">Proč Revimont</p>
+      <h2 class="font-playfair font-bold text-heading-2 text-primary">
+        Spolehlivost a kvalita na prvním místě
+      </h2>
+      <p class="text-primary">
+        S více než 15 lety zkušeností v oboru elektroinstalace a revize nabízíme spolehlivé a
+        profesionální služby pro domácnosti, firmy i veřejné objekty v Klatovech a okolí.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-8">
+      <ul role="list" class="flex flex-col gap-5">
+        <li>
+          <WhyUsListItem
+            title="Záruka kvality"
+            description="Na všechny práce poskytujeme záruku až 5 let. Používáme pouze certifikované materiály."
+          >
+            <ShieldCheck slot="icon" class="h-6 w-6" />
+          </WhyUsListItem>
+        </li>
+        <li>
+          <WhyUsListItem
+            title="Dodržení termínu"
+            description="Co slíbíme, to dodržíme. Práci plánujeme precizně a váš čas je pro nás prioritou."
+          >
+            <Clock slot="icon" class="h-6 w-6" />
+          </WhyUsListItem>
+        </li>
+        <li>
+          <WhyUsListItem
+            title="Osobní přístup"
+            description="Nejsme velká korporace. Každého zákazníka známe osobně a přistupujeme k němu individuálně."
+          >
+            <Users slot="icon" class="h-6 w-6" />
+          </WhyUsListItem>
+        </li>
+        <li>
+          <WhyUsListItem
+            title="Certifikace a oprávnění"
+            description="Máme všechna potřebná oprávnění a pravidelně se školíme v novinkách v oboru."
+          >
+            <Star slot="icon" class="h-6 w-6" />
+          </WhyUsListItem>
+        </li>
+      </ul>
+
+      <!-- Image -->
+      <div aria-label="Fotografie technika při práci">
+        <figure class="overflow-hidden rounded-2xl">
+          <img
+            class="h-full w-full object-cover"
+            src={WhyUsImage.src}
+            alt="Elektrikář měří rozvaděč a kontroluje zapojení"
+            loading="lazy"
+          />
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
