@@ -15,7 +15,7 @@ const isActive = (href: string) => {
 };
 ---
 
-<nav aria-label="Hlavní navigace" class="hidden">
+<nav aria-label="Hlavní navigace" class="hidden lg:block">
   <ul class="inline-flex gap-6">
     {
       links.map((link) => {
@@ -28,7 +28,7 @@ const isActive = (href: string) => {
               aria-current={active ? "page" : undefined}
               class:list={[
                 // base
-                "group relative inline-flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors text-primary/75 hover:text-primary",
+                "group relative inline-flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors text-primary/75 hover:text-accent-primary",
 
                 // focus (accessibility)
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
