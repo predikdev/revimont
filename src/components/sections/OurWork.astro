@@ -9,13 +9,16 @@ import Rekonstrukce from "../../assets/images/rekonstrukce.png";
 
 <section id="our-work" class="flex items-center py-24 bg-background">
   <div class="container">
-    <div class="section-header flex flex-col items-center gap-4 text-center pb-8 text-black">
+    <div class="section-header flex flex-col items-center gap-4 text-center pb-16 text-black">
       <p class="uppercase text-accent-primary text-sm font-medium">Naše práce</p>
       <h2 class="font-playfair font-bold text-heading-2">Ukázky našich realizací</h2>
       <p>Prohlédněte si vybrané projekty, na kterých jsme v poslední době pracovali.</p>
     </div>
 
-    <ul role="list" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <ul
+      role="list"
+      class="grid gap-12 md:gap-8 pb-8 md:grid-cols-2 lg:grid-cols-3 md:[&>li:last-child]:col-span-2 md:[&>li:last-child]:flex md:[&>li:last-child]:justify-center md:[&>li:last-child>article]:w-full md:[&>li:last-child>article]:max-w-104 lg:[&>li:last-child]:col-span-1 lg:[&>li:last-child]:block lg:[&>li:last-child>article]:max-w-none"
+    >
       <li>
         <WorkCard
           href="/galerie"

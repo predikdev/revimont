@@ -9,15 +9,18 @@ import ClipboardCheck from "../../assets/icons/clipboard-check.svg";
 import Hammer from "../../assets/icons/hammer.svg";
 ---
 
-<section id="services" class="flex items-center py-24 bg-primary">
+<section id="services" class="flex items-center py-24 bg-background">
   <div class="container">
-    <div class="section-header flex flex-col items-center gap-4 text-center pb-8">
+    <div class="section-header flex flex-col items-center gap-4 text-center pb-16 text-black">
       <p class="uppercase text-accent-primary text-sm font-medium">Naše služby</p>
       <h2 class="font-playfair font-bold text-heading-2">Komplexní řešení pro vaši nemovitost</h2>
       <p>Nabízíme širokou škálu služeb od elektroinstalace přes revize až po rekonstrukce.</p>
     </div>
 
-    <ul role="list" class="flex flex-col">
+    <ul
+      role="list"
+      class="grid gap-12 md:gap-8 md:grid-cols-2 lg:grid-cols-3 md:[&>li:last-child]:col-span-2 md:[&>li:last-child]:flex md:[&>li:last-child]:justify-center md:[&>li:last-child>article]:w-full md:[&>li:last-child>article]:max-w-104 lg:[&>li:last-child]:col-span-1 lg:[&>li:last-child]:block lg:[&>li:last-child>article]:max-w-none"
+    >
       <li>
         <ServiceCard
           href="/sluzby"
@@ -28,7 +31,9 @@ import Hammer from "../../assets/icons/hammer.svg";
         >
           <Zap slot="icon" class="w-4 h-4 text-primary" />
         </ServiceCard>
+      </li>
 
+      <li>
         <ServiceCard
           href="/sluzby"
           title="Opravy a montáže domácích systémů"
@@ -38,7 +43,9 @@ import Hammer from "../../assets/icons/hammer.svg";
         >
           <Hammer slot="icon" class="w-4 h-4 text-primary" />
         </ServiceCard>
+      </li>
 
+      <li>
         <ServiceCard
           href="/sluzby"
           title="Revizní činnost"
