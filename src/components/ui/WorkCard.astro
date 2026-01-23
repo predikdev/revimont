@@ -1,0 +1,42 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt?: string;
+  badge: string;
+}
+
+const { href, title, description, image, imageAlt = "", badge } = Astro.props;
+---
+
+<article class="group py-6">
+  <a href={href} class="group block">
+    <figure class="relative overflow-hidden rounded-xl">
+      <img
+        src={image}
+        alt={imageAlt}
+        loading="lazy"
+        class="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+      />
+
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 bg-linear-to-t from-black to-black/30"
+      >
+      </div>
+
+      <div class="absolute bottom-4 left-4 right-4 flex flex-col gap-3">
+        <span
+          class="inline-flex w-fit items-center rounded-lg bg-accent-primary px-3 py-1 text-xs font-medium text-primary"
+        >
+          {badge}
+        </span>
+        <h3 class="text-lead font-playfair font-normal text-primary">{title}</h3>
+      </div>
+    </figure>
+
+    <p class="mt-4 text-body text-black">{description}</p>
+  </a>
+</article>

@@ -1,0 +1,55 @@
+---
+import WorkCard from "../ui/WorkCard.astro";
+import Button from "../ui/Button.astro";
+
+import Osvetleni from "../../assets/images/elektroinstalace.png";
+import Revize from "../../assets/images/revize.png";
+import Rekonstrukce from "../../assets/images/rekonstrukce.png";
+---
+
+<section id="our-work" class="flex items-center py-24 bg-background">
+  <div class="container">
+    <div class="section-header flex flex-col items-center gap-4 text-center pb-8 text-black">
+      <p class="uppercase text-accent-primary text-sm font-medium">Naše práce</p>
+      <h2 class="font-playfair font-bold text-heading-2">Ukázky našich realizací</h2>
+      <p>Prohlédněte si vybrané projekty, na kterých jsme v poslední době pracovali.</p>
+    </div>
+
+    <ul role="list" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <li>
+        <WorkCard
+          href="/galerie"
+          badge="Osvětlení"
+          title="Kancelářské prostory"
+          description="Moderní LED osvětlení s chytrým řízením pro kancelářský komplex."
+          image={Osvetleni.src}
+          imageAlt=""
+        />
+      </li>
+      <li>
+        <WorkCard
+          href="/galerie"
+          badge="Revize"
+          title="Laboratorní prostory - revize"
+          description="Revize elektroinstalace v laboratorních prostorách."
+          image={Revize.src}
+          imageAlt=""
+        />
+      </li>
+      <li>
+        <WorkCard
+          href="/galerie"
+          badge="Elektroinstalace"
+          title="Rekonstrukce RD"
+          description="Kompletní elektroinstalace rodinného domu včetně chytré domácnosti."
+          image={Rekonstrukce.src}
+          imageAlt=""
+        />
+      </li>
+    </ul>
+
+    <div class="mt-8 flex justify-center">
+      <Button variant="secondary" href="/galerie">Zobrazit všechny realizace</Button>
+    </div>
+  </div>
+</section>
