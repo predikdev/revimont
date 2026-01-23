@@ -7,18 +7,18 @@ import Navigation from "../ui/Navigation.astro";
 import Button from "../ui/Button.astro";
 ---
 
-<header class="w-full pt-4">
+<header class="site-header w-full flex items-center p-4 sticky top-0 z-50">
   <div class="mx-auto container flex items-center justify-between">
     <Logo class="w-48" />
     <Navigation />
     <div class="hidden lg:flex items-center gap-4">
       <div class="text-primary/75">
-        <a href="tel:+420775736112" class="flex gap-2">
-          <img src={PhoneIcon.src} alt="Telefon ikona" class="w-6" />
-          +420 775 736 112
+        <a href="tel:+420775736112" class="flex gap-2 hover:text-accent-primary transition-colors">
+          <img src={PhoneIcon.src} alt="Telefon ikona" class="w-4" />
+          <p class="text-small">+420 775 736 112</p>
         </a>
       </div>
-      <Button variant="primary">Poptávka</Button>
+      <Button variant="primary" href="/kontakt">Poptávka</Button>
     </div>
     <button type="button" aria-label="Otevřít menu" data-menu-open class="lg:hidden text-primary">
       <OpenMenu class="text-primary" />
