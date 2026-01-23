@@ -6,9 +6,16 @@ interface Props {
   size?: "sm" | "md";
   href?: string;
   class?: string;
+  type?: "button" | "submit" | "reset";
 }
 
-const { variant = "primary", size = "md", href, class: className = "" } = Astro.props;
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  class: className = "",
+  type = "button",
+} = Astro.props;
 
 const base =
   "inline-flex items-center justify-center rounded-lg font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background cursor-pointer";
@@ -36,7 +43,7 @@ const classes = clsx(base, variants[variant], sizes[size], className);
       <slot />
     </a>
   ) : (
-    <button type="button" class={classes} role="button">
+    <button type={type} class={classes} role="button">
       <slot />
     </button>
   )
