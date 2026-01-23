@@ -14,7 +14,7 @@ const links = [
 ];
 ---
 
-<div class="mobile-menu lg:hidden h-full w-full" id="mobile-menu" data-open="false">
+<div class="mobile-menu lg:hidden h-full w-full z-100" id="mobile-menu" data-open="false">
   <div class="mobile-menu__backdrop" data-menu-backdrop></div>
   <div class="mobile-menu__panel w-full h-full flex flex-col gap-24 bg-background-dark">
     <div class="flex items-center justify-between px-6 pt-4">
@@ -61,7 +61,7 @@ const links = [
   .mobile-menu {
     position: fixed;
     inset: 0;
-    z-index: 50;
+    z-index: 60;
     pointer-events: none;
   }
 
