@@ -1,0 +1,73 @@
+---
+import Button from "../ui/Button.astro";
+---
+
+<form class="rounded-2xl bg-black/10 p-6 sm:p-8 text-black shadow-2xl shadow-black/10">
+  <div class="grid gap-4 sm:grid-cols-2">
+    <label class="flex flex-col gap-2 text-sm">
+      <span class="font-medium">Jméno <span class="text-accent-primary">*</span></span>
+      <input
+        type="text"
+        name="firstName"
+        placeholder="Karel"
+        required
+        class="h-10 rounded-md border border-black/10 bg-white px-4 text-sm placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-accent-primary/40"
+      />
+    </label>
+    <label class="flex flex-col gap-2 text-sm">
+      <span class="font-medium">Příjmení <span class="text-accent-primary">*</span></span>
+      <input
+        type="text"
+        name="lastName"
+        placeholder="Novák"
+        required
+        class="h-10 rounded-md border border-black/10 bg-white px-4 text-sm placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-accent-primary/40"
+      />
+    </label>
+  </div>
+
+  <div class="mt-4 grid gap-4 sm:grid-cols-2">
+    <label class="flex flex-col gap-2 text-sm">
+      <span class="font-medium">Email <span class="text-accent-primary">*</span></span>
+      <input
+        type="email"
+        name="email"
+        placeholder="@"
+        required
+        class="h-10 rounded-md border border-black/10 bg-white px-4 text-sm placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-accent-primary/40"
+      />
+    </label>
+    <label class="flex flex-col gap-2 text-sm">
+      <span class="font-medium">Telefonní číslo</span>
+      <input
+        type="tel"
+        name="phone"
+        placeholder="+420"
+        class="h-10 rounded-md border border-black/10 bg-white px-4 text-sm placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-accent-primary/40"
+      />
+    </label>
+  </div>
+
+  <label class="mt-4 flex flex-col gap-2 text-sm">
+    <span class="font-medium">Vaše zpráva <span class="text-accent-primary">*</span></span>
+    <textarea
+      name="message"
+      rows="6"
+      placeholder="Popište vaši představu"
+      required
+      class="rounded-md border border-black/10 bg-white px-4 py-3 text-sm placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-accent-primary/40"
+    ></textarea>
+  </label>
+
+  <label class="mt-5 flex items-start gap-3 text-sm text-black/70">
+    <input type="checkbox" required class="mt-1 h-4 w-4 rounded border-black/20" />
+    <span>
+      Odesláním formuláře souhlasíte se zpracováním
+      <a href="/kontakt" class="text-accent-primary hover:underline">osobních údajů</a>.
+    </span>
+  </label>
+
+  <div class="mt-6">
+    <Button variant="primary" type="submit">Odeslat poptávku</Button>
+  </div>
+</form>

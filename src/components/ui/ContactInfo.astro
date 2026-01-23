@@ -1,0 +1,51 @@
+---
+import PhoneIcon from "../../assets/icons/phone.svg";
+import MailIcon from "../../assets/icons/mail.svg";
+import MapPinIcon from "../../assets/icons/map-pin.svg";
+---
+
+<ul class="mt-8 flex flex-col gap-5 text-black">
+  <li class="flex items-start gap-4">
+    <span
+      class="mt-1 flex h-10 w-10 items-center justify-center rounded-lg bg-accent-secondary text-accent-primary"
+      aria-hidden="true"
+    >
+      <PhoneIcon class="h-5 w-5" />
+    </span>
+    <div class="text-sm">
+      <p class="font-medium">Telefon</p>
+      <a href="tel:+420775736112" class="text-black/70 hover:text-accent-primary transition-colors">
+        +420 775 736 112
+      </a>
+    </div>
+  </li>
+  <li class="flex items-start gap-4">
+    <span
+      class="mt-1 flex h-10 w-10 items-center justify-center rounded-lg bg-accent-secondary text-accent-primary"
+      aria-hidden="true"
+    >
+      <MailIcon class="h-5 w-5" />
+    </span>
+    <div class="text-sm">
+      <p class="font-medium">Email</p>
+      <a
+        href="mailto:revimontklatovy@seznam.cz"
+        class="text-black/70 hover:text-accent-primary transition-colors"
+      >
+        revimontklatovy@seznam.cz
+      </a>
+    </div>
+  </li>
+  <li class="flex items-start gap-4">
+    <span
+      class="mt-1 flex h-10 w-10 items-center justify-center rounded-lg bg-accent-secondary text-accent-primary"
+      aria-hidden="true"
+    >
+      <MapPinIcon class="h-5 w-5" />
+    </span>
+    <div class="text-sm">
+      <p class="font-medium">Místo</p>
+      <p class="text-black/70">Klatovy</p>
+    </div>
+  </li>
+</ul>
