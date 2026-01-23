@@ -1,0 +1,47 @@
+---
+import Badge from "../../assets/icons/badge-check.svg";
+import HeroIllustration from "../../assets/images/hero_illustration.svg";
+import Button from "../../components/ui/Button.astro";
+---
+
+<section slot="hero" id="hero" class="flex items-center py-24">
+  <div class="container grid gap-12 lg:grid-cols-2 items-center">
+    <div class="content text-primary">
+      <h1 class="font-playfair font-bold text-heading mb-8">
+        Profesionální
+        <span class="text-accent-primary">revize</span> a <span class="text-accent-primary"
+          >elektroinstalace</span
+        >
+        pro domy i firmy
+      </h1>
+      <p class="mb-8 text-primary">
+        Provádíme elektroinstalace, revize, montáže a opravy elektrozařízení v Klatovech a okolí.
+        Máme za sebou roky praxe, a tak víme, že nejdůležitější je kvalitní, bezpečná a poctivě
+        odvedená práce
+      </p>
+      <ul class="mb-12">
+        <li class="flex items-start gap-2 py-1">
+          <img src={Badge.src} alt="Ikona" class="w-6 h-6 mt-0.5" />
+          15 let zkušeností v oboru
+        </li>
+        <li class="flex items-start gap-2 py-1">
+          <img src={Badge.src} alt="Ikona" class="w-6 h-6 mt-0.5" />
+          Kompletní služby pro byty, domy i firmy
+        </li>
+        <li class="flex items-start gap-2 py-1">
+          <img src={Badge.src} alt="Ikona" class="w-6 h-6 mt-0.5" />
+          Certifikovaní technici s platným oprávněním
+        </li>
+      </ul>
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+        <Button variant="primary" href="/kontakt">Nezávazná poptávka</Button>
+        <Button variant="secondary" href="tel:+420775736112" class="hidden sm:inline-flex">
+          +420 775 736 112
+        </Button>
+      </div>
+    </div>
+    <div class="hidden lg:block justify-self-end">
+      <img src={HeroIllustration.src} alt="Ilustrace" class="w-96 h-auto" />
+    </div>
+  </div>
+</section>
