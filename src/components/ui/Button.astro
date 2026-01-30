@@ -2,7 +2,7 @@
 import { clsx } from "clsx";
 
 interface Props {
-  variant?: "primary" | "secondary" | "ternary";
+  variant?: "primary" | "secondary" | "ternary" | "quaternary";
   size?: "sm" | "md";
   href?: string;
   class?: string;
@@ -22,7 +22,7 @@ const base =
 
 const variants = {
   primary:
-    "bg-accent-primary/90 text-primary hover:bg-accent-primary hover:ring-2 hover:ring-offset-2 hover:ring-offset-background hover:ring-accent-primary",
+    "bg-accent-primary/90 text-primary hover:bg-accent-primary hover:ring-2 hover:ring-offset-2 hover:ring-offset-background-dark hover:ring-accent-primary",
   secondary:
     "bg-background-dark text-primary hover:bg-background-dark/90 hover:bg-background-dark/90 hover:ring-2 hover:ring-offset-2 hover:ring-offset-background hover:ring-background-dark/90",
   ternary:

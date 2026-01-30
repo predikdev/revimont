@@ -5,7 +5,7 @@ interface Props {
   description: string;
   image: string;
   imageAlt?: string;
-  badge: string;
+  badge?: string;
 }
 
 const { href, title, description, image, imageAlt = "", badge } = Astro.props;
@@ -13,12 +13,12 @@ const { href, title, description, image, imageAlt = "", badge } = Astro.props;
 
 <article class="group h-full">
   <a href={href} class="group flex h-full flex-col">
-    <figure class="relative overflow-hidden rounded-lg">
+    <figure class="relative overflow-hidden rounded-tl-xl rounded-tr-xl">
       <img
         src={image}
         alt={imageAlt}
         loading="lazy"
-        class="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        class="h-100 w-full object-cover transition-transform duration-300 group-hover:scale-105"
       />
 
       <div
@@ -28,12 +28,16 @@ const { href, title, description, image, imageAlt = "", badge } = Astro.props;
       </div>
 
       <div class="absolute bottom-4 left-4 right-4 flex flex-col gap-3">
-        <span
-          class="inline-flex w-fit items-center rounded-md bg-accent-primary px-3 py-1 text-xs font-medium text-primary"
-        >
-          {badge}
-        </span>
-        <h3 class="text-lead font-playfair font-semibold text-primary">{title}</h3>
+        <!-- {
+          badge ? (
+            <span class="inline-flex w-fit items-center rounded-md bg-accent-primary px-3 py-1 text-xs font-medium text-primary">
+              {badge}
+            </span>
+          ) : (
+            ""
+          )
+        } -->
+        <h3 class="text-lead font-playfair font-medium tracking-wide text-primary">{title}</h3>
       </div>
     </figure>
 

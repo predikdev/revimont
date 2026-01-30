@@ -1,13 +1,13 @@
 ---
-import Button from "../ui/Button.astro";
-import LetsWorkImage from "../../assets/images/lets_work.png";
+import Button from "../../ui/Button.astro";
+import LetsWorkImage from "../../../assets/images/firma.jpeg";
 ---
 
-<section id="lets-work" class="flex items-center py-24 bg-background-dark">
-  <div class="container grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
+<section id="lets-work" class="flex items-center bg-background-dark">
+  <div class="container grid gap-10 lg:grid-cols-2 items-center">
     <div class="text-primary text-center flex flex-col items-center lg:text-left lg:items-start">
       <h2 class="font-playfair font-bold text-heading-2 mb-4">
-        Pojďme se spojit a pracovat společně
+        Pojďme se spojit a<br /> pracovat společně
       </h2>
       <p class="text-secondary mb-8 max-w-102">
         Revize, nová elektroinstalace či oprava, jsme připraveni vám pomoci. Dejte nám vědět a
@@ -16,13 +16,13 @@ import LetsWorkImage from "../../assets/images/lets_work.png";
       <Button variant="primary" href="/kontakt" class="w-full md:w-fit">Kontaktujte nás</Button>
     </div>
 
-    <div class="hidden lg:block lg:justify-self-end">
-      <figure class="overflow-hidden rounded-2xl shadow-2xl shadow-black/40">
+    <div class="block lg:block lg:justify-self-end">
+      <figure class="overflow-hidden rounded-lg shadow-2xl shadow-black/40">
         <img
           src={LetsWorkImage.src}
-          alt="Projektová dokumentace elektroinstalace"
+          alt="Fotografie našeho vozového parku, v pozadí sídlo naší firmy."
           loading="lazy"
-          class="w-full max-w-sm h-auto"
+          class="w-full h-auto bg-cover"
         />
       </figure>
     </div>

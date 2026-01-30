@@ -1,13 +1,13 @@
 ---
-import WorkCard from "../ui/WorkCard.astro";
-import Button from "../ui/Button.astro";
+import WorkCard from "../../ui/cards/WorkCard.astro";
+import Button from "../../ui/Button.astro";
 
-import Osvetleni from "../../assets/images/elektroinstalace.png";
-import Revize from "../../assets/images/revize.png";
-import Rekonstrukce from "../../assets/images/rekonstrukce.png";
+import Osvetleni from "../../../assets/images/elektroinstalace.png";
+import Revize from "../../../assets/images/revize.png";
+import Rekonstrukce from "../../../assets/images/rekonstrukce.png";
 ---
 
-<section id="our-work" class="flex items-center py-24 bg-background">
+<section id="our-work" class="flex items-center bg-background">
   <div class="container">
     <div class="section-header flex flex-col items-center gap-4 text-center pb-16 text-black">
       <p class="uppercase text-accent-primary text-sm font-medium">Naše práce</p>
@@ -22,9 +22,8 @@ import Rekonstrukce from "../../assets/images/rekonstrukce.png";
       <li>
         <WorkCard
           href="/galerie"
-          badge="Osvětlení"
-          title="Kancelářské prostory"
-          description="Moderní LED osvětlení s chytrým řízením pro kancelářský komplex."
+          title="Domovní zvonkový systém"
+          description="Instalace a modernizace domovního zvonkového systému s přehledným ovládáním."
           image={Osvetleni.src}
           imageAlt=""
         />
@@ -32,9 +31,8 @@ import Rekonstrukce from "../../assets/images/rekonstrukce.png";
       <li>
         <WorkCard
           href="/galerie"
-          badge="Revize"
-          title="Laboratorní prostory - revize"
-          description="Revize elektroinstalace v laboratorních prostorách."
+          title="Průmyslové osvětlení"
+          description="Návrh a montáž úsporného osvětlení pro průmyslovou halu."
           image={Revize.src}
           imageAlt=""
         />
@@ -43,8 +41,8 @@ import Rekonstrukce from "../../assets/images/rekonstrukce.png";
         <WorkCard
           href="/galerie"
           badge="Elektroinstalace"
-          title="Rekonstrukce RD"
-          description="Kompletní elektroinstalace rodinného domu včetně chytré domácnosti."
+          title="Hromosvod a uzemnění"
+          description="Instalace hromosvodu a uzemnění pro bezpečnou ochranu objektu."
           image={Rekonstrukce.src}
           imageAlt=""
         />

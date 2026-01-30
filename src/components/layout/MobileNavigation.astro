@@ -2,9 +2,8 @@
 import PhoneIcon from "../../assets/icons/phone.svg";
 import CloseMenu from "../../assets/icons/square-x.svg";
 
-import Logo from "../../components/ui/Logo.astro";
-import Navigation from "../../components/ui/Navigation.astro";
-import Button from "../../components/ui/Button.astro";
+import Logo from "./Logo.astro";
+import Button from "../ui/Button.astro";
 
 const links = [
   { href: "/", label: "Domů" },
@@ -61,7 +60,7 @@ const links = [
   .mobile-menu {
     position: fixed;
     inset: 0;
-    z-index: 60;
+    z-index: 90;
     pointer-events: none;
   }
 

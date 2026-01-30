@@ -1,15 +1,15 @@
 ---
-import ServiceCard from "../ui/ServiceCard.astro";
+import ServiceCard from "../../ui/cards/ServiceCard.astro";
 
-import Elektroinstalace from "../../assets/images/elektroinstalace.png";
-import Revize from "../../assets/images/revize.png";
-import Rekonstrukce from "../../assets/images/rekonstrukce.png";
-import Zap from "../../assets/icons/zap.svg";
-import ClipboardCheck from "../../assets/icons/clipboard-check.svg";
-import Hammer from "../../assets/icons/hammer.svg";
+import Elektroinstalace from "../../../assets/images/elektroinstalace.png";
+import Revize from "../../../assets/images/revize.png";
+import Rekonstrukce from "../../../assets/images/rekonstrukce.png";
+import Zap from "../../../assets/icons/zap.svg";
+import ClipboardCheck from "../../../assets/icons/clipboard-check.svg";
+import Hammer from "../../../assets/icons/hammer.svg";
 ---
 
-<section id="services" class="flex items-center py-24 bg-background">
+<section id="services" class="flex items-center bg-background">
   <div class="container">
     <div class="section-header flex flex-col items-center gap-4 text-center pb-16 text-black">
       <p class="uppercase text-accent-primary text-sm font-medium">Naše služby</p>
@@ -23,7 +23,7 @@ import Hammer from "../../assets/icons/hammer.svg";
     >
       <li>
         <ServiceCard
-          href="/sluzby"
+          href="/sluzby/elektroinstalace"
           title="Elektroinstalační práce"
           description="Provádíme kompletní elektroinstalace v bytových a rodinných domech, včetně přípojek, rekonstrukcí a revizní dokumentace."
           image={Elektroinstalace.src}
