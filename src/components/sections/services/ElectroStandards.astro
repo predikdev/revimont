@@ -1,0 +1,60 @@
+---
+import ShieldCheck from "../../../assets/icons/shield-check.svg";
+import ClipboardCheck from "../../../assets/icons/clipboard-check.svg";
+import BadgeCheck from "../../../assets/icons/badge-check.svg";
+import Star from "../../../assets/icons/star.svg";
+
+const standards = [
+  {
+    title: "Certifikace a oprávnění",
+    description: "Práce provádíme v souladu s platnými oprávněními a pravidelným školením.",
+    icon: BadgeCheck,
+  },
+  {
+    title: "Normy ČSN a bezpečnost",
+    description: "Dodržujeme technické normy a bezpečnostní postupy v každé fázi realizace.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Revizní protokoly",
+    description: "Každou instalaci uzavíráme revizí a předáním kompletní dokumentace.",
+    icon: ClipboardCheck,
+  },
+  {
+    title: "Pojištění odpovědnosti",
+    description: "Krytí pro klidný průběh zakázky i bezpečné předání díla.",
+    icon: Star,
+  },
+];
+---
+
+<section id="standards" class="bg-background-dark">
+  <div class="container">
+    <div class="section-header flex flex-col items-center gap-4 text-center text-primary max-w-2xl mx-auto">
+      <p class="uppercase text-accent-primary text-sm font-medium">Standardy</p>
+      <h2 class="font-playfair font-bold text-heading-2">Bezpečnostní standardy</h2>
+      <p class="text-body text-secondary">
+        Pracujeme podle ověřených postupů a držíme se technických norem.
+      </p>
+    </div>
+
+    <ul role="list" class="mt-12 flex flex-col divide-y divide-white/12 max-w-3xl mx-auto">
+      {standards.map((item) => (
+        <li class="py-6 first:pt-0 last:pb-0">
+          <article class="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-5">
+            <div class="flex items-center gap-3 sm:min-w-64">
+              <span
+                class="flex h-9 w-9 items-center justify-center rounded-md bg-accent-secondary text-accent-primary"
+                aria-hidden="true"
+              >
+                <item.icon class="h-4 w-4" />
+              </span>
+              <h3 class="text-body font-semibold text-primary">{item.title}</h3>
+            </div>
+            <p class="text-body text-secondary">{item.description}</p>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/sections/shared/PageHero.astro";
+import ElectroServices from "../../components/sections/services/ElectroServices.astro";
+import ElectroClients from "../../components/sections/services/ElectroClients.astro";
+import ElectroProcess from "../../components/sections/services/ElectroProcess.astro";
+import ElectroShowcase from "../../components/sections/services/ElectroShowcase.astro";
+import ElectroStandarts from "../../components/sections/services/ElectroStandards.astro";
+import ElectroPrinciples from "../../components/sections/services/ElectroPrinciples.astro";
+import LetsWork from "../../components/sections/shared/LetsWork.astro";
+import ContactFormSection from "../../components/sections/shared/ContactFormSection.astro";
+import ElectroServicesRedesign from "../../components/sections/services/ElectroServicesRedesign.astro";
+
+const title = `<span class=\"text-accent-primary\">Elektroinstalace </span>pro váš domov i firmu`;
+const description =
+  "Bezpečné a spolehlivé elektroinstalace v Klatovech a okolí. Od návrhu po revizi - vše pod jednou střechou.";
+---
+
+<BaseLayout heroBackground="/hero-bg.jpg">
+  <PageHero
+    slot="hero"
+    id="hero"
+    titleHtml={title}
+    description={description}
+    primaryCta={{ label: "Nezávazná poptávka", href: "/kontakt" }}
+  />
+  <ElectroServices />
+  <ElectroClients />
+  <ElectroShowcase />
+  <LetsWork />
+  <ContactFormSection />
+</BaseLayout>

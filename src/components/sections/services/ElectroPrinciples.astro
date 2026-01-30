@@ -1,0 +1,46 @@
+---
+const items = [
+  {
+    title: "Návrh řešení",
+    description: "Připravíme přehledný návrh elektroinstalace podle potřeb objektu.",
+  },
+  {
+    title: "Kvalitní provedení",
+    description: "Realizace s důrazem na bezpečnost, čistotu a dlouhou životnost.",
+  },
+  {
+    title: "Revizní zpráva",
+    description: "Každou instalaci ověřujeme měřením a předáváme revizní dokumentaci.",
+  },
+  {
+    title: "Jasná domluva",
+    description: "Práce mají pevný rozsah a termín, o průběhu vás průběžně informujeme.",
+  },
+];
+---
+
+<section id="electro-deliverables" class="bg-background-dark">
+  <div class="container">
+    <div class="text-center text-primary max-w-2xl mx-auto">
+      <p class="uppercase text-accent-primary text-sm font-medium">Co dostanete</p>
+      <h2 class="mt-4 font-playfair font-bold text-heading-2">Jasný výstup z každé zakázky</h2>
+      <p class="mt-4 text-body text-secondary">
+        Stručně a bez složitostí: tohle je standard, který u nás dostanete vždy.
+      </p>
+    </div>
+
+    <ul role="list" class="mt-12 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+      {
+        items.map((item, index) => (
+          <li class="flex">
+            <article class="flex w-full flex-col gap-3 border-l border-white/10 pl-5">
+              <p class="text-xs font-semibold uppercase text-accent-primary">0{index + 1}</p>
+              <h3 class="text-body font-semibold text-primary">{item.title}</h3>
+              <p class="text-body text-secondary">{item.description}</p>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

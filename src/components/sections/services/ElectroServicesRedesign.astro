@@ -1,0 +1,191 @@
+---
+import Button from "../../ui/Button.astro";
+
+import House from "../../../assets/icons/house.svg";
+import Wrench from "../../../assets/icons/wrench.svg";
+import Zap from "../../../assets/icons/zap.svg";
+import LightBulb from "../../../assets/icons/lightbulb.svg";
+import Car from "../../../assets/icons/car.svg";
+import ShieldCheck from "../../../assets/icons/shield-check.svg";
+
+interface ServiceItem {
+  title: string;
+  description: string;
+  Icon: typeof House;
+  tag: string;
+}
+
+interface Props {
+  variant?: "editorial" | "tiles" | "compact";
+}
+
+const { variant = "compact" } = Astro.props;
+
+const services: ServiceItem[] = [
+  {
+    title: "Elektroinstalace novostaveb",
+    description:
+      "Kompletní rozvody pro rodinné domy, plánované zásuvky, okruhy i příprava na budoucí technologie.",
+    Icon: House,
+    tag: "Novostavby",
+  },
+  {
+    title: "Rekonstrukce rozvodu",
+    description:
+      "Výměna starých rozvodů za bezpečné měděné, řešení přetížených okruhů a doplnění zásuvek.",
+    Icon: Wrench,
+    tag: "Rekonstrukce",
+  },
+  {
+    title: "Rozvaděče a jističe",
+    description:
+      "Montáž domovních rozvaděčů s přehledným značením a moderními jističi pro maximální bezpečnost.",
+    Icon: Zap,
+    tag: "Bezpečí",
+  },
+  {
+    title: "Osvětlení",
+    description:
+      "Návrh a montáž interiérového i exteriérového osvětlení s důrazem na funkčnost a úsporu energie.",
+    Icon: LightBulb,
+    tag: "Osvětlení",
+  },
+  {
+    title: "Revize elektroinstalace",
+    description:
+      "Po dokončení prací zajistíme revizi a vydáme revizní zprávu. Nabízíme i pravidelné revize pro firmy.",
+    Icon: ShieldCheck,
+    tag: "Revize",
+  },
+  {
+    title: "Příprava pro EV a FVE",
+    description:
+      "Příprava instalace pro nabíjení elektromobilu nebo fotovoltaiku bez zbytečných dodatečných bourání.",
+    Icon: Car,
+    tag: "Moderní energie",
+  },
+];
+---
+
+<section id="electro-services" class="bg-background">
+  <div class="container py-24">
+    <div class="flex flex-col gap-4 text-left text-black sm:max-w-2xl">
+      <p class="uppercase text-accent-primary text-sm font-medium tracking-widest">Naše služby</p>
+      <h2 class="font-playfair font-bold text-heading-2">Co pro vás zařídíme</h2>
+      <p class="text-body text-black/70">
+        Kompletní elektroinstalační práce od prvního návrhu až po vydání revizní zprávy.
+      </p>
+    </div>
+
+    {
+      variant === "editorial" ? (
+        <div class="mt-14 grid gap-10 lg:grid-cols-[1.05fr_1fr]">
+          <div class="rounded-2xl border border-black/10 bg-white p-8 shadow-lg">
+            <div class="flex items-center gap-3 text-accent-primary">
+              <Zap class="h-5 w-5" />
+              <span class="text-xs font-semibold uppercase tracking-widest">
+                Nejoblíbenější služba
+              </span>
+            </div>
+            <h3 class="mt-4 font-playfair text-heading">Elektroinstalace bez starostí</h3>
+            <p class="mt-4 text-body text-black/80">
+              Od projektu po revizi. Vše pod jednou střechou, s jasnou komunikací, termíny a
+              certifikovanými techniky.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-3 text-sm text-black/80">
+              <span class="rounded-full bg-accent-primary/10 px-3 py-1">Rodinné domy</span>
+              <span class="rounded-full bg-accent-primary/10 px-3 py-1">Bytové domy</span>
+              <span class="rounded-full bg-accent-primary/10 px-3 py-1">Firmy</span>
+            </div>
+            <div class="mt-8 flex flex-wrap gap-4">
+              <Button variant="quaternary" href="/kontakt">
+                Nezávazná poptávka
+              </Button>
+              <Button variant="ternary" href="/sluzby">
+                Zobrazit vše
+              </Button>
+            </div>
+          </div>
+
+          <ul role="list" class="grid gap-6">
+            {services.map((service) => (
+              <li class="rounded-2xl border border-black/10 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                <div class="flex items-start gap-4">
+                  <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-primary/10 text-accent-primary">
+                    <service.Icon class="h-5 w-5" />
+                  </span>
+                  <div>
+                    <div class="text-xs font-semibold uppercase tracking-widest text-accent-primary/80">
+                      {service.tag}
+                    </div>
+                    <h3 class="mt-2 text-lead font-playfair text-black">{service.title}</h3>
+                    <p class="mt-2 text-body text-black/70">{service.description}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null
+    }
+
+    {
+      variant === "tiles" ? (
+        <ul role="list" class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((service) => (
+            <li class="h-full">
+              <article class="group flex h-full flex-col gap-5 rounded-2xl border border-black/10 bg-white p-6 shadow-md transition hover:-translate-y-1 hover:shadow-lg">
+                <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-accent-primary/80">
+                  <service.Icon class="h-4 w-4 text-accent-primary" />
+                  {service.tag}
+                </span>
+                <h3 class="text-lead font-playfair text-black">{service.title}</h3>
+                <p class="text-body text-black/70">{service.description}</p>
+                <span class="mt-auto inline-flex items-center text-sm font-semibold text-accent-primary">
+                  Zjistit více{" "}
+                  <span aria-hidden="true" class="ml-2">
+                    →
+                  </span>
+                </span>
+              </article>
+            </li>
+          ))}
+        </ul>
+      ) : null
+    }
+
+    {
+      variant === "compact" ? (
+        <div class="mt-14 rounded-2xl border border-black/10 bg-white shadow-sm">
+          <ul role="list" class="divide-y divide-black/10">
+            {services.map((service, index) => (
+              <li class="p-6" aria-label={`${index + 1}. ${service.title}`}>
+                <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
+                  <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent-primary/10 text-accent-primary">
+                    <service.Icon class="h-6 w-6" />
+                  </span>
+                  <div class="flex-1">
+                    <div class="text-xs font-semibold uppercase tracking-widest text-accent-primary/80">
+                      {service.tag}
+                    </div>
+                    <h3 class="mt-2 text-lead font-playfair text-black">{service.title}</h3>
+                    <p class="mt-2 text-body text-black/70">{service.description}</p>
+                  </div>
+                  <a
+                    href="/sluzby"
+                    class="inline-flex items-center text-sm font-semibold text-accent-primary"
+                  >
+                    Detail{" "}
+                    <span aria-hidden="true" class="ml-2">
+                      →
+                    </span>
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null
+    }
+  </div>
+</section>

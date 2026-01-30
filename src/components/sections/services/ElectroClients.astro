@@ -1,0 +1,80 @@
+---
+const clients = [
+  {
+    title: "Rodinné domy a byty",
+    description:
+      "Novostavby, rekonstrukce, kompletní rozvody včetně přípravy na moderní technologie.",
+    highlight: true,
+  },
+  {
+    title: "Bytové domy",
+    description: "Společné prostory, hlavní rozvaděče, osvětlení chodeb a schodišť.",
+  },
+  {
+    title: "Menší firmy a provozovny",
+    description: "Kanceláře, dílny, sklady - elektroinstalace navržená na reálný provoz.",
+  },
+  {
+    title: "Developerské projekty",
+    description: "Spolehlivý partner pro opakované realizace v dohodnutém standardu.",
+  },
+];
+
+const stats = [
+  {
+    number: "15+",
+    label: "let zkušeností",
+  },
+  {
+    number: "300+",
+    label: "dokončených projektů",
+  },
+  {
+    number: "120+",
+    label: "revizí za rok",
+  },
+];
+---
+
+<section id="electro-clients" class="bg-background-dark">
+  <div class="container">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-start">
+      <div class="text-primary">
+        <h2 class="font-playfair font-bold text-heading-2">Pro koho pracujeme</h2>
+        <p class="mt-5 text-body text-secondary max-w-md">
+          Máme zkušenosti s projekty různého rozsahu - od bytů až po komerční prostory.
+        </p>
+
+        <div class="mt-12 grid grid-cols-3 gap-8">
+          {
+            stats.map((stat) => (
+              <div class="flex flex-col items-start justify-center">
+                <div class="font-playfair font-bold text-4xl lg:text-5xl text-accent-primary">
+                  {stat.number}
+                </div>
+                <div class="mt-2 text-sm text-secondary leading-tight">{stat.label}</div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <ul role="list" class="flex flex-col gap-10">
+        {
+          clients.map((client) => (
+            <li class="group relative pl-8 cursor-pointer transition-all duration-300">
+              <span
+                class="absolute left-0 top-1.5 h-full w-1 bg-accent-primary/40 group-hover:bg-accent-primary transition-colors duration-300"
+                aria-hidden="true"
+              />
+              <div class="flex flex-col gap-2 text-primary">
+                <h3 class="text-body font-semibold">{client.title}</h3>
+                <p class="text-body text-secondary">{client.description}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,92 @@
+---
+import Button from "../../ui/Button.astro";
+import PhoneIcon from "../../../assets/icons/phone.svg";
+import MapPinIcon from "../../../assets/icons/map-pin.svg";
+import ClipboardCheck from "../../../assets/icons/clipboard-check.svg";
+import Zap from "../../../assets/icons/zap.svg";
+import BadgeCheck from "../../../assets/icons/badge-check.svg";
+
+const steps = [
+  {
+    step: "Krok 1",
+    title: "Poptávka",
+    description: "Kontaktujte nás a domluvíme termín prohlídky.",
+    icon: PhoneIcon,
+  },
+  {
+    step: "Krok 2",
+    title: "Prohlídka",
+    description: "Přijedeme se podívat a probereme vaše požadavky.",
+    icon: MapPinIcon,
+  },
+  {
+    step: "Krok 3",
+    title: "Nabídka",
+    description: "Do 48 hodin obdržíte podrobnou cenovou nabídku.",
+    icon: ClipboardCheck,
+  },
+  {
+    step: "Krok 4",
+    title: "Realizace",
+    description: "Provedeme elektroinstalaci v dohodnutém termínu.",
+    icon: Zap,
+  },
+  {
+    step: "Krok 5",
+    title: "Předání",
+    description: "Zajistíme revizi a předáme veškerou dokumentaci.",
+    icon: BadgeCheck,
+  },
+];
+---
+
+<section id="electro-process" class="bg-background">
+  <div class="container">
+    <div class="section-header flex flex-col items-start gap-4 text-left text-black max-w-2xl">
+      <p class="uppercase text-accent-primary text-sm font-medium">Proces</p>
+      <h2 class="font-playfair font-bold text-heading-2">Jak probíhá spolupráce</h2>
+      <p class="text-body text-black/70">
+        Transparentní postup od prvního kontaktu po předání hotového díla.
+      </p>
+    </div>
+
+    <div class="relative mt-12">
+      <div aria-hidden="true" class="absolute left-5 top-0 bottom-0 w-px bg-border md:hidden"></div>
+      <div aria-hidden="true" class="absolute left-4 right-4 top-5 h-px bg-border hidden md:block"></div>
+      <ul role="list" class="relative flex flex-col gap-8 md:grid md:grid-cols-5 md:gap-6">
+        {steps.map((item) => (
+          <li class="relative flex flex-col items-start gap-3 pl-12 md:pl-0">
+            <span
+              class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-white text-accent-primary shadow-sm shadow-black/10 md:static"
+              aria-hidden="true"
+            >
+              <item.icon class="h-5 w-5" />
+            </span>
+            <div class="flex flex-col gap-2">
+              <p class="text-xs font-semibold uppercase text-accent-primary">{item.step}</p>
+              <h3 class="text-body font-semibold text-black">{item.title}</h3>
+              <p class="text-small text-black/70">{item.description}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="mt-10 rounded-xl bg-white/70 p-6 shadow-lg shadow-black/10">
+      <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p class="text-body font-semibold text-black">Máte dotaz?</p>
+          <p class="text-small text-black/60">
+            Rádi vám vše vysvětlíme osobně nebo telefonicky.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <Button href="tel:+420775736112" variant="primary" size="sm">Zavolejte nám</Button>
+          <Button href="mailto:revimontklatovy@seznam.cz" variant="secondary" size="sm">
+            Napište nám
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
