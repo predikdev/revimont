@@ -1,0 +1,173 @@
+---
+import { Image } from "astro:assets";
+
+import Elektroinstalace from "../../../assets/images/elektroinstalace.png";
+import Rekonstrukce from "../../../assets/images/rekonstrukce.png";
+import Firma from "../../../assets/images/firma.jpeg";
+import Electric from "../../../assets/images/electric.jpg";
+
+interface ClientItem {
+  title: string;
+  description: string;
+  tag: string;
+  image: ImageMetadata;
+  imageAlt: string;
+}
+
+interface Props {}
+
+const {} = Astro.props;
+
+const clients: ClientItem[] = [
+  {
+    title: "Rodinné domy a byty",
+    description:
+      "Novostavby, rekonstrukce, kompletní rozvody včetně přípravy na moderní technologie.",
+    tag: "Bydlení",
+    image: Elektroinstalace,
+    imageAlt: "Elektroinstalace v rodinném domě",
+  },
+  {
+    title: "Bytové domy",
+    description: "Společné prostory, hlavní rozvaděče, osvětlení chodeb a schodišť.",
+    tag: "Společenství",
+    image: Rekonstrukce,
+    imageAlt: "Rozvaděč v bytovém domě",
+  },
+  {
+    title: "Menší firmy a provozovny",
+    description: "Kanceláře, dílny, sklady - elektroinstalace navržená na reálný provoz.",
+    tag: "Provoz",
+    image: Firma,
+    imageAlt: "Elektroinstalace v provozovně",
+  },
+  {
+    title: "Developerské projekty",
+    description: "Spolehlivý partner pro opakované realizace v dohodnutém standardu.",
+    tag: "Developer",
+    image: Electric,
+    imageAlt: "Moderní elektroinstalace v novostavbě",
+  },
+];
+---
+
+<section id="electro-clients-v1" class="bg-background-dark" data-clients-v1>
+  <div class="container">
+    <div class="grid gap-12 lg:grid-cols-[1.05fr_1fr] lg:items-start">
+      <div class="flex flex-col gap-8 text-primary">
+        <div>
+          <h2 class="font-playfair font-bold text-heading-2">Pro koho pracujeme</h2>
+          <p class="mt-5 text-body text-secondary max-w-md">
+            Máme zkušenosti s projekty různého rozsahu - od bytů až po komerční prostory.
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-lg">
+          <div class="relative aspect-[4/3] overflow-hidden rounded-2xl">
+            {clients.map((client, index) => (
+              <Image
+                src={client.image}
+                alt={client.imageAlt}
+                width={960}
+                height={720}
+                sizes="(min-width: 1024px) 520px, 90vw"
+                format="avif"
+                data-client-figure
+                class:list={[
+                  "absolute inset-0 h-full w-full object-cover transition-all duration-500",
+                  index === 0 ? "opacity-100 scale-100" : "opacity-0 scale-105",
+                ]}
+              />
+            ))}
+          </div>
+          <div class="mt-5 flex items-center gap-3 text-sm text-secondary">
+            <span class="h-2 w-2 rounded-full bg-accent-primary" aria-hidden="true"></span>
+            <span data-client-badge>{clients[0].tag}</span>
+          </div>
+          <p class="mt-3 text-lead font-playfair" data-client-title>
+            {clients[0].title}
+          </p>
+        </div>
+      </div>
+
+      <ul role="list" class="flex flex-col gap-4">
+        {clients.map((client, index) => (
+          <li>
+            <button
+              type="button"
+              data-client-trigger
+              data-client-index={index}
+              data-client-title={client.title}
+              data-client-tag={client.tag}
+              aria-pressed={index === 0 ? "true" : "false"}
+              class:list={[
+                "w-full rounded-2xl border border-white/10 px-6 py-5 text-left transition duration-300",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/40",
+                "hover:border-accent-primary/50 hover:bg-white/5",
+                index === 0 ? "bg-white/5 shadow-lg" : "bg-transparent",
+              ]}
+            >
+              <div class="flex items-start gap-4 text-primary">
+                <span class="mt-1 flex h-10 w-10 items-center justify-center rounded-xl bg-accent-primary/10 text-accent-primary text-sm font-semibold">
+                  {index + 1}
+                </span>
+                <div>
+                  <h3 class="text-body font-semibold">{client.title}</h3>
+                  <p class="mt-2 text-body text-secondary">{client.description}</p>
+                </div>
+              </div>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll("[data-clients-v1]");
+
+    sections.forEach((section) => {
+      const triggers = Array.from(section.querySelectorAll("[data-client-trigger]"));
+      const figures = Array.from(section.querySelectorAll("[data-client-figure]"));
+      const badge = section.querySelector("[data-client-badge]");
+      const title = section.querySelector("[data-client-title]");
+
+      if (!triggers.length || !figures.length) return;
+
+      const setActive = (index) => {
+        triggers.forEach((trigger, triggerIndex) => {
+          const isActive = triggerIndex === index;
+          trigger.setAttribute("aria-pressed", isActive ? "true" : "false");
+          trigger.classList.toggle("bg-white/5", isActive);
+          trigger.classList.toggle("shadow-lg", isActive);
+          trigger.classList.toggle("border-accent-primary/60", isActive);
+        });
+
+        figures.forEach((figure, figureIndex) => {
+          const isActive = figureIndex === index;
+          figure.classList.toggle("opacity-100", isActive);
+          figure.classList.toggle("scale-100", isActive);
+          figure.classList.toggle("opacity-0", !isActive);
+          figure.classList.toggle("scale-105", !isActive);
+        });
+
+        const current = triggers[index];
+        if (current) {
+          if (badge) badge.textContent = current.dataset.clientTag ?? badge.textContent;
+          if (title) title.textContent = current.dataset.clientTitle ?? title.textContent;
+        }
+      };
+
+      triggers.forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+          const index = Number(trigger.dataset.clientIndex);
+          if (!Number.isNaN(index)) setActive(index);
+        });
+      });
+
+      setActive(0);
+    });
+  });
+</script>
