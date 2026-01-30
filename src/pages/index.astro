@@ -1,7 +1,18 @@
 ---
+const titleHtml = `Profesionální <span class=\"text-accent-primary\">revize</span> a <br /><span class=\"text-accent-primary\">elektroinstalace</span> pro domy i firmy`;
+const description =
+  "Provádíme elektroinstalace, revize, montáže a opravy elektrozařízení v Klatovech a okolí. Máme za sebou roky praxe, a tak víme, že nejdůležitější je kvalitní, bezpečná a poctivě odvedená práce";
+const bullets = [
+  "15 let zkušeností v oboru",
+  "Kompletní služby pro byty, domy i firmy",
+  "Certifikovaní technici s platným oprávněním",
+];
+
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-import Hero from "../components/sections/Hero.astro";
+import HeroIllustration from "../assets/images/hero_illustration.svg";
+
+import PageHero from "../components/sections/shared/PageHero.astro";
 import Services from "../components/sections/home/Services.astro";
 import WhyUs from "../components/sections/home/WhyUs.astro";
 import OurWork from "../components/sections/home/OurWork.astro";
@@ -9,8 +20,18 @@ import LetsWork from "../components/sections/shared/LetsWork.astro";
 import ContactFormSection from "../components/sections/shared/ContactFormSection.astro";
 ---
 
-<BaseLayout>
-  <Hero />
+<BaseLayout heroBackground="/hero-bg.jpg">
+  <PageHero
+    id="hero"
+    slot="hero"
+    titleHtml={titleHtml}
+    description={description}
+    bullets={bullets}
+    primaryCta={{ label: "Nezávazná poptávka", href: "/kontakt" }}
+    secondaryCta={{ label: "+420 775 736 112", href: "tel:+420775736112" }}
+    image={{ src: HeroIllustration.src, alt: "Ilustrace" }}
+  />
+
   <Services />
   <WhyUs />
   <OurWork />

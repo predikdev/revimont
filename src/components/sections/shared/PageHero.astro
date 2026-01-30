@@ -1,0 +1,99 @@
+---
+import Button from "../../ui/Button.astro";
+
+interface Cta {
+  label: string;
+  href: string;
+}
+
+interface Image {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  id?: string;
+  slot?: string;
+  eyebrow?: string;
+  title?: string;
+  titleHtml?: string;
+  description?: string;
+  bullets?: string[];
+  primaryCta?: Cta;
+  secondaryCta?: Cta;
+  image?: Image;
+  overlayClass?: string;
+}
+
+const {
+  id = "page-hero",
+  slot,
+  eyebrow,
+  title,
+  titleHtml,
+  description,
+  bullets = [],
+  primaryCta,
+  secondaryCta,
+  image,
+  overlayClass = "bg-black/90",
+} = Astro.props;
+---
+
+<section
+  slot={slot}
+  id={id}
+  class="relative flex items-center py-32 md:py-46 lg:py-64 overflow-hidden"
+>
+  <div class="container grid gap-12 lg:grid-cols-2 items-center relative z-20">
+    <div class="text-primary">
+      {eyebrow ? <p class="uppercase text-accent-primary text-sm font-medium">{eyebrow}</p> : null}
+      {
+        titleHtml ? (
+          <h1 class="font-playfair font-bold text-heading mt-4" set:html={titleHtml} />
+        ) : title ? (
+          <h1 class="font-playfair font-bold text-heading mt-4">{title}</h1>
+        ) : null
+      }
+      {description ? <p class="mt-6 text-primary/90">{description}</p> : null}
+
+      {
+        bullets.length ? (
+          <ul class="mt-8 space-y-2 text-primary/90">
+            {bullets.map((item) => (
+              <li class="flex items-start gap-2">
+                <span class="mt-2 h-1.5 w-1.5 rounded-full bg-accent-primary" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null
+      }
+
+      {
+        primaryCta || secondaryCta ? (
+          <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+            {primaryCta ? (
+              <Button variant="primary" href={primaryCta.href}>
+                {primaryCta.label}
+              </Button>
+            ) : null}
+            {secondaryCta ? (
+              <Button variant="secondary" href={secondaryCta.href} class="hidden sm:inline-flex">
+                {secondaryCta.label}
+              </Button>
+            ) : null}
+          </div>
+        ) : null
+      }
+    </div>
+
+    {
+      image ? (
+        <div class="hidden lg:block justify-self-end relative z-20">
+          <img src={image.src} alt={image.alt} class="w-96 h-auto" loading="lazy" />
+        </div>
+      ) : null
+    }
+  </div>
+</section>

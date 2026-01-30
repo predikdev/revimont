@@ -3,6 +3,12 @@ import "../styles/globals.css";
 import Header from "../components/layout/Header.astro";
 import MobileNavigation from "../components/layout/MobileNavigation.astro";
 import Footer from "../components/layout/Footer.astro";
+
+interface Props {
+  heroBackground?: string;
+}
+
+const { heroBackground } = Astro.props;
 ---
 
 <html lang="en">
@@ -17,10 +23,13 @@ import Footer from "../components/layout/Footer.astro";
     <meta name="generator" content={Astro.generator} />
     <title>Revimont Klatovy</title>
   </head>
-  <body class="bg-[#1C1C1C] text-black">
+  <body class="text-black">
     <MobileNavigation />
     <Header />
-    <div class="hero-wrapper">
+    <div
+      class="hero-wrapper"
+      style={heroBackground ? `--hero-bg: url(${heroBackground});` : undefined}
+    >
       <slot name="hero" />
     </div>
     <main>
@@ -34,22 +43,31 @@ import Footer from "../components/layout/Footer.astro";
   :global(.hero-wrapper) {
     position: relative;
     isolation: isolate;
-    background-image: url("/path/to/hero-bg.jpg");
-    background-size: cover;
-    background-position: center;
   }
 
   :global(.hero-wrapper::before) {
     content: "";
     position: absolute;
     inset: 0;
-    background: var(--overlay);
+    background-image: var(--hero-bg, none);
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(1);
     z-index: 0;
+    pointer-events: none;
+  }
+
+  :global(.hero-wrapper::after) {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: oklch(0.22 0 0 / 0.97);
+    z-index: 1;
     pointer-events: none;
   }
 
   :global(.hero-wrapper > *) {
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 </style>
