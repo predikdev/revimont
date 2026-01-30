@@ -23,7 +23,7 @@
   --text-black: oklch(25.2% 0 0);
   --orange-primary: oklch(67.66% 0.1838 40.03);
   --orange-secondary: oklch(67.66% 0.1838 40.03 / 0.15);
-  --overlay: oklch(0.22 0 0 / 0.9);
+  --overlay: oklch(0.22 0 0 / 0.7);
   --border-color: oklch(83.9% 0 0);
 
   /* Font sizes */
@@ -37,11 +37,6 @@
   --lh-small: 1.5;
   --lh-body: 1.75;
   --lh-heading: 1.25;
-}
-
-html,
-body {
-  overflow-x: hidden;
 }
 
 @theme {
@@ -73,13 +68,18 @@ body {
   --font-playfair: "Playfair Display", system-ui, sans-serif;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
+main > section {
+  padding-block: 10rem;
+}
+
 .container {
   margin-inline: auto;
   width: 100%;
   max-width: 1152px;
   padding-inline: 1rem;
-}
-
-.site-header {
-  background-color: #1c1c1c;
 }
