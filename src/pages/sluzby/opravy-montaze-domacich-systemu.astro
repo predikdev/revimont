@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/sections/shared/PageHero.astro";
+import MontazeServices from "../../components/sections/services/MontazeServices.astro";
+import MontazeClients from "../../components/sections/services/MontazeClients.astro";
+import MontazeProblems from "../../components/sections/services/MontazeProblems.astro";
+import LetsWork from "../../components/sections/shared/LetsWork.astro";
+import ContactFormSection from "../../components/sections/shared/ContactFormSection.astro";
+
+const title = "Montáže a opravy domácích systémů";
+const description =
+  "Profesionální montáž, zapojení či oprava elektrických zařízení. Od zásuvek po klimatizace - vše zapojíme bezpečně a správně.";
+---
+
+<BaseLayout heroBackground="/hero-bg.jpg">
+  <PageHero
+    slot="hero"
+    id="hero"
+    eyebrow="Revimont Klatovy"
+    titleHtml={title}
+    description={description}
+    primaryCta={{ label: "Nezávazně poptat", href: "/kontakt" }}
+    stats={[
+      { number: "300+", label: "zakázek" },
+      { number: "15+", label: "let zkušeností" },
+      { number: "500+", label: "zakázek" },
+    ]}
+  />
+  <MontazeServices />
+  <MontazeClients />
+  <MontazeProblems />
+  <LetsWork />
+  <ContactFormSection />
+</BaseLayout>
