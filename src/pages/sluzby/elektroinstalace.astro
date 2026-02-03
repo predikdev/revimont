@@ -11,7 +11,7 @@ import LetsWork from "../../components/sections/shared/LetsWork.astro";
 import ContactFormSection from "../../components/sections/shared/ContactFormSection.astro";
 import ElectroServicesRedesign from "../../components/sections/services/ElectroServicesRedesign.astro";
 
-const title = `<span class=\"text-accent-primary\">Elektroinstalace </span>pro váš domov i firmu`;
+const title = "Elektroinstalace pro váš domov i firmu";
 const description =
   "Bezpečné a spolehlivé elektroinstalace v Klatovech a okolí. Od návrhu po revizi - vše pod jednou střechou.";
 ---
@@ -20,8 +20,14 @@ const description =
   <PageHero
     slot="hero"
     id="hero"
+    eyebrow="Revimont Klatovy"
     titleHtml={title}
     description={description}
+    stats={[
+      { number: "300+", label: "zakázek" },
+      { number: "15+", label: "let zkušeností" },
+      { number: "500+", label: "zakázek" },
+    ]}
     primaryCta={{ label: "Nezávazná poptávka", href: "/kontakt" }}
   />
   <ElectroServices />

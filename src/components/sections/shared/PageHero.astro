@@ -11,6 +11,11 @@ interface Image {
   alt: string;
 }
 
+interface Stat {
+  number: string;
+  label: string;
+}
+
 interface Props {
   id?: string;
   slot?: string;
@@ -21,6 +26,7 @@ interface Props {
   bullets?: string[];
   primaryCta?: Cta;
   secondaryCta?: Cta;
+  stats?: Stat[];
   image?: Image;
   overlayClass?: string;
 }
@@ -35,6 +41,7 @@ const {
   bullets = [],
   primaryCta,
   secondaryCta,
+  stats = [],
   image,
   overlayClass = "bg-black/90",
 } = Astro.props;
@@ -83,6 +90,21 @@ const {
                 {secondaryCta.label}
               </Button>
             ) : null}
+          </div>
+        ) : null
+      }
+
+      {
+        stats.length ? (
+          <div class="mt-10 grid grid-cols-3 gap-8">
+            {stats.map((stat) => (
+              <div class="flex flex-col items-start justify-center">
+                <div class="font-playfair font-bold text-3xl lg:text-4xl text-accent-primary">
+                  {stat.number}
+                </div>
+                <div class="mt-1 text-sm text-primary/70 leading-tight">{stat.label}</div>
+              </div>
+            ))}
           </div>
         ) : null
       }
