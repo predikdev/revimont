@@ -73,6 +73,11 @@ body {
   overflow-x: hidden;
 }
 
+html.no-scroll,
+body.no-scroll {
+  overflow: hidden;
+}
+
 main > section {
   padding-block: 10rem;
 }

@@ -1,6 +1,7 @@
 ---
 import PhoneIcon from "../../assets/icons/phone.svg";
 import CloseMenu from "../../assets/icons/square-x.svg";
+import ChevronDown from "../../assets/icons/chevron-down.svg";
 
 import Logo from "./Logo.astro";
 import Button from "../ui/Button.astro";
@@ -10,6 +11,16 @@ const links = [
   { href: "/sluzby", label: "Služby" },
   { href: "/galerie", label: "Galerie" },
   { href: "/kontakt", label: "Kontakt" },
+];
+
+const servicesLinks = [
+  { href: "/sluzby/elektroinstalace", label: "Elektroinstalace", number: "01" },
+  {
+    href: "/sluzby/opravy-montaze-domacich-systemu",
+    label: "Opravy a montáže",
+    number: "02",
+  },
+  { href: "/sluzby/revize", label: "Revize", number: "03" },
 ];
 ---
 
@@ -26,6 +37,42 @@ const links = [
       <ul class="flex flex-col items-center justify-center gap-6">
         {
           links.map((link) => {
+            if (link.href === "/sluzby") {
+              return (
+                <li class="w-full">
+                  <details class="group w-full text-center">
+                    <summary
+                      class:list={[
+                        // base
+                        "inline-flex w-full items-center justify-center gap-2 rounded-lg px-3 py-2 text-lead font-medium transition-colors text-primary hover:text-primary cursor-pointer",
+
+                        // focus (accessibility)
+                        "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                      ]}
+                    >
+                      <span>{link.label}</span>
+                      <ChevronDown class="h-5 w-5 transition-transform duration-200 group-open:rotate-180" />
+                    </summary>
+                    <div class="mt-4 overflow-hidden transition-[max-height,opacity,transform] duration-300 ease-out max-h-0 opacity-0 -translate-y-1 group-open:max-h-[360px] group-open:opacity-100 group-open:translate-y-0">
+                      <ul class="grid gap-2">
+                        {servicesLinks.map((service) => (
+                          <li>
+                            <a
+                              href={service.href}
+                              class="inline-flex items-center justify-center gap-3 text-body font-semibold text-primary/80 transition-colors hover:text-accent-primary"
+                            >
+                              <span class="text-accent-primary font-playfair">{service.number}</span>
+                              <span>{service.label}</span>
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                </li>
+              );
+            }
+
             return (
               <li class="">
                 <a
@@ -104,12 +151,14 @@ const links = [
 
     const openMenu = () => {
       menu?.setAttribute("data-open", "true");
-      document.body.style.overflow = "hidden";
+      document.documentElement.classList.add("no-scroll");
+      document.body.classList.add("no-scroll");
     };
 
     const closeMenu = () => {
       menu?.setAttribute("data-open", "false");
-      document.body.style.overflow = "";
+      document.documentElement.classList.remove("no-scroll");
+      document.body.classList.remove("no-scroll");
     };
 
     openBtn?.addEventListener("click", openMenu);
