@@ -1,11 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/sections/shared/PageHero.astro";
-import MontazeServices from "../../components/sections/services/MontazeServices.astro";
-import MontazeClients from "../../components/sections/services/MontazeClients.astro";
-import MontazeProblems from "../../components/sections/services/MontazeProblems.astro";
-import LetsWork from "../../components/sections/shared/LetsWork.astro";
-import ContactFormSection from "../../components/sections/shared/ContactFormSection.astro";
+import ContactSection from "../../components/sections/shared/ContactSection.astro";
 
 const title = "Montáže a opravy domácích systémů";
 const description =
@@ -26,9 +22,5 @@ const description =
       { number: "500+", label: "zakázek" },
     ]}
   />
-  <MontazeServices />
-  <MontazeClients />
-  <MontazeProblems />
-  <LetsWork />
-  <ContactFormSection />
+  <ContactSection />
 </BaseLayout>

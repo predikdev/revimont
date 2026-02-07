@@ -1,11 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/sections/shared/PageHero.astro";
-import RevizeServices from "../../components/sections/services/RevizeServices.astro";
-import RevizeProcess from "../../components/sections/services/RevizeProcess.astro";
-import RevizeClients from "../../components/sections/services/RevizeClients.astro";
-import LetsWork from "../../components/sections/shared/LetsWork.astro";
-import ContactFormSection from "../../components/sections/shared/ContactFormSection.astro";
+import ContactSection from "../../components/sections/shared/ContactSection.astro";
 
 const title = "Revizní činnost";
 const description =
@@ -26,9 +22,5 @@ const description =
     ]}
     primaryCta={{ label: "Nezávazná poptávka", href: "/kontakt" }}
   />
-  <RevizeServices />
-  <RevizeProcess />
-  <RevizeClients />
-  <LetsWork />
-  <ContactFormSection />
+  <ContactSection />
 </BaseLayout>

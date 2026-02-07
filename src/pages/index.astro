@@ -14,10 +14,9 @@ import HeroIllustration from "../assets/images/hero_illustration.svg";
 
 import PageHero from "../components/sections/shared/PageHero.astro";
 import Services from "../components/sections/home/Services.astro";
-import WhyUs from "../components/sections/home/WhyUs.astro";
-import OurWork from "../components/sections/home/OurWork.astro";
-import LetsWork from "../components/sections/shared/LetsWork.astro";
-import ContactFormSection from "../components/sections/shared/ContactFormSection.astro";
+import WhoWeWorkFor from "../components/sections/services/WhoWeWorkFor.astro";
+import PortfolioShowcase from "../components/sections/services/PortfolioShowcase.astro";
+import ContactSection from "../components/sections/shared/ContactSection.astro";
 ---
 
 <BaseLayout heroBackground="/hero-bg.jpg">
@@ -38,8 +37,7 @@ import ContactFormSection from "../components/sections/shared/ContactFormSection
   />
 
   <Services />
-  <WhyUs />
-  <OurWork />
-  <LetsWork />
-  <ContactFormSection />
+  <WhoWeWorkFor />
+  <PortfolioShowcase />
+  <ContactSection />
 </BaseLayout>
