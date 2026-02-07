@@ -1,0 +1,72 @@
+---
+import SectionWrapper from "../../ui/SectionWrapper.astro";
+import SectionHeader from "../../ui/SectionHeader.astro";
+import PortfolioCard from "../../ui/cards/PortfolioCard.astro";
+
+import Prace01 from "../../../assets/images/el_prace_1.jpeg";
+import Prace02 from "../../../assets/images/el_prace_2.jpeg";
+import Prace03 from "../../../assets/images/el_prace_3.jpeg";
+
+const projects = [
+  {
+    title: "Rodinný dům Klatovy",
+    category: "Kompletní elektroinstalace",
+    year: "2025",
+    image: Prace01.src,
+    href: "/reference/rodinny-dum-klatovy",
+  },
+  {
+    title: "Rodinný dům Klatovy",
+    category: "Kompletní elektroinstalace",
+    year: "2025",
+    image: Prace02.src,
+    href: "/reference/projekt-2",
+  },
+  {
+    title: "Rodinný dům Klatovy",
+    category: "Kompletní elektroinstalace",
+    year: "2025",
+    image: Prace03.src,
+    href: "/reference/projekt-3",
+  },
+];
+---
+
+<SectionWrapper background="light" withGrid>
+  <div class="flex items-start justify-between mb-12">
+    <SectionHeader eyebrow="Portfolio" title="Ukázky našich elektroinstalací" class="mb-0" />
+
+    <a
+      href="/reference"
+      class="hidden md:flex items-center gap-2 text-primary hover:text-accent-primary transition-colors duration-300 font-medium mt-8"
+    >
+      Všechny reference
+      <span aria-hidden="true">→</span>
+    </a>
+  </div>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {
+      projects.map((project) => (
+        <PortfolioCard
+          title={project.title}
+          category={project.category}
+          year={project.year}
+          image={project.image}
+          href={project.href}
+          placeholder={project.placeholder}
+        />
+      ))
+    }
+  </div>
+
+  <div class="mt-12 text-center md:hidden">
+    <a
+      href="/reference"
+      class="inline-flex items-center gap-2 text-primary hover:text-accent-primary transition-colors duration-300 font-medium"
+    >
+      Všechny reference
+      <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</SectionWrapper>
