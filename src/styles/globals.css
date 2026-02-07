@@ -7,16 +7,10 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Playfair Display";
-  src: url("../assets/fonts/PlayfairDisplay.ttf") format("truetype");
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
   /* Colors */
-  --background: oklch(0.86 0 0);
+  /*--background: oklch(0.86 0 0);*/
+  --background: oklch(96.7% 0.003 264.542);
   --background-dark: oklch(32.11% 0 0);
   --text-primary: oklch(0.9846 0.0017 247.84);
   --text-secondary: oklch(98.46% 0.0017 247.84 / 0.75);
@@ -87,4 +81,11 @@ main > section {
   width: 100%;
   max-width: 1152px;
   padding-inline: 1rem;
+}
+
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, rgb(128 128 128 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(128 128 128 / 0.07) 1px, transparent 1px);
+  background-size: 80px 80px;
 }

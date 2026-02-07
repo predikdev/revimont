@@ -2,8 +2,8 @@
 import { clsx } from "clsx";
 
 interface Props {
-  variant?: "primary" | "secondary" | "ternary" | "quaternary";
-  size?: "sm" | "md";
+  variant?: "primary" | "secondary" | "outline" | "ghost";
+  size?: "sm" | "md" | "lg";
   href?: string;
   class?: string;
   type?: "button" | "submit" | "reset";
@@ -18,22 +18,22 @@ const {
 } = Astro.props;
 
 const base =
-  "inline-flex items-center justify-center rounded-lg font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background cursor-pointer";
+  "inline-flex items-center justify-center rounded font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background cursor-pointer";
 
 const variants = {
   primary:
     "bg-accent-primary/90 text-primary hover:bg-accent-primary hover:ring-2 hover:ring-offset-2 hover:ring-offset-background-dark hover:ring-accent-primary",
   secondary:
+    "bg-background-dark text-primary hover:bg-background-dark/90 shadow-sm hover:shadow-md",
+  outline:
     "bg-background-dark text-primary hover:bg-background-dark/90 hover:bg-background-dark/90 hover:ring-2 hover:ring-offset-2 hover:ring-offset-background hover:ring-background-dark/90",
-  ternary:
-    "border border-accent-primary text-accent-primary hover:bg-accent-primary/10 hover:border-accent-primary focus-visible:ring-2 focus-visible:ring-accent-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-  quaternary:
-    "bg-white/10 text-primary hover:bg-white/20 hover:ring-2 hover:ring-offset-2 hover:ring-offset-background-dark hover:ring-accent-primary",
+  ghost: "bg-white/10 text-primary hover:bg-white/20",
 };
 
 const sizes = {
   sm: "py-2 px-4 text-sm",
   md: "py-3 px-6 text-sm",
+  lg: "py-4 px-8 text-sm",
 };
 
 const classes = clsx(base, variants[variant], sizes[size], className);
