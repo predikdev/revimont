@@ -1,17 +1,12 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/sections/shared/PageHero.astro";
-import ElectroServices from "../../components/sections/services/ElectroServices.astro";
-import ElectroClients from "../../components/sections/services/ElectroClients.astro";
-import ElectroProcess from "../../components/sections/services/ElectroProcess.astro";
-import ElectroShowcase from "../../components/sections/services/ElectroShowcase.astro";
-import ElectroStandarts from "../../components/sections/services/ElectroStandards.astro";
-import ElectroPrinciples from "../../components/sections/services/ElectroPrinciples.astro";
-import LetsWork from "../../components/sections/shared/LetsWork.astro";
-import ContactFormSection from "../../components/sections/shared/ContactFormSection.astro";
-import ElectroServicesRedesign from "../../components/sections/services/ElectroServicesRedesign.astro";
+import Services from "../../components/sections/home/Services.astro";
+import WhoWeWorkFor from "../../components/sections/services/WhoWeWorkFor.astro";
+import PortfolioShowcase from "../../components/sections/services/PortfolioShowcase.astro";
+import ContactSection from "../../components/sections/shared/ContactSection.astro";
 
-const title = "Elektroinstalace pro váš domov i firmu";
+const title = `Elektroinstalace <br /> pro váš domov i firmu`;
 const description =
   "Bezpečné a spolehlivé elektroinstalace v Klatovech a okolí. Od návrhu po revizi - vše pod jednou střechou.";
 ---
@@ -20,7 +15,7 @@ const description =
   <PageHero
     slot="hero"
     id="hero"
-    eyebrow="Revimont Klatovy"
+    eyebrow="Region Klatovy a okolí"
     titleHtml={title}
     description={description}
     stats={[
@@ -30,9 +25,8 @@ const description =
     ]}
     primaryCta={{ label: "Nezávazná poptávka", href: "/kontakt" }}
   />
-  <ElectroServices />
-  <ElectroClients />
-  <ElectroShowcase />
-  <LetsWork />
-  <ContactFormSection />
+  <Services />
+  <WhoWeWorkFor />
+  <PortfolioShowcase />
+  <ContactSection />
 </BaseLayout>

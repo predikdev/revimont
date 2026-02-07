@@ -52,28 +52,30 @@ const {
   id={id}
   class="relative flex items-center py-32 md:py-46 lg:py-64 overflow-hidden"
 >
-  <div class="container grid gap-12 lg:grid-cols-2 items-center relative z-20">
-    <div class="text-primary">
-      {eyebrow ? <p class="uppercase text-accent-primary text-sm font-medium">{eyebrow}</p> : null}
+  <div class="container grid gap-12 items-center relative z-20">
+    <div class="text-primary flex flex-col gap-4">
       {
-        titleHtml ? (
-          <h1 class="font-playfair font-bold text-heading mt-4" set:html={titleHtml} />
-        ) : title ? (
-          <h1 class="font-playfair font-bold text-heading mt-4">{title}</h1>
+        eyebrow ? (
+          <p class="uppercase px-3 py-2  w-fit text-accent-primary text-xs font-bold bg-accent-secondary rounded tracking-widest">
+            {eyebrow}
+          </p>
         ) : null
       }
-      {description ? <p class="mt-6 text-primary/90">{description}</p> : null}
-
       {
-        bullets.length ? (
-          <ul class="mt-8 space-y-2 text-primary/90">
-            {bullets.map((item) => (
-              <li class="flex items-start gap-2">
-                <span class="mt-2 h-1.5 w-1.5 rounded-full bg-accent-primary" aria-hidden="true" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+        titleHtml ? (
+          <h1
+            class="font-semibold text-primary text-5xl sm:text-6xl md:text-7xl mt-4"
+            set:html={titleHtml}
+          />
+        ) : title ? (
+          <h1 class="font-semibold text-primary text-5xl sm:text-6xl md:text-7xl mt-4">{title}</h1>
+        ) : null
+      }
+      {
+        description ? (
+          <p class="mt-6 text-secondary text-md sm:text-lg leading-relaxed max-w-xl">
+            {description}
+          </p>
         ) : null
       }
 
@@ -96,26 +98,16 @@ const {
 
       {
         stats.length ? (
-          <div class="mt-10 grid grid-cols-3 gap-8">
+          <div class="mt-16 grid grid-cols-3 gap-8 pt-8 max-w-2xl border-t border-white/10">
             {stats.map((stat) => (
               <div class="flex flex-col items-start justify-center">
-                <div class="font-playfair font-bold text-3xl lg:text-4xl text-accent-primary">
-                  {stat.number}
-                </div>
-                <div class="mt-1 text-sm text-primary/70 leading-tight">{stat.label}</div>
+                <div class="font-semibold text-3xl lg:text-4xl text-primary">{stat.number}</div>
+                <div class="mt-1 text-sm text-secondary leading-tight">{stat.label}</div>
               </div>
             ))}
           </div>
         ) : null
       }
     </div>
-
-    {
-      image ? (
-        <div class="hidden lg:block justify-self-end relative z-20">
-          <img src={image.src} alt={image.alt} class="w-96 h-auto" loading="lazy" />
-        </div>
-      ) : null
-    }
   </div>
 </section>

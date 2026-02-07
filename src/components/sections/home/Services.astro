@@ -1,61 +1,65 @@
 ---
+import SectionWrapper from "../../ui/SectionWrapper.astro";
+import SectionHeader from "../../ui/SectionHeader.astro";
 import ServiceCard from "../../ui/cards/ServiceCard.astro";
 
-import Elektroinstalace from "../../../assets/images/elektroinstalace.png";
-import Revize from "../../../assets/images/revize.png";
-import Rekonstrukce from "../../../assets/images/rekonstrukce.png";
-import Zap from "../../../assets/icons/zap.svg";
+import House from "../../../assets/icons/house.svg";
 import ClipboardCheck from "../../../assets/icons/clipboard-check.svg";
+import Zap from "../../../assets/icons/zap.svg";
+import Lightbulb from "../../../assets/icons/lightbulb.svg";
 import Hammer from "../../../assets/icons/hammer.svg";
+import Wrench from "../../../assets/icons/wrench.svg";
+
+const services = [
+  {
+    title: "Domovní elektroinstalace",
+    description:
+      "Kompletní rozvody pro rodinné domy a byty. Od hrubých prací až po kompletaci zásuvek a vypínačů.",
+    icon: House,
+  },
+  {
+    title: "Revize a projekty",
+    description:
+      "Zajišťujeme výchozí i pravidelné revize elektroinstalací a hromosvodů včetně projektové dokumentace.",
+    icon: ClipboardCheck,
+  },
+  {
+    title: "Hromosvody",
+    description:
+      "Montáže a opravy hromosvodů pro zajištění maximální bezpečnosti vašeho objektu před bleskem.",
+    icon: Zap,
+  },
+  {
+    title: "Osvětlení",
+    description:
+      "Návrh a montáž moderního LED osvětlení. Inteligentní systémy řízení světel pro úsporu energie.",
+    icon: Lightbulb,
+  },
+  {
+    title: "Průmyslové instalace",
+    description:
+      "Silnoproudé instalace pro haly, dílny a kancelářské prostory. Zapojení strojů a rozvaděčů.",
+    icon: Hammer,
+  },
+  {
+    title: "Servis a opravy",
+    description:
+      "Rychlý servis při poruchách. Opravy zásuvek, jističů a odstraňování závad po revizích.",
+    icon: Wrench,
+  },
+];
 ---
 
-<section id="services" class="flex items-center bg-background">
-  <div class="container">
-    <div class="section-header flex flex-col items-center gap-4 text-center pb-16 text-black">
-      <p class="uppercase text-accent-primary text-sm font-medium">Naše služby</p>
-      <h2 class="font-playfair font-bold text-heading-2">Komplexní řešení pro vaši nemovitost</h2>
-      <p>Nabízíme širokou škálu služeb od elektroinstalace přes revize až po rekonstrukce.</p>
-    </div>
+<SectionWrapper background="light" withGrid>
+  <SectionHeader eyebrow="Co pro vás zařídíme" title="Kompletní elektroinstalační práce" />
 
-    <ul
-      role="list"
-      class="grid gap-12 md:gap-8 md:grid-cols-2 lg:grid-cols-3 md:[&>li:last-child]:col-span-2 md:[&>li:last-child]:flex md:[&>li:last-child]:justify-center md:[&>li:last-child>article]:w-full md:[&>li:last-child>article]:max-w-104 lg:[&>li:last-child]:col-span-1 lg:[&>li:last-child]:block lg:[&>li:last-child>article]:max-w-none"
-    >
-      <li>
-        <ServiceCard
-          href="/sluzby/elektroinstalace"
-          title="Elektroinstalační práce"
-          description="Provádíme kompletní elektroinstalace v bytových a rodinných domech, včetně přípojek, rekonstrukcí a revizní dokumentace."
-          image={Elektroinstalace.src}
-          imageAlt=""
-        >
-          <Zap slot="icon" class="w-4 h-4 text-primary" />
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {
+      services.map((service) => (
+        <ServiceCard title={service.title} description={service.description}>
+          <service.icon slot="icon" class="w-6 h-6" />
         </ServiceCard>
-      </li>
-
-      <li>
-        <ServiceCard
-          href="/sluzby/opravy-montaze-domacich-systemu"
-          title="Opravy a montáže domácích systémů"
-          description="Zajišťujeme montáže a opravy domácích telefonů, zvonků a modernizaci starších systémů."
-          image={Revize.src}
-          imageAlt=""
-        >
-          <Hammer slot="icon" class="w-4 h-4 text-primary" />
-        </ServiceCard>
-      </li>
-
-      <li>
-        <ServiceCard
-          href="/sluzby/revize"
-          title="Revizní činnost"
-          description="Provádíme revize elektroinstalací a hromosvodů včetně kompletní revizní dokumentace."
-          image={Rekonstrukce.src}
-          imageAlt=""
-        >
-          <ClipboardCheck slot="icon" class="w-4 h-4 text-primary" />
-        </ServiceCard>
-      </li>
-    </ul>
+      ))
+    }
   </div>
-</section>
+</SectionWrapper>
