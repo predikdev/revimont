@@ -1,95 +1,90 @@
 ---
-import Logo from "./Logo.astro";
+import MapPin from "../../assets/icons/map-pin.svg";
+import Clock from "../../assets/icons/clock.svg";
 
 const year = new Date().getFullYear();
-
-const navigationLinks = [
-  { href: "/", label: "Domů" },
-  { href: "/sluzby", label: "Elektroinstalace" },
-  { href: "/sluzby", label: "Revize" },
-  { href: "/sluzby", label: "Montáže a opravy" },
-];
-
-const companyLinks = [
-  { href: "/#why-us", label: "O nás" },
-  { href: "/galerie", label: "Realizace" },
-  { href: "/kontakt", label: "Kontakt" },
-  { href: "/ochrana-udaju", label: "Ochrana údajů" },
-];
-
-const mapSrc =
-  "https://www.google.com/maps?q=K%20Leti%C5%A1ti%20487,%20339%2001%20Klatovy%20II,%20%C4%8Cesko&output=embed";
 ---
 
-<footer class="bg-background-dark text-primary">
-  <div class="container py-20">
-    <div class="mx-auto max-w-2xl text-center">
-      <p class="uppercase text-accent-primary text-sm font-medium">Kde nás najdete</p>
-      <h2 class="mt-3 font-playfair text-heading-2 font-bold">Sídlíme v Klatovech</h2>
-      <p class="mt-3 text-secondary">
-        Působíme v celém Plzeňském kraji. Pro větší projekty vyjedeme i do jiných regionů.
-      </p>
+<footer class="bg-background-dark">
+  <section class="py-20">
+    <div class="container">
+      <div class="grid lg:grid-cols-[1fr_1fr] gap-12 items-center min-w-0">
+        <div>
+          <div
+            class="inline-flex items-center gap-2 bg-accent-primary/10 text-accent-primary px-3 rounded mb-6"
+          >
+            <MapPin class="w-4 h-4" />
+
+            <span
+              class="uppercase px-3 py-2 w-fit text-accent-primary text-xs font-bold rounded tracking-widest"
+              >Kde nás najdete</span
+            >
+          </div>
+
+          <h2 class="text-4xl md:text-5xl font-bold text-primary mb-6">Sídlíme v Klatovech</h2>
+
+          <p class="text-secondary text-lg leading-relaxed mb-12">
+            Zastavte se za námi probrat váš projekt. Naše kancelář je snadno dostupná a parkování je
+            možné v blízkém okolí.
+          </p>
+
+          <div class="space-y-6">
+            <div class="flex items-start gap-4">
+              <div
+                class="shrink-0 w-12 h-12 bg-background/10 rounded-lg flex items-center justify-center"
+              >
+                <MapPin class="w-5 h-5 text-accent-primary" />
+              </div>
+              <div>
+                <h3 class="font-semibold text-white mb-1">Náměstí Míru 62</h3>
+                <p class="text-gray-400">339 01 Klatovy</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div
+                class="shrink-0 w-12 h-12 bg-background/10 rounded flex items-center justify-center"
+              >
+                <Clock class="w-5 h-5 text-accent-primary" />
+              </div>
+              <div>
+                <h3 class="font-semibold text-primary mb-1">Otevírací doba</h3>
+                <p class="text-secondary">Po–Pá: 7:00 – 16:00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative aspect-4/3 w-full rounded-lg shadow-lg min-w-0">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2596.1508777071854!2d13.293759277432164!3d49.40605237141159!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470acff0180278e5%3A0x15bf144195efa395!2sK3%20s.r.o.!5e0!3m2!1scs!2sde!4v1770420582901!5m2!1scs!2sde"
+            class="absolute inset-0 w-full h-full rounded-2xl"
+            style="border:0;"
+            allowfullscreen
+            allow="fullscreen"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Mapa - Náměstí Míru 62, Klatovy"></iframe>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="mt-10">
-      <div class="overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/40">
-        <iframe
-          title="Mapa: K Letišti 487, Klatovy"
-          src={mapSrc}
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          class="h-80 w-full md:h-105"
-          allowfullscreen></iframe>
+  <div class="bg-background-dark py-6">
+    <div class="container">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondary pt-8 border-t border-secondary"
+      >
+        <p>© {year} Revimont Klatovy. Všechna práva vyhrazena.</p>
+        <div class="flex gap-6">
+          <a href="/ochrana-udaju" class="hover:text-accent-primary transition-colors">
+            Ochrana osobních údajů
+          </a>
+          <a href="/obchodni-podminky" class="hover:text-accent-primary transition-colors">
+            Obchodní podmínky
+          </a>
+        </div>
       </div>
-      <!-- <p class="mt-4 text-center text-sm text-secondary">K Letišti 487, 339 01 Klatovy II, Česko</p> -->
-    </div>
-
-    <div class="mt-16 grid gap-10 lg:grid-cols-[1.4fr_0.8fr_0.8fr]">
-      <div class="space-y-4 flex flex-col gap-1">
-        <Logo class="w-40" />
-        <p class="text-secondary text-sm leading-relaxed max-w-sm">
-          Elektroinstalace, revize, montáže a opravy v Klatovech a okolí. Práce provádíme v bytech,
-          rodinných domech i ve firemních objektech. Spolehlivý partner s více jak 15 lety
-          zkušeností.
-        </p>
-      </div>
-
-      <div class="space-y-4">
-        <p class="text-base font-semibold">Navigace</p>
-        <ul class="space-y-2 text-sm text-secondary">
-          {
-            navigationLinks.map((link) => (
-              <li>
-                <a href={link.href} class="transition-colors hover:text-accent-primary">
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-
-      <div class="space-y-4">
-        <p class="text-base font-semibold">Společnost</p>
-        <ul class="space-y-2 text-sm text-secondary">
-          {
-            companyLinks.map((link) => (
-              <li>
-                <a href={link.href} class="transition-colors hover:text-accent-primary">
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </div>
-
-    <div
-      class="mt-12 flex flex-col gap-4 border-t border-white/15 pt-6 text-xs text-secondary md:flex-row md:items-center md:justify-between"
-    >
-      <p>© {year} Všechna práva vyhrazena | Revimont Klatovy s.r.o. | Klatovy</p>
-      <p>IČ | DIČ</p>
     </div>
   </div>
 </footer>

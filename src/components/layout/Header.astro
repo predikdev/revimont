@@ -2,39 +2,79 @@
 import PhoneIcon from "../../assets/icons/phone.svg";
 import OpenMenu from "../../assets/icons/square-menu.svg";
 
-import Logo from "./Logo.astro";
+import LogoInline from "./LogoInline.astro";
 import Navigation from "./Navigation.astro";
+import MobileNavigation from "./MobileNavigation.astro";
 import Button from "../ui/Button.astro";
 ---
 
-<header class="site-header w-full flex items-center py-4 px-2 z-40">
-  <div class="mx-auto container flex items-center justify-between">
-    <Logo class="w-48" />
+<header
+  id="site-header"
+  class="group fixed inset-x-0 top-0 z-50 transition-all duration-300"
+  data-scrolled="false"
+>
+  <div class="container mx-auto flex items-center justify-between py-4">
+    <!-- Bílé logo - výchozí -->
+    <div id="logo-light" class="transition-opacity duration-300">
+      <LogoInline class="w-44 sm:w-48" dark={false} />
+    </div>
+    <!-- Černé logo - při scrollu -->
+    <div id="logo-dark" class="hidden transition-opacity duration-300">
+      <LogoInline class="w-44 sm:w-48" dark={true} />
+    </div>
+
     <Navigation />
+
     <div class="hidden lg:flex items-center gap-4">
-      <div class="text-primary/75">
-        <a href="tel:+420775736112" class="flex gap-2 hover:text-accent-primary transition-colors">
-          <img src={PhoneIcon.src} alt="Telefon ikona" class="w-4" />
-          <p class="text-small">+420 775 736 112</p>
-        </a>
-      </div>
+      <a
+        href="tel:+420775736112"
+        class="flex items-center gap-2 text-primary/75 group-data-[scrolled=true]:text-gray-900 hover:text-accent-primary transition-colors"
+      >
+        <img
+          src={PhoneIcon.src}
+          alt="Telefon"
+          class="w-4 h-4 brightness-0 invert group-data-[scrolled=true]:brightness-100 group-data-[scrolled=true]:invert-0 transition-all"
+        />
+        <span class="text-sm font-medium">+420 775 736 112</span>
+      </a>
       <Button variant="primary" href="/kontakt">Poptávka</Button>
     </div>
-    <button type="button" aria-label="Otevřít menu" data-menu-open class="lg:hidden text-primary">
-      <OpenMenu class="text-primary" />
+
+    <button
+      type="button"
+      aria-label="Otevřít menu"
+      data-menu-open
+      class="lg:hidden text-primary/90 group-data-[scrolled=true]:text-gray-900 transition hover:text-primary"
+    >
+      <OpenMenu class="h-6 w-6" />
     </button>
   </div>
 </header>
 
-<style>
-  .site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 70;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    background-color: oklch(0.22 0 0 / 0.7);
-  }
-</style>
+<MobileNavigation />
+
+<script is:inline>
+  (function () {
+    function handleScroll() {
+      const header = document.getElementById("site-header");
+      const logoLight = document.getElementById("logo-light");
+      const logoDark = document.getElementById("logo-dark");
+      const currentScroll = window.pageYOffset;
+
+      if (currentScroll > 50) {
+        header?.classList.add("bg-white", "shadow-lg");
+        header?.setAttribute("data-scrolled", "true");
+        logoLight?.classList.add("hidden");
+        logoDark?.classList.remove("hidden");
+      } else {
+        header?.classList.remove("bg-white", "shadow-lg");
+        header?.setAttribute("data-scrolled", "false");
+        logoLight?.classList.remove("hidden");
+        logoDark?.classList.add("hidden");
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+  })();
+</script>

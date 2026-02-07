@@ -1,177 +1,112 @@
 ---
-import PhoneIcon from "../../assets/icons/phone.svg";
 import CloseMenu from "../../assets/icons/square-x.svg";
-import ChevronDown from "../../assets/icons/chevron-down.svg";
+import PhoneIcon from "../../assets/icons/phone.svg";
 
-import Logo from "./Logo.astro";
+import LogoInline from "./LogoInline.astro";
 import Button from "../ui/Button.astro";
 
 const links = [
   { href: "/", label: "Domů" },
   { href: "/sluzby", label: "Služby" },
-  { href: "/galerie", label: "Galerie" },
+  { href: "/o-nas", label: "O nás" },
+  { href: "/reference", label: "Reference" },
   { href: "/kontakt", label: "Kontakt" },
-];
-
-const servicesLinks = [
-  { href: "/sluzby/elektroinstalace", label: "Elektroinstalace", number: "01" },
-  {
-    href: "/sluzby/opravy-montaze-domacich-systemu",
-    label: "Opravy a montáže",
-    number: "02",
-  },
-  { href: "/sluzby/revize", label: "Revize", number: "03" },
 ];
 ---
 
-<div class="mobile-menu lg:hidden h-full w-full z-100" id="mobile-menu" data-open="false">
-  <div class="mobile-menu__backdrop" data-menu-backdrop></div>
-  <div class="mobile-menu__panel w-full h-full flex flex-col gap-24 bg-background-dark">
-    <div class="flex items-center justify-between px-6 pt-4">
-      <Logo class="w-48" />
-      <button type="button" aria-label="Zavřít menu" data-menu-close class="lg:hidden text-primary">
-        <CloseMenu class="text-primary" />
-      </button>
-    </div>
-    <div class="flex flex-col gap-24 px-6">
-      <ul class="flex flex-col items-center justify-center gap-6">
-        {
-          links.map((link) => {
-            if (link.href === "/sluzby") {
-              return (
-                <li class="w-full">
-                  <details class="group w-full text-center">
-                    <summary
-                      class:list={[
-                        // base
-                        "inline-flex w-full items-center justify-center gap-2 rounded-lg px-3 py-2 text-lead font-medium transition-colors text-primary hover:text-primary cursor-pointer",
+<div
+  class="group fixed inset-0 z-[100] pointer-events-none lg:hidden"
+  id="mobile-menu-v2"
+  data-open="false"
+>
+  <div
+    class="absolute inset-0 bg-black/90 opacity-0 transition-opacity duration-300 group-data-[open=true]:opacity-100 group-data-[open=true]:pointer-events-auto backdrop-blur-sm"
+    data-menu-backdrop
+  >
+  </div>
 
-                        // focus (accessibility)
-                        "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                      ]}
-                    >
-                      <span>{link.label}</span>
-                      <ChevronDown class="h-5 w-5 transition-transform duration-200 group-open:rotate-180" />
-                    </summary>
-                    <div class="mt-4 overflow-hidden transition-[max-height,opacity,transform] duration-300 ease-out max-h-0 opacity-0 -translate-y-1 group-open:max-h-[360px] group-open:opacity-100 group-open:translate-y-0">
-                      <ul class="grid gap-2">
-                        {servicesLinks.map((service) => (
-                          <li>
-                            <a
-                              href={service.href}
-                              class="inline-flex items-center justify-center gap-3 text-body font-semibold text-primary/80 transition-colors hover:text-accent-primary"
-                            >
-                              <span class="text-accent-primary font-playfair">{service.number}</span>
-                              <span>{service.label}</span>
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </details>
-                </li>
-              );
-            }
+  <div
+    class="absolute inset-0 translate-y-full bg-background-dark transition-transform duration-300 ease-out group-data-[open=true]:translate-y-0 group-data-[open=true]:pointer-events-auto overflow-y-auto"
+  >
+    <div class="container min-h-full flex flex-col py-4">
+      <!-- Header -->
+      <div class="flex items-center justify-between">
+        <LogoInline class="w-40" dark={false} />
+        <button
+          type="button"
+          aria-label="Zavřít menu"
+          data-menu-close
+          class="p-2 -m-2 text-primary hover:text-accent-primary transition-colors"
+        >
+          <CloseMenu class="h-6 w-6" />
+        </button>
+      </div>
 
-            return (
-              <li class="">
+      <nav class="mt-16 flex-1">
+        <ul class="flex flex-col gap-1">
+          {
+            links.map((link) => (
+              <li>
                 <a
                   href={link.href}
-                  class:list={[
-                    // base
-                    "group relative inline-flex items-center rounded-lg px-3 py-2 text-lead font-medium transition-colors text-primary hover:text-primary",
-
-                    // focus (accessibility)
-                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                  ]}
+                  class="block py-4 text-2xl font-medium text-primary hover:text-accent-primary transition-colors border-b border-white/10"
                 >
                   {link.label}
                 </a>
               </li>
-            );
-          })
-        }
-      </ul>
-      <div class="mt-6 flex flex-col gap-4">
-        <div class="flex justify-center gap-2 text-body text-primary">
-          <img src={PhoneIcon.src} alt="Telefon ikona" class="w-5" />
-          +420 775 736 112
-        </div>
-        <Button variant="primary" href="/kontakt">Poptávka</Button>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="mt-auto pt-8 space-y-4 border-t border-white/10">
+        <a
+          href="tel:+420775736112"
+          class="flex items-center justify-center gap-3 py-3 text-primary hover:text-accent-primary transition-colors group"
+        >
+          <PhoneIcon class="w-5 h-5" />
+          <span class="text-lg font-semibold">+420 775 736 112</span>
+        </a>
+        <Button variant="primary" href="/kontakt" class="w-full" size="lg">
+          Nezávazná poptávka
+        </Button>
       </div>
     </div>
   </div>
 </div>
 
-<style>
-  .mobile-menu {
-    position: fixed;
-    inset: 0;
-    z-index: 90;
-    pointer-events: none;
-  }
-
-  .mobile-menu[data-open="true"] {
-    pointer-events: auto;
-  }
-
-  .mobile-menu__backdrop {
-    position: absolute;
-    inset: 0;
-    background: oklch(0 0 0 / 0.5);
-    opacity: 0;
-    transition: opacity 200ms ease;
-  }
-
-  .mobile-menu[data-open="true"] .mobile-menu__backdrop {
-    opacity: 1;
-  }
-
-  .mobile-menu__panel {
-    position: absolute;
-    right: 0;
-    transform: translateX(100%);
-    transition: transform 250ms ease;
-  }
-
-  .mobile-menu[data-open="true"] .mobile-menu__panel {
-    transform: translateX(0);
-  }
-</style>
-
 <script>
   window.addEventListener("DOMContentLoaded", () => {
-    const menu = document.querySelector(".mobile-menu");
-    const panel = document.querySelector(".mobile-menu__panel");
+    const menu = document.querySelector("#mobile-menu-v2");
     const openBtn = document.querySelector("[data-menu-open]");
     const closeBtn = document.querySelector("[data-menu-close]");
     const backdrop = document.querySelector("[data-menu-backdrop]");
 
-    if (!menu || !panel || !openBtn) return;
+    if (!menu || !openBtn) return;
 
     const openMenu = () => {
-      menu?.setAttribute("data-open", "true");
+      menu.setAttribute("data-open", "true");
       document.documentElement.classList.add("no-scroll");
       document.body.classList.add("no-scroll");
     };
 
     const closeMenu = () => {
-      menu?.setAttribute("data-open", "false");
+      menu.setAttribute("data-open", "false");
       document.documentElement.classList.remove("no-scroll");
       document.body.classList.remove("no-scroll");
     };
 
-    openBtn?.addEventListener("click", openMenu);
+    openBtn.addEventListener("click", openMenu);
     closeBtn?.addEventListener("click", closeMenu);
     backdrop?.addEventListener("click", closeMenu);
 
-    panel?.addEventListener("click", (e) => {
-      if (!(e.target instanceof Element)) return;
-      if (e.target.closest("a,button, [data-menu-close]")) closeMenu();
+    menu.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) return;
+      if (event.target.closest("a,button,[data-menu-close]")) closeMenu();
     });
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeMenu();
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
     });
   });
 </script>

@@ -2,21 +2,8 @@
 const links = [
   { href: "/", label: "Domů" },
   { href: "/sluzby", label: "Služby" },
-  { href: "/galerie", label: "Galerie" },
-  { href: "/kontakt", label: "Kontakt" },
-];
-
-import ChevronDown from "../../assets/icons/chevron-down.svg";
-import ChevronUp from "../../assets/icons/chevron-up.svg";
-
-const servicesLinks = [
-  { href: "/sluzby/elektroinstalace", label: "Elektroinstalace", number: "01" },
-  {
-    href: "/sluzby/opravy-montaze-domacich-systemu",
-    label: "Opravy a montáže",
-    number: "02",
-  },
-  { href: "/sluzby/revize", label: "Revize", number: "03" },
+  { href: "/o-nas", label: "O nás" },
+  { href: "/reference", label: "Reference" },
 ];
 
 const pathname = Astro.url.pathname;
@@ -27,159 +14,19 @@ const isActive = (href: string) => {
 };
 ---
 
-<nav aria-label="Hlavní navigace" class="hidden lg:block">
-  <ul class="inline-flex gap-6">
-    {
-      links.map((link) => {
-        const active = isActive(link.href);
-
-        if (link.href === "/sluzby") {
-          return (
-            <li class="relative" data-nav-dropdown>
-              <button
-                type="button"
-                aria-haspopup="menu"
-                aria-expanded="false"
-                data-dropdown-trigger
-                class:list={[
-                  // base
-                  "group inline-flex items-center px-3 py-2 text-sm font-medium transition-colors text-primary/75 hover:text-accent-primary cursor-pointer",
-
-                  // focus (accessibility)
-                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                ]}
-              >
-                <span>{link.label}</span>
-                <span class="relative ml-2 h-5 w-5">
-                  <ChevronDown
-                    class="absolute inset-0 h-5 w-5 transition-all duration-200 ease-in-out opacity-100 scale-100"
-                    data-chevron-down
-                    aria-hidden="true"
-                  />
-                  <ChevronUp
-                    class="absolute inset-0 h-5 w-5 transition-all duration-200 ease-in-out opacity-0 scale-90"
-                    data-chevron-up
-                    aria-hidden="true"
-                  />
-                </span>
-              </button>
-              <div
-                class:list={[
-                  "fixed left-0 right-0 pt-2 z-50",
-                  "opacity-0 invisible translate-y-1  transition-[opacity,transform] duration-200 ease-in-out",
-                ]}
-                data-dropdown-panel
-              >
-                <div class="container">
-                  <div class="border-t-2 border-b-2 border-white/15 shadow-lg bg-background-dark">
-                    <ul class="grid gap-2 px-6 py-6 sm:grid-cols-2 lg:grid-cols-3">
-                      {servicesLinks.map((service) => {
-                        const serviceActive = isActive(service.href);
-                        return (
-                          <li class="inline-flex items-center">
-                            <span class="text-accent-primary text-lead font-semibold font-playfair">
-                              {service.number}
-                            </span>
-                            <a
-                              href={service.href}
-                              aria-current={serviceActive ? "page" : undefined}
-                              class:list={[
-                                "block px-4 py-3 text-body font-semibold text-primary/80 transition-colors",
-                                "hover:text-accent-primary",
-                                serviceActive ? "text-accent-primary" : "",
-                              ]}
-                            >
-                              {service.label}
-                            </a>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </li>
-          );
-        }
-
-        return (
-          <li>
-            <a
-              href={link.href}
-              aria-current={active ? "page" : undefined}
-              class:list={[
-                // base
-                "group relative inline-flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors text-primary/75 hover:text-accent-primary",
-
-                // focus (accessibility)
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-              ]}
-            >
-              {link.label}
-            </a>
-          </li>
-        );
-      })
-    }
-  </ul>
+<nav class="hidden lg:flex items-center gap-8">
+  {
+    links.map((link) => (
+      <a
+        href={link.href}
+        class={`text-sm font-medium transition-colors hover:text-accent-primary ${
+          isActive(link.href)
+            ? "text-accent-primary"
+            : "text-primary/75 group-data-[scrolled=true]:text-black"
+        }`}
+      >
+        {link.label}
+      </a>
+    ))
+  }
 </nav>
-
-<script>
-  const dropdowns = document.querySelectorAll("[data-nav-dropdown]");
-  const header = document.querySelector(".site-header");
-
-  dropdowns.forEach((dropdown) => {
-    const trigger = dropdown.querySelector("[data-dropdown-trigger]");
-    const panel = dropdown.querySelector("[data-dropdown-panel]");
-    const chevronDown = dropdown.querySelector("[data-chevron-down]");
-    const chevronUp = dropdown.querySelector("[data-chevron-up]");
-
-    if (!trigger || !panel) return;
-
-    const setPanelTop = () => {
-      if (!header) return;
-      const rect = header.getBoundingClientRect();
-      panel.style.top = `${rect.bottom}px`;
-    };
-
-    const open = () => {
-      setPanelTop();
-      trigger.setAttribute("aria-expanded", "true");
-      chevronDown?.classList.add("opacity-0", "scale-90");
-      chevronDown?.classList.remove("opacity-100", "scale-100");
-      chevronUp?.classList.add("opacity-100", "scale-100");
-      chevronUp?.classList.remove("opacity-0", "scale-90");
-      panel.classList.remove("opacity-0", "invisible", "translate-y-1", "pointer-events-none");
-      panel.classList.add("opacity-100", "visible", "translate-y-0", "pointer-events-auto");
-    };
-
-    const close = () => {
-      trigger.setAttribute("aria-expanded", "false");
-      chevronDown?.classList.add("opacity-100", "scale-100");
-      chevronDown?.classList.remove("opacity-0", "scale-90");
-      chevronUp?.classList.add("opacity-0", "scale-90");
-      chevronUp?.classList.remove("opacity-100", "scale-100");
-      panel.classList.add("opacity-0", "invisible", "translate-y-1", "pointer-events-none");
-      panel.classList.remove("opacity-100", "visible", "translate-y-0", "pointer-events-auto");
-    };
-
-    trigger.addEventListener("click", (event) => {
-      event.preventDefault();
-      const isOpen = trigger.getAttribute("aria-expanded") === "true";
-      if (isOpen) close();
-      else open();
-    });
-
-    document.addEventListener("click", (event) => {
-      if (!dropdown.contains(event.target)) close();
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") close();
-    });
-
-    window.addEventListener("resize", () => {
-      if (trigger.getAttribute("aria-expanded") === "true") setPanelTop();
-    });
-  });
-</script>
