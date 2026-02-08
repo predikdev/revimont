@@ -12,8 +12,14 @@ interface Image {
 }
 
 interface Stat {
-  number: string;
+  number?: string;
   label: string;
+}
+
+interface ServiceBox {
+  icon: any;
+  title: string;
+  description: string;
 }
 
 interface Props {
@@ -29,6 +35,7 @@ interface Props {
   stats?: Stat[];
   image?: Image;
   overlayClass?: string;
+  serviceBoxes?: ServiceBox[];
 }
 
 const {
@@ -44,19 +51,22 @@ const {
   stats = [],
   image,
   overlayClass = "bg-black/90",
+  serviceBoxes = [],
 } = Astro.props;
 ---
 
 <section
   slot={slot}
   id={id}
-  class="relative flex items-center py-32 md:py-46 lg:py-64 overflow-hidden"
+  class="relative flex items-center py-24 md:py-32 lg:py-64 overflow-hidden"
 >
-  <div class="container grid gap-12 items-center relative z-20">
-    <div class="text-primary flex flex-col gap-4">
+  <div
+    class={`container relative z-20 ${serviceBoxes.length ? "grid lg:grid-cols-[1fr_1fr] gap-4 xl:gap-6 items-start" : "grid gap-12 items-center"}`}
+  >
+    <div class="text-primary flex flex-col gap-4 max-w-2xl">
       {
         eyebrow ? (
-          <p class="uppercase px-3 py-2  w-fit text-accent-primary text-xs font-bold bg-accent-secondary rounded tracking-widest">
+          <p class="uppercase px-3 py-2 w-fit text-accent-primary/70 text-xs font-bold border-accent-primary/70 border rounded tracking-widest">
             {eyebrow}
           </p>
         ) : null
@@ -64,31 +74,34 @@ const {
       {
         titleHtml ? (
           <h1
-            class="font-semibold text-primary text-5xl sm:text-6xl md:text-7xl mt-4"
+            class="font-semibold text-primary text-4xl sm:text-5xl xl:text-6xl mt-4"
             set:html={titleHtml}
           />
         ) : title ? (
-          <h1 class="font-semibold text-primary text-5xl sm:text-6xl md:text-7xl mt-4">{title}</h1>
+          <h1 class="font-semibold text-primary text-4xl sm:text-5xl lg:text-6xl mt-4">{title}</h1>
         ) : null
       }
       {
         description ? (
-          <p class="mt-6 text-secondary text-md sm:text-lg leading-relaxed max-w-xl">
-            {description}
-          </p>
+          <p class="mt-4 text-secondary text-sm sm:text-base leading-relaxed">{description}</p>
         ) : null
       }
 
       {
         primaryCta || secondaryCta ? (
-          <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
             {primaryCta ? (
-              <Button variant="primary" href={primaryCta.href}>
+              <Button variant="primary" href={primaryCta.href} size="md">
                 {primaryCta.label}
               </Button>
             ) : null}
             {secondaryCta ? (
-              <Button variant="secondary" href={secondaryCta.href} class="hidden sm:inline-flex">
+              <Button
+                variant="outline"
+                href={secondaryCta.href}
+                class="hidden sm:inline-flex"
+                size="md"
+              >
                 {secondaryCta.label}
               </Button>
             ) : null}
@@ -98,16 +111,46 @@ const {
 
       {
         stats.length ? (
-          <div class="mt-16 grid grid-cols-3 gap-8 pt-8 max-w-2xl border-t border-white/10">
+          <div class="mt-8 flex flex-wrap gap-x-8 gap-y-2">
             {stats.map((stat) => (
-              <div class="flex flex-col items-start justify-center">
-                <div class="font-semibold text-3xl lg:text-4xl text-primary">{stat.number}</div>
-                <div class="mt-1 text-sm text-secondary leading-tight">{stat.label}</div>
+              <div class="flex items-center gap-2">
+                <svg
+                  class="w-4 h-4 text-accent-primary shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span class="text-sm text-secondary/90">{stat.label}</span>
               </div>
             ))}
           </div>
         ) : null
       }
     </div>
+
+    {
+      serviceBoxes.length ? (
+        <div class="hidden lg:grid lg:grid-cols-2 gap-4 lg:gap-4 ">
+          {serviceBoxes.map((box, index) => (
+            <div
+              class={`bg-background-darker h-fit border border-white/10 rounded p-6  transition-all hover:border-accent-primary hover:shadow-lg hover:shadow-accent-primary/5 w-full ${index % 2 === 0 ? "mt-4 lg:mt-6 xl:mt-8" : ""}`}
+            >
+              <div class="text-accent-primary mb-4">
+                <box.icon class="w-7 h-7 xl:w-8 xl:h-8" />
+              </div>
+              <h3 class="text-primary font-semibold text-lg xl:text-xl mb-2">{box.title}</h3>
+              <p class="text-secondary/80 text-sm leading-snug">{box.description}</p>
+            </div>
+          ))}
+        </div>
+      ) : null
+    }
   </div>
 </section>
