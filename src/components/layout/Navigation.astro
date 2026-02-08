@@ -20,9 +20,7 @@ const isActive = (href: string) => {
       <a
         href={link.href}
         class={`text-sm font-medium transition-colors hover:text-accent-primary ${
-          isActive(link.href)
-            ? "text-accent-primary"
-            : "text-primary/75 group-data-[scrolled=true]:text-black"
+          isActive(link.href) ? "text-accent-primary" : "text-primary/75 "
         }`}
       >
         {link.label}
