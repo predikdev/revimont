@@ -1,64 +1,73 @@
 ---
 import SectionWrapper from "../../ui/SectionWrapper.astro";
 import SectionHeader from "../../ui/SectionHeader.astro";
-import ServiceCard from "../../ui/cards/ServiceCard.astro";
+import DetailedServiceCard from "../../ui/cards/DetailedServiceCard.astro";
 
-import House from "../../../assets/icons/house.svg";
-import ClipboardCheck from "../../../assets/icons/clipboard-check.svg";
 import Zap from "../../../assets/icons/zap.svg";
-import Lightbulb from "../../../assets/icons/lightbulb.svg";
-import Hammer from "../../../assets/icons/hammer.svg";
-import Wrench from "../../../assets/icons/wrench.svg";
+import ClipboardCheck from "../../../assets/icons/clipboard-check.svg";
+import Factory from "../../../assets/icons/factory.svg";
 
 const services = [
   {
-    title: "Domovní elektroinstalace",
+    title: "Elektroinstalace",
     description:
-      "Kompletní rozvody pro rodinné domy a byty. Od hrubých prací až po kompletaci zásuvek a vypínačů.",
-    icon: House,
-  },
-  {
-    title: "Revize a projekty",
-    description:
-      "Zajišťujeme výchozí i pravidelné revize elektroinstalací a hromosvodů včetně projektové dokumentace.",
-    icon: ClipboardCheck,
-  },
-  {
-    title: "Hromosvody",
-    description:
-      "Montáže a opravy hromosvodů pro zajištění maximální bezpečnosti vašeho objektu před bleskem.",
+      "Kompletní silnoproudé rozvody pro novostavby i rekonstrukce. Zajišťujeme vše od projektu, přes sekání drážek a kabeláž, až po kompletaci zásuvek a finální revizi.",
     icon: Zap,
+    bullets: ["Rodinné domy", "Bytové domy", "Elektrické přípojky", "Rozvaděče"],
+    link: "/sluzby/elektroinstalace",
   },
   {
-    title: "Osvětlení",
+    title: "Revize",
     description:
-      "Návrh a montáž moderního LED osvětlení. Inteligentní systémy řízení světel pro úsporu energie.",
-    icon: Lightbulb,
+      "Bezpečnost je priorita. Provádíme výchozí revize pro kolaudace i pravidelné kontroly pro pojišťovny. Revidujeme elektroinstalace, hromosvody, spotřebiče i nářadí.",
+    icon: ClipboardCheck,
+    bullets: [
+      "Revize do 1000V",
+      "Revizní zprávy a dokumentace",
+      "Poradenství a návrh opatření",
+      "Hromosvody",
+    ],
+    link: "/sluzby/revize",
   },
   {
-    title: "Průmyslové instalace",
+    title: "Montáže a opravy",
     description:
-      "Silnoproudé instalace pro haly, dílny a kancelářské prostory. Zapojení strojů a rozvaděčů.",
-    icon: Hammer,
-  },
-  {
-    title: "Servis a opravy",
-    description:
-      "Rychlý servis při poruchách. Opravy zásuvek, jističů a odstraňování závad po revizích.",
-    icon: Wrench,
+      "Specializujeme se na náročné provozy. Instalujeme osvětlení výrobních hal, zapojujeme stroje a zajišťujeme údržbu s důrazem na minimální odstávky výroby.",
+    icon: Factory,
+    bullets: [
+      "Domácí telefony a zvonky",
+      "Instalace zvonkových tabel",
+      "Rozvody domácích telefonů v bytových domech",
+      "Náhrady starších systémů za nové",
+    ],
+    link: "/sluzby",
   },
 ];
 ---
 
 <SectionWrapper background="light" withGrid>
-  <SectionHeader eyebrow="Co pro vás zařídíme" title="Kompletní elektroinstalační práce" />
+  <div class="max-w-2xl mb-16">
+    <p class="uppercase text-accent-primary text-sm font-bold tracking-widest mb-4">NAŠE SLUŽBY</p>
+    <h2 class="text-4xl md:text-5xl font-bold text-black mb-6">
+      Komplexní řešení<br />pro vaši nemovitost
+    </h2>
+    <p class="text-black/70 text-lg leading-relaxed">
+      Ať už potřebujete vyměnit zásuvku nebo zasíťovat výrobní halu, máme pro vás řešení. Pracujeme
+      rychle, čistě a dle norem.
+    </p>
+  </div>
 
-  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
     {
       services.map((service) => (
-        <ServiceCard title={service.title} description={service.description}>
-          <service.icon slot="icon" class="w-6 h-6" />
-        </ServiceCard>
+        <DetailedServiceCard
+          title={service.title}
+          description={service.description}
+          bullets={service.bullets}
+          link={service.link}
+        >
+          <service.icon slot="icon" class="w-7 h-7" />
+        </DetailedServiceCard>
       ))
     }
   </div>

@@ -1,0 +1,55 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  bullets: string[];
+  link?: string;
+  linkText?: string;
+}
+
+const { title, description, bullets, link = "#", linkText = "Detail služby" } = Astro.props;
+---
+
+<article
+  class="group bg-white rounded-lg border border-border/30 shadow-sm hover:shadow-xl hover:border-accent-primary transition-all duration-300 p-8 flex flex-col h-full"
+>
+  <div class="flex items-center justify-center w-16 h-16 rounded-xl bg-background-dark group-hover:bg-accent-primary transition-colors duration-300 mb-6">
+    <div class="text-primary group-hover:text-white transition-colors duration-300">
+      <slot name="icon" />
+    </div>
+  </div>
+
+  <h3 class="text-2xl font-semibold text-black mb-4">
+    {title}
+  </h3>
+
+  <p class="text-black/70 leading-relaxed mb-6">
+    {description}
+  </p>
+
+  <ul class="space-y-3 mb-8 flex-grow">
+    {
+      bullets.map((bullet) => (
+        <li class="flex items-start gap-3">
+          <span class="w-1.5 h-1.5 rounded-full bg-accent-primary mt-2 shrink-0" />
+          <span class="text-black/80 text-sm">{bullet}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <a
+    href={link}
+    class="inline-flex items-center gap-2 text-black font-medium group-hover:text-accent-primary transition-colors duration-300"
+  >
+    {linkText}
+    <svg
+      class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+  </a>
+</article>
