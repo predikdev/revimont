@@ -10,6 +10,7 @@
 :root {
   /* Colors */
   /*--background: oklch(0.86 0 0);*/
+  --background-darker: oklch(28.5% 0 0);
   --background: oklch(96.7% 0.003 264.542);
   --background-dark: oklch(32.11% 0 0);
   --text-primary: oklch(0.9846 0.0017 247.84);
@@ -37,6 +38,7 @@
   /* Colors */
   --color-background: var(--background);
   --color-background-dark: var(--background-dark);
+  --color-background-darker: var(--background-darker);
   --color-primary: var(--text-primary);
   --color-secondary: var(--text-secondary);
   --color-black: var(--text-black);
@@ -79,7 +81,7 @@ main > section {
 .container {
   margin-inline: auto;
   width: 100%;
-  max-width: 1152px;
+  max-width: 1280px;
   padding-inline: 1rem;
 }
 
