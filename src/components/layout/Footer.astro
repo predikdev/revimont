@@ -3,27 +3,32 @@ import MapPin from "../../assets/icons/map-pin.svg";
 import Clock from "../../assets/icons/clock.svg";
 
 const year = new Date().getFullYear();
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+}
+
+const { eyebrow, title, description } = Astro.props;
 ---
 
 <footer class="bg-background-dark">
   <section class="py-20">
     <div class="container">
       <div class="grid lg:grid-cols-[1fr_1fr] gap-12 items-center min-w-0">
-        <div>
-          <div
-            class="inline-flex items-center gap-2 bg-accent-primary/10 text-accent-primary px-3 rounded mb-6"
-          >
-            <MapPin class="w-4 h-4" />
-
-            <span
-              class="uppercase px-3 py-2 w-fit text-accent-primary text-xs font-bold rounded tracking-widest"
-              >Kde nás najdete</span
-            >
-          </div>
+        <div class="space-y-6">
+          {
+            eyebrow ? (
+              <p class="uppercase px-3 py-2 w-fit text-accent-primary/70 text-xs font-bold border-accent-primary/70 border rounded tracking-widest">
+                {eyebrow}
+              </p>
+            ) : null
+          }
 
           <h2 class="text-4xl md:text-5xl font-bold text-primary mb-6">Sídlíme v Klatovech</h2>
 
-          <p class="text-secondary text-lg leading-relaxed mb-12">
+          <p class="text-secondary/80 text-lg leading-relaxed mb-12">
             Zastavte se za námi probrat váš projekt. Naše kancelář je snadno dostupná a parkování je
             možné v blízkém okolí.
           </p>
@@ -37,7 +42,7 @@ const year = new Date().getFullYear();
               </div>
               <div>
                 <h3 class="font-semibold text-white mb-1">Náměstí Míru 62</h3>
-                <p class="text-gray-400">339 01 Klatovy</p>
+                <p class="text-secondary/80">339 01 Klatovy</p>
               </div>
             </div>
 
@@ -49,7 +54,7 @@ const year = new Date().getFullYear();
               </div>
               <div>
                 <h3 class="font-semibold text-primary mb-1">Otevírací doba</h3>
-                <p class="text-secondary">Po–Pá: 7:00 – 16:00</p>
+                <p class="text-secondary/80">Po–Pá: 7:00 – 16:00</p>
               </div>
             </div>
           </div>
