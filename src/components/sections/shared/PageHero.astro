@@ -29,12 +29,9 @@ interface Props {
   title?: string;
   titleHtml?: string;
   description?: string;
-  bullets?: string[];
   primaryCta?: Cta;
   secondaryCta?: Cta;
   stats?: Stat[];
-  image?: Image;
-  overlayClass?: string;
   serviceBoxes?: ServiceBox[];
 }
 
@@ -45,12 +42,9 @@ const {
   title,
   titleHtml,
   description,
-  bullets = [],
   primaryCta,
   secondaryCta,
   stats = [],
-  image,
-  overlayClass = "bg-black/90",
   serviceBoxes = [],
 } = Astro.props;
 ---
@@ -61,9 +55,9 @@ const {
   class="relative flex items-center py-24 md:py-32 lg:py-64 overflow-hidden"
 >
   <div
-    class={`container relative z-20 ${serviceBoxes.length ? "grid lg:grid-cols-[1fr_1fr] gap-4 xl:gap-6 items-start" : "grid gap-12 items-center"}`}
+    class={`container relative z-20 ${serviceBoxes.length ? "grid lg:grid-cols-[1fr_1fr] gap-4 xl:gap-12 items-start" : "grid gap-12 items-center"}`}
   >
-    <div class="text-primary flex flex-col gap-4 max-w-2xl">
+    <div class="text-primary flex flex-col gap-8 max-w-2xl">
       {
         eyebrow ? (
           <p class="uppercase px-3 py-2 w-fit text-accent-primary/70 text-xs font-bold border-accent-primary/70 border rounded tracking-widest">
@@ -137,10 +131,10 @@ const {
 
     {
       serviceBoxes.length ? (
-        <div class="hidden lg:grid lg:grid-cols-2 gap-4 lg:gap-4 ">
+        <div class="hidden lg:grid lg:grid-cols-2 gap-8 pt-24">
           {serviceBoxes.map((box, index) => (
             <div
-              class={`bg-background-darker h-fit border border-white/10 rounded p-6  transition-all hover:border-accent-primary hover:shadow-lg hover:shadow-accent-primary/5 w-full ${index % 2 === 0 ? "mt-4 lg:mt-6 xl:mt-8" : ""}`}
+              class={`bg-background-darker h-fit border border-white/10 rounded p-6  transition-all hover:border-accent-primary hover:shadow-lg hover:shadow-accent-primary/5 w-full ${index % 2 === 0 ? "lg:translate-y-8" : ""}`}
             >
               <div class="text-accent-primary mb-4">
                 <box.icon class="w-7 h-7 xl:w-8 xl:h-8" />

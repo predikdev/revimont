@@ -1,40 +1,39 @@
 ---
 const titleHtml = `Profesionální <span class=\"text-accent-primary\">revize</span> a <br /><span class=\"text-accent-primary\">elektroinstalace</span>`;
 const description =
-  "Jsme partnerem pro váš domov i firmu. Zajišťujeme kompletní elektro servis od projektu přes realizaci až po pravidelné revize.";
+  "Provádíme elektroinstalace, revize, montáže a opravy elektrozařízení v Klatovech a okolí. Máme za sebou roky praxe, a tak víme, že nejdůležitější je kvalitní, bezpečná a poctivě odvedená práce.";
 
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-import HeroIllustration from "../assets/images/hero_illustration.svg";
 import ClipboardIcon from "../assets/icons/clipboard-check.svg";
-import ShieldIcon from "../assets/icons/shield-check.svg";
+import Hammer from "../assets/icons/hammer.svg";
 import ZapIcon from "../assets/icons/zap.svg";
-import ActivityIcon from "../assets/icons/activity.svg";
+import Wrench from "../assets/icons/wrench.svg";
 
 import PageHero from "../components/sections/shared/PageHero.astro";
 import Services from "../components/sections/home/Services.astro";
-import WhoWeWorkFor from "../components/sections/services/WhoWeWorkFor.astro";
+import QualitySection from "../components/sections/home/QualitySection.astro";
 import PortfolioShowcase from "../components/sections/services/PortfolioShowcase.astro";
 import ContactSection from "../components/sections/shared/ContactSection.astro";
 
 const serviceBoxes = [
   {
-    icon: ClipboardIcon,
+    icon: ZapIcon,
     title: "Elektroinstalace",
     description: "Rodinné domy i bytové domy",
   },
   {
-    icon: ShieldIcon,
+    icon: Hammer,
     title: "Montáže",
     description: "Domácí telefony a zvonková tabla",
   },
   {
-    icon: ZapIcon,
+    icon: ClipboardIcon,
     title: "Revize",
     description: "Elektroinstalace i hromosvody",
   },
   {
-    icon: ActivityIcon,
+    icon: Wrench,
     title: "Opravy",
     description: "Náhrady starších systémů za nové",
   },
@@ -59,7 +58,7 @@ const serviceBoxes = [
   />
 
   <Services />
-  <WhoWeWorkFor />
+  <QualitySection />
   <PortfolioShowcase />
   <ContactSection />
 </BaseLayout>
