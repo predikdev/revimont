@@ -5,13 +5,13 @@ import DetailedServiceCard from "../../ui/cards/DetailedServiceCard.astro";
 
 import Zap from "../../../assets/icons/zap.svg";
 import ClipboardCheck from "../../../assets/icons/clipboard-check.svg";
-import Factory from "../../../assets/icons/factory.svg";
+import Hammer from "../../../assets/icons/hammer.svg";
 
 const services = [
   {
     title: "Elektroinstalace",
     description:
-      "Kompletní silnoproudé rozvody pro novostavby i rekonstrukce. Zajišťujeme vše od projektu, přes sekání drážek a kabeláž, až po kompletaci zásuvek a finální revizi.",
+      "Elektroinstalační práce pro rodinné domy, byty i firemní objekty. Zajišťujeme návrh řešení, realizaci rozvodů, instalaci rozvaděčů i koncových prvků. Pracujeme podle platných norem s důrazem na bezpečnost, spolehlivost a dlouhou životnost instalace.",
     icon: Zap,
     bullets: ["Rodinné domy", "Bytové domy", "Elektrické přípojky", "Rozvaděče"],
     link: "/sluzby/elektroinstalace",
@@ -19,7 +19,7 @@ const services = [
   {
     title: "Revize",
     description:
-      "Bezpečnost je priorita. Provádíme výchozí revize pro kolaudace i pravidelné kontroly pro pojišťovny. Revidujeme elektroinstalace, hromosvody, spotřebiče i nářadí.",
+      "Provádíme výchozí i pravidelné revize elektroinstalací, hromosvodů a elektrických zařízení do 1000 V. Součástí je zpracování revizní zprávy, kontrola bezpečnosti instalace a doporučení pro odstranění zjištěných závad.",
     icon: ClipboardCheck,
     bullets: [
       "Revize do 1000V",
@@ -32,8 +32,8 @@ const services = [
   {
     title: "Montáže a opravy",
     description:
-      "Specializujeme se na náročné provozy. Instalujeme osvětlení výrobních hal, zapojujeme stroje a zajišťujeme údržbu s důrazem na minimální odstávky výroby.",
-    icon: Factory,
+      "Zajišťujeme montáž a servis domácích i technických systémů, od instalace zvonků a telefonů až po výměny a opravy starších zařízení. Pracujeme rychle a spolehlivě, s důrazem na funkčnost a minimální zásah do provozu objektu.",
+    icon: Hammer,
     bullets: [
       "Domácí telefony a zvonky",
       "Instalace zvonkových tabel",
@@ -46,15 +46,15 @@ const services = [
 ---
 
 <SectionWrapper background="light" withGrid>
-  <div class="max-w-2xl mb-16">
-    <p class="uppercase text-accent-primary text-sm font-bold tracking-widest mb-4">NAŠE SLUŽBY</p>
-    <h2 class="text-4xl md:text-5xl font-bold text-black mb-6">
-      Komplexní řešení<br />pro vaši nemovitost
-    </h2>
-    <p class="text-black/70 text-lg leading-relaxed">
-      Ať už potřebujete vyměnit zásuvku nebo zasíťovat výrobní halu, máme pro vás řešení. Pracujeme
-      rychle, čistě a dle norem.
-    </p>
+  <div class="mb-16">
+    <SectionHeader
+      eyebrow="Naše služby"
+      title="Komplexní řešení pro vaši nemovitost"
+      description="Elektroinstalace, revize i montáže technických zařízení pro domácnosti, bytové domy i firmy. Nabízíme spolehlivé řešení od návrhu až po realizaci a následný servis."
+      background="light"
+      width="narrow"
+      class="mb-0"
+    />
   </div>
 
   <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">

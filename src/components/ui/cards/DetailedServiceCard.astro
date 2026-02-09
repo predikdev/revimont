@@ -11,9 +11,11 @@ const { title, description, bullets, link = "#", linkText = "Detail služby" } =
 ---
 
 <article
-  class="group bg-white rounded-lg border border-border/30 shadow-sm hover:shadow-xl hover:border-accent-primary transition-all duration-300 p-8 flex flex-col h-full"
+  class="group bg-white rounded-lg border border-border/50 shadow-sm hover:shadow-xl hover:border-accent-primary transition-all duration-300 p-8 flex flex-col h-full"
 >
-  <div class="flex items-center justify-center w-16 h-16 rounded-xl bg-background-dark group-hover:bg-accent-primary transition-colors duration-300 mb-6">
+  <div
+    class="flex items-center justify-center w-16 h-16 rounded-lg bg-background-dark group-hover:bg-accent-primary transition-colors duration-300 mb-6"
+  >
     <div class="text-primary group-hover:text-white transition-colors duration-300">
       <slot name="icon" />
     </div>
@@ -27,7 +29,7 @@ const { title, description, bullets, link = "#", linkText = "Detail služby" } =
     {description}
   </p>
 
-  <ul class="space-y-3 mb-8 flex-grow">
+  <ul class="space-y-3 mb-8 grow">
     {
       bullets.map((bullet) => (
         <li class="flex items-start gap-3">
