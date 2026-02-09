@@ -3,14 +3,24 @@ interface Props {
   eyebrow?: string;
   title: string;
   description?: string;
+  width?: "" | "narrow";
+  background?: "light" | "dark";
   align?: "left" | "center";
   class?: string;
 }
 
-const { eyebrow, title, description, align = "left", class: className = "" } = Astro.props;
+const {
+  eyebrow,
+  title,
+  description,
+  width = "",
+  background = "dark",
+  align = "left",
+  class: className = "",
+} = Astro.props;
 ---
 
-<div class:list={["max-w-3xl mb-16", align === "center" && "mx-auto text-center", className]}>
+<div class:list={["max-w-2xl mb-16", align === "center" && "mx-auto text-center", className]}>
   {
     eyebrow && (
       <p class="uppercase text-accent-primary text-sm font-semibold mb-3 tracking-wide">
@@ -18,6 +28,27 @@ const { eyebrow, title, description, align = "left", class: className = "" } = A
       </p>
     )
   }
-  <h2 class="text-4xl md:text-5xl font-bold text-black">{title}</h2>
-  {description && <p class="mt-6 text-secondary text-lg leading-relaxed">{description}</p>}
+  <h2
+    class:list={[
+      "text-4xl md:text-5xl leading-14",
+      width === "narrow" && "max-w-[15ch]",
+      background === "dark" && "text-primary",
+      "font-bold text-black",
+    ]}
+  >
+    {title}
+  </h2>
+  {
+    description && (
+      <p
+        class:list={[
+          "mt-6",
+          background === "dark" && "text-secondary/80",
+          "text-black/80 text-lg leading-relaxed",
+        ]}
+      >
+        {description}
+      </p>
+    )
+  }
 </div>
