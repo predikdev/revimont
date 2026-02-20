@@ -12,12 +12,12 @@ const { id, background = "light", withGrid = false, class: className = "" } = As
 <section
   id={id}
   class:list={[
-    "relative py-20 overflow-hidden",
-    background === "dark" ? "bg-background-dark" : "bg-background",
+    "relative py-10 overflow-hidden",
+    background === "dark" ? "bg-background-surface" : "bg-background",
     className,
   ]}
 >
-  {withGrid && <div class="absolute inset-0 bg-grid-pattern"></div>}
+  {withGrid && <div class="absolute inset-0 bg-grid-pattern" />}
 
   <div class="container relative z-10">
     <slot />

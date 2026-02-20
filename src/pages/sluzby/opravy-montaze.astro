@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHeroServicesNew from "../../components/sections/shared/PageHeroServicesNew.astro";
+
+import OpravyMontazeServices from "../../components/sections/opravy-montaze/OpravyMontazeServices.astro";
+import OpravyMontazeWhyUs from "../../components/sections/opravy-montaze/OpravyMontazeWhyUs.astro";
+import OpravyMontazeApproach from "../../components/sections/opravy-montaze/OpravyMontazeApproach.astro";
+import ContactSection from "../../components/sections/shared/ContactSection.astro";
+
+const title = "Montáže a opravy domácích systémů";
+const description =
+  "Nabízíme odborné opravy a montáže domácích telefonů, zvonkových tabel i elektrických zařízení. Rychle a spolehlivě vyřešíme každou závadu v Klatovech i širokém okolí.";
+---
+
+<BaseLayout heroBackground="/hero-bg.jpg">
+  <PageHeroServicesNew
+    slot="hero"
+    id="hero"
+    eyebrow="Opravy a montáže Klatovy a okolí"
+    titleHtml={title}
+    description={description}
+  />
+  <OpravyMontazeServices />
+  <OpravyMontazeApproach />
+  <OpravyMontazeWhyUs />
+  <ContactSection />
+</BaseLayout>

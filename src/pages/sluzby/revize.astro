@@ -1,26 +1,29 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import PageHero from "../../components/sections/shared/PageHero.astro";
-import ContactSection from "../../components/sections/shared/ContactSection.astro";
-
-const title = "Revizní činnost";
+const titleHtml = `Revizní činnost a kontroly`;
+// const description =
+//   "Zajistíme revizi elektroinstalací a plynových zařízení v souladu s platnými normami. Součástí je přehledná zpráva a doporučení k odstranění zjistěných závad.";
 const description =
-  "Zajistíme revizi elektroinstalací a plynových zařízení v souladu s platnými normami. Součástí je přehledná zpráva a doporučení k odstranění zjistěných závad.";
+  "Provádíme pečlivé výchozí i pravidelné revize elektroinstalací a hromosvodů v souladu s platnými normami. Odhalíme skrytá rizika a dodáme vám právně platný revizní protokol.";
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import RevizeApproach from "../../components/sections/revize/RevizeApproach.astro";
+import ContactSection from "../../components/sections/shared/ContactSection.astro";
+import PageHeroServicesNew from "../../components/sections/shared/PageHeroServicesNew.astro";
+import RevizeServicesV2 from "../../components/sections/revize/RevizeServicesV2.astro";
+import RevizeWhyUs from "../../components/sections/revize/RevizeWhyUs.astro";
 ---
 
 <BaseLayout heroBackground="/hero-bg.jpg">
-  <PageHero
-    slot="hero"
+  <PageHeroServicesNew
     id="hero"
-    eyebrow="Revimont Klatovy"
-    titleHtml={title}
+    slot="hero"
+    eyebrow="Revize Klatovy a okolí"
+    titleHtml={titleHtml}
     description={description}
-    stats={[
-      { number: "300+", label: "zakázek" },
-      { number: "15+", label: "let zkušeností" },
-      { number: "500+", label: "zakázek" },
-    ]}
-    primaryCta={{ label: "Nezávazná poptávka", href: "/kontakt" }}
   />
+
+  <RevizeServicesV2 />
+  <RevizeApproach />
+  <RevizeWhyUs />
   <ContactSection />
 </BaseLayout>

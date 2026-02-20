@@ -1,32 +1,28 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import PageHero from "../../components/sections/shared/PageHero.astro";
-import Services from "../../components/sections/home/Services.astro";
-import WhoWeWorkFor from "../../components/sections/services/WhoWeWorkFor.astro";
-import PortfolioShowcase from "../../components/sections/services/PortfolioShowcase.astro";
+import PageHeroServicesNew from "../../components/sections/shared/PageHeroServicesNew.astro";
+import ElektroServices from "../../components/sections/elektroinstalace/ElektroServices.astro";
+import ElektroApproach from "../../components/sections/elektroinstalace/ElektroApproach.astro";
+import ElektroWhyUs from "../../components/sections/elektroinstalace/ElektroWhyUs.astro";
+import PortfolioShowcaseAlternating from "../../components/sections/shared/PortfolioShowcaseAlternating.astro";
 import ContactSection from "../../components/sections/shared/ContactSection.astro";
 
 const title = `Elektroinstalace <br /> pro váš domov i firmu`;
 const description =
-  "Bezpečné a spolehlivé elektroinstalace v Klatovech a okolí. Od návrhu po revizi - vše pod jednou střechou.";
+  "Zajistíme kompletní a bezpečné elektroinstalace pro váš rodinný dům, byt i firmu. Od prvotního návrhu až po konečnou revizi, vše s maximálním důrazem na kvalitu.";
 ---
 
-<BaseLayout heroBackground="/hero-bg.jpg">
-  <PageHero
+<BaseLayout>
+  <PageHeroServicesNew
     slot="hero"
     id="hero"
-    eyebrow="Region Klatovy a okolí"
+    eyebrow="Elektro Klatovy a okolí"
     titleHtml={title}
     description={description}
-    stats={[
-      { number: "300+", label: "zakázek" },
-      { number: "15+", label: "let zkušeností" },
-      { number: "500+", label: "zakázek" },
-    ]}
-    primaryCta={{ label: "Nezávazná poptávka", href: "/kontakt" }}
   />
-  <Services />
-  <WhoWeWorkFor />
-  <PortfolioShowcase />
+  <ElektroServices />
+  <ElektroApproach />
+  <ElektroWhyUs />
+  <PortfolioShowcaseAlternating />
   <ContactSection />
 </BaseLayout>

@@ -1,0 +1,302 @@
+---
+import SectionWrapper from "../../ui/SectionWrapper.astro";
+import SectionHeader from "../../ui/SectionHeader.astro";
+import Button from "../../ui/Button.astro";
+import {
+  CalendarCheck,
+  Search,
+  Activity,
+  FileText,
+  BadgeCheck,
+  Check,
+  ArrowLeft,
+  ArrowRight,
+} from "@lucide/astro";
+
+interface ApproachStep {
+  title: string;
+  description: string;
+  bullets: string[];
+}
+
+interface RenderedApproachStep extends ApproachStep {
+  order: string;
+  nextTitle?: string;
+  icon: typeof CalendarCheck;
+}
+
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  steps?: ApproachStep[];
+}
+
+const defaultSteps: ApproachStep[] = [
+  {
+    title: "Objednávka a termín",
+    description: "Kontaktujete nás, upřesníme rozsah revize a domluvíme termín návštěvy.",
+    bullets: ["Telefonická / online poptávka", "Upřesnění rozsahu revize", "Potvrzení termínu"],
+  },
+  {
+    title: "Příjezd a prohlídka",
+    description: "Revizní technik provede vizuální kontrolu celé instalace a rozvaděče.",
+    bullets: [
+      "Vizuální kontrola instalace",
+      "Kontrola rozvaděče a jističů",
+      "Dokumentace aktuálního stavu",
+    ],
+  },
+  {
+    title: "Měření a testování",
+    description: "Provedeme sérii odborných měření profesionálními přístroji dle platných norem.",
+    bullets: [
+      "Měření izolačních odporů",
+      "Kontrola ochranných vodičů",
+      "Funkční zkoušky přístrojů",
+    ],
+  },
+  {
+    title: "Zpracování zprávy",
+    description: "Naměřené hodnoty vyhodnotíme a vyhotovíme oficiální revizní zprávu.",
+    bullets: [
+      "Vyhodnocení naměřených hodnot",
+      "Sepsání revizní zprávy",
+      "Zaznamenání případných závad",
+    ],
+  },
+  {
+    title: "Předání dokladů",
+    description: "Zprávu předáme osobně nebo elektronicky včetně doporučení k opravám.",
+    bullets: [
+      "Předání protokolu s razítkem",
+      "Doporučení k odstranění závad",
+      "Záruční platnost zprávy",
+    ],
+  },
+];
+
+const stepIcons = [CalendarCheck, Search, Activity, FileText, BadgeCheck];
+
+const {
+  id = "revize-approach",
+  eyebrow = "ZNAKY NAŠÍ PRÁCE",
+  title = "Jak probíhá revize",
+  description = "Od objednávky až po vydání revizní zprávy. Každý krok provádíme pečlivě a transparentně.",
+  steps = defaultSteps,
+} = Astro.props;
+
+const renderedSteps: RenderedApproachStep[] = steps.slice(0, 5).map((step, index) => ({
+  ...step,
+  order: String(index + 1).padStart(2, "0"),
+  nextTitle: steps[index + 1]?.title,
+  icon: stepIcons[index] ?? CalendarCheck,
+}));
+---
+
+<SectionWrapper id={id} background="light" withGrid={true}>
+  <div class="w-full" data-approach-section-v2>
+    <SectionHeader
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      background="light"
+      align="left"
+      titleWidth=""
+      descWidth="narrow"
+      class="mb-0"
+    />
+
+    <ol class="mt-14 hidden md:grid md:grid-cols-5 md:gap-x-3">
+      {
+        renderedSteps.map((step, index) => (
+          <li class="relative text-center">
+            {index < renderedSteps.length - 1 && (
+              <span class="pointer-events-none absolute top-6 left-[calc(50%+2rem)] hidden h-px w-[calc(100%-4rem)] bg-zinc-200 md:block" />
+            )}
+            <button
+              type="button"
+              data-step-trigger
+              data-step-index={index}
+              data-active={index === 0 ? "true" : "false"}
+              aria-current={index === 0 ? "step" : "false"}
+              class="group mx-auto flex w-full flex-col items-center"
+            >
+              <span class="flex h-14 w-14 items-center justify-center rounded-full border border-zinc-200 bg-zinc-100 text-zinc-400 transition-all duration-300 group-data-[active=true]:border-accent-primary group-data-[active=true]:bg-accent-primary group-data-[active=true]:text-white group-data-[active=true]:shadow-[0_12px_26px_-14px_rgba(251,146,60,0.85)]">
+                <step.icon class="h-5 w-5" />
+              </span>
+              <span class="mt-3 text-sm font-bold text-zinc-400 transition-colors duration-300 group-data-[active=true]:text-accent-primary">
+                {step.order}
+              </span>
+              <span class="mt-1 text-sm leading-tight font-semibold text-zinc-500 transition-colors duration-300 group-data-[active=true]:text-zinc-800">
+                {step.title}
+              </span>
+            </button>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="mt-8 md:mt-14">
+      {
+        renderedSteps.map((step, index) => (
+          <article
+            data-step-card
+            data-step-card-index={index}
+            class:list={[
+              "overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-[0_24px_52px_-34px_rgba(39,39,42,0.42)]",
+              index !== 0 && "hidden",
+            ]}
+          >
+            <div class="flex flex-col md:flex-row">
+              {/* Left sidebar */}
+              <div class="flex flex-col justify-between bg-accent-primary/8 p-8 md:w-56 md:shrink-0 md:rounded-l-2xl">
+                <div>
+                  <p class="font-sora text-6xl font-bold text-accent-primary/20 leading-none">
+                    {step.order}
+                  </p>
+                  <p class="mt-6 text-sm font-bold text-accent-primary">Krok {step.order}</p>
+                  {step.nextTitle ? (
+                    <p class="mt-1 text-sm text-zinc-400">
+                      Dále: <span class="font-medium text-zinc-500">{step.nextTitle}</span>
+                    </p>
+                  ) : (
+                    <p class="mt-1 text-sm text-zinc-400 font-medium">Poslední krok</p>
+                  )}
+                </div>
+
+                {/* Dot indicators */}
+                <div class="mt-8 flex gap-1.5">
+                  {renderedSteps.map((_, dotIndex) => (
+                    <span
+                      class:list={[
+                        "h-2 rounded-full transition-all duration-300",
+                        dotIndex === index ? "w-6 bg-accent-primary" : "w-2 bg-accent-primary/25",
+                      ]}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Right content */}
+              <div class="flex flex-1 flex-col justify-between p-8">
+                <div>
+                  <h3 class="font-sora text-3xl font-bold text-zinc-800 leading-tight">
+                    {step.title}
+                  </h3>
+                  <p class="mt-3 text-base leading-relaxed text-zinc-500">{step.description}</p>
+
+                  <ul class="mt-6 flex flex-col gap-3">
+                    {step.bullets.map((bullet) => (
+                      <li class="flex items-center gap-3">
+                        <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-accent-primary/40 bg-accent-primary/10">
+                          <Check class="h-3 w-3 text-accent-primary" />
+                        </span>
+                        <span class="text-sm font-medium text-zinc-700">{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Navigation */}
+                <div class="mt-8 flex items-center justify-between border-t border-zinc-100 pt-6">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    type="button"
+                    data-step-prev
+                    data-current-index={index}
+                    disabled={index === 0}
+                  >
+                    <ArrowLeft class="h-4 w-4" />
+                    Předchozí krok
+                  </Button>
+
+                  <Button
+                    variant="primaryLight"
+                    size="sm"
+                    type="button"
+                    data-step-next
+                    data-current-index={index}
+                    disabled={index === renderedSteps.length - 1}
+                    class="shadow-[0_8px_20px_-8px_rgba(251,146,60,0.7)]"
+                  >
+                    Další krok
+                    <ArrowRight class="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</SectionWrapper>
+
+<script>
+  function initApproachSectionV2() {
+    const sections = document.querySelectorAll("[data-approach-section-v2]");
+    if (!sections.length) return;
+
+    sections.forEach((section) => {
+      const triggers = Array.from(
+        section.querySelectorAll<HTMLButtonElement>("[data-step-trigger]"),
+      );
+      const cards = Array.from(section.querySelectorAll<HTMLElement>("[data-step-card]"));
+      const nextButtons = Array.from(
+        section.querySelectorAll<HTMLButtonElement>("[data-step-next]"),
+      );
+      const prevButtons = Array.from(
+        section.querySelectorAll<HTMLButtonElement>("[data-step-prev]"),
+      );
+
+      if (!triggers.length || !cards.length) return;
+
+      let activeIndex = triggers.findIndex((button) => button.dataset.active === "true");
+      if (activeIndex < 0) activeIndex = 0;
+
+      const setActiveStep = (index: number) => {
+        const clampedIndex = Math.max(0, Math.min(index, cards.length - 1));
+        activeIndex = clampedIndex;
+
+        triggers.forEach((button, triggerIndex) => {
+          const isActive = triggerIndex === clampedIndex;
+          button.dataset.active = isActive ? "true" : "false";
+          button.setAttribute("aria-current", isActive ? "step" : "false");
+        });
+
+        cards.forEach((card, cardIndex) => {
+          card.classList.toggle("hidden", cardIndex !== clampedIndex);
+        });
+      };
+
+      triggers.forEach((button, index) => {
+        button.addEventListener("click", () => setActiveStep(index));
+      });
+
+      nextButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (button.disabled) return;
+          setActiveStep(activeIndex + 1);
+        });
+      });
+
+      prevButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (button.disabled) return;
+          setActiveStep(activeIndex - 1);
+        });
+      });
+
+      setActiveStep(activeIndex);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initApproachSectionV2, { once: true });
+  } else {
+    initApproachSectionV2();
+  }
+</script>

@@ -1,0 +1,103 @@
+---
+import { Image } from "astro:assets";
+
+import SectionWrapper from "../../ui/SectionWrapper.astro";
+import SectionHeader from "../../ui/SectionHeader.astro";
+
+import { Award, Clock, BadgeCheck } from "@lucide/astro";
+import FirmaImage from "../../../assets/images/firma.jpeg";
+
+interface Props {
+  id?: string;
+}
+
+const { id = "about-us" } = Astro.props;
+
+const highlights = [
+  {
+    icon: Award,
+    title: "Certifikovaní odborníci",
+    description:
+      "Všichni naši technici jsou držiteli platných certifikátů a pravidelně si doplňují vzdělání v oboru.",
+  },
+  {
+    icon: Clock,
+    title: "Rychlý a spolehlivý servis",
+    description:
+      "Garantujeme rychlou odezvu a dodržení dohodnutých termínů. V případě havárie jsme k dispozici do 2 hodin.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Záruka kvality",
+    description:
+      "Na všechny naše práce poskytujeme záruku. Používáme pouze ověřené materiály od renomovaných výrobců.",
+  },
+];
+
+const stats = [
+  { value: "15+", label: "Let zkušeností" },
+  { value: "2 500+", label: "Dokončených projektů" },
+  { value: "98%", label: "Spokojených zákazníků" },
+  { value: "24/7", label: "Havarijní servis" },
+];
+---
+
+<SectionWrapper id={id} background="light" withGrid>
+  <div class="space-y-14 lg:space-y-16">
+    <SectionHeader
+      eyebrow="O společnosti"
+      title="Profesionalita podložená zkušenostmi"
+      description="Jsme tým zkušených elektrikářů s více než 15letou praxí v oboru. Naše práce stojí na kvalitě, spolehlivosti a individuálním přístupu ke každému zákazníkovi."
+      background="light"
+      descWidth="narrow"
+      class="mb-16"
+    />
+
+    <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-12 mb-16">
+      <div class="overflow-hidden rounded-lg border border-border/70">
+        <Image
+          src={FirmaImage}
+          alt="Elektrotechnik při práci na vedení"
+          class="h-full w-full object-cover"
+        />
+      </div>
+
+      <div class="space-y-12">
+        {
+          highlights.map((item) => (
+            <article class="flex items-start gap-4">
+              <div class="mt-0.5 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-accent-primary/10 text-accent-primary">
+                <item.icon class="h-6 w-6" />
+              </div>
+
+              <div>
+                <h3 class="font-sora text-lg font-semibold leading-tight text-black">
+                  {item.title}
+                </h3>
+                <p class="mt-2 text-base leading-relaxed text-black/60">{item.description}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="grid gap-6 pt-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0 lg:pt-12">
+      {
+        stats.map((stat, index) => (
+          <div
+            class:list={[
+              "text-center lg:px-8",
+              index < stats.length - 1 && "lg:border-r lg:border-border/70",
+            ]}
+          >
+            <p class="font-sora text-4xl font-bold leading-none text-accent-primary">
+              {stat.value}
+            </p>
+            <p class="mt-4 text-lg font-semibold text-neutral-800/95">{stat.label}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</SectionWrapper>

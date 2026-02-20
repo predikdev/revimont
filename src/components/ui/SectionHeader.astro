@@ -3,7 +3,8 @@ interface Props {
   eyebrow?: string;
   title: string;
   description?: string;
-  width?: "" | "narrow";
+  titleWidth?: "" | "narrow";
+  descWidth?: "" | "narrow";
   background?: "light" | "dark";
   align?: "left" | "center";
   class?: string;
@@ -13,14 +14,15 @@ const {
   eyebrow,
   title,
   description,
-  width = "",
+  titleWidth = "",
+  descWidth = "",
   background = "dark",
   align = "left",
   class: className = "",
 } = Astro.props;
 ---
 
-<div class:list={["max-w-2xl mb-16", align === "center" && "mx-auto text-center", className]}>
+<div class:list={[" mb-8", align === "center" && "mx-auto text-center", className]}>
   {
     eyebrow && (
       <p class="uppercase text-accent-primary text-sm font-semibold mb-3 tracking-wide">
@@ -30,8 +32,8 @@ const {
   }
   <h2
     class:list={[
-      "text-4xl md:text-5xl leading-14",
-      width === "narrow" && "max-w-[15ch]",
+      "text-4xl md:text-5xl leading-14 font-sora",
+      titleWidth === "narrow" && "max-w-[15ch]",
       background === "dark" && "text-primary",
       "font-bold text-black",
     ]}
@@ -43,6 +45,7 @@ const {
       <p
         class:list={[
           "mt-6",
+          descWidth === "narrow" && "max-w-3xl",
           background === "dark" && "text-secondary/80",
           "text-black/80 text-lg leading-relaxed",
         ]}

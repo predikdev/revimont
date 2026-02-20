@@ -3,12 +3,6 @@ import "../styles/globals.css";
 import Header from "../components/layout/Header.astro";
 import MobileNavigation from "../components/layout/MobileNavigation.astro";
 import Footer from "../components/layout/Footer.astro";
-
-interface Props {
-  heroBackground?: string;
-}
-
-const { heroBackground } = Astro.props;
 ---
 
 <html lang="en">
@@ -23,15 +17,10 @@ const { heroBackground } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>Revimont Klatovy</title>
   </head>
-  <body class="text-black">
+  <body class="text-zinc-800">
     <MobileNavigation />
     <Header />
-    <div
-      class="hero-wrapper"
-      style={heroBackground
-        ? `--hero-bg: url("https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80");`
-        : undefined}
-    >
+    <div class="hero-wrapper">
       <slot name="hero" />
     </div>
     <main>
@@ -45,17 +34,6 @@ const { heroBackground } = Astro.props;
   :global(.hero-wrapper) {
     position: relative;
     isolation: isolate;
-  }
-
-  :global(.hero-wrapper::before) {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: var(--hero-bg, none);
-    background-size: cover;
-    background-position: center;
-    z-index: 0;
-    pointer-events: none;
   }
 
   :global(.hero-wrapper::after) {
@@ -72,3 +50,14 @@ const { heroBackground } = Astro.props;
     z-index: 2;
   }
 </style>
+
+<script>
+  import Lenis from "lenis";
+
+  // Initialize Lenis
+  const lenis = new Lenis({
+    duration: 0.3,
+    smoothWheel: true,
+    autoRaf: true,
+  });
+</script>

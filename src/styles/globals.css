@@ -7,12 +7,21 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Sora";
+  src: url("../assets/fonts/Sora.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* Colors */
   /*--background: oklch(0.86 0 0);*/
   --background-darker: oklch(28.5% 0 0);
   --background: oklch(96.7% 0.003 264.542);
   --background-dark: oklch(32.11% 0 0);
+  --background-surface: #18181b;
+  --bg-dark: #0f0f11;
   --text-primary: oklch(0.9846 0.0017 247.84);
   --text-secondary: oklch(98.46% 0.0017 247.84 / 0.75);
   --text-black: oklch(25.2% 0 0);
@@ -39,6 +48,8 @@
   --color-background: var(--background);
   --color-background-dark: var(--background-dark);
   --color-background-darker: var(--background-darker);
+  --color-background-surface: var(--background-surface);
+  --color-background-bg: var(--bg-dark);
   --color-primary: var(--text-primary);
   --color-secondary: var(--text-secondary);
   --color-black: var(--text-black);
@@ -61,12 +72,13 @@
 
   /* Fonts */
   --font-inter: "Inter", system-ui, sans-serif;
-  --font-playfair: "Playfair Display", system-ui, sans-serif;
+  --font-sora: "Sora", system-ui, sans-serif;
 }
 
 html,
 body {
   overflow-x: hidden;
+  font-family: "Inter";
 }
 
 html.no-scroll,
@@ -87,7 +99,19 @@ main > section {
 
 .bg-grid-pattern {
   background-image:
-    linear-gradient(to right, rgb(128 128 128 / 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(128 128 128 / 0.07) 1px, transparent 1px);
-  background-size: 80px 80px;
+    linear-gradient(to right, rgb(164 164 164 / 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(164 164 164 / 0.08) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.bg-grid-pattern-dark {
+  background-image:
+    linear-gradient(to right, rgb(64 64 64 / 0.9) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(64 64 64 / 0.9) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.mask-image-gradient {
+  -webkit-mask-image: linear-gradient(to left, transparent, black 30%, black);
+  mask-image: linear-gradient(to left, transparent, black 30%, black);
 }

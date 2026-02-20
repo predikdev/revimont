@@ -2,50 +2,60 @@
 import { clsx } from "clsx";
 
 interface Props {
-  variant?: "primary" | "secondary" | "outline" | "ghost";
+  variant?: "primaryDark" | "primaryLight" | "secondaryLight" | "ghost";
   size?: "sm" | "md" | "lg";
   href?: string;
   class?: string;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  [key: string]: unknown;
 }
 
 const {
-  variant = "primary",
+  variant = "primaryDark",
   size = "md",
   href,
   class: className = "",
   type = "button",
+  disabled = false,
+  ...rest
 } = Astro.props;
 
 const base =
-  "inline-flex items-center justify-center rounded font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background cursor-pointer";
+  "flex items-center justify-center gap-2 rounded font-medium transition-all duration-200 focus:outline-none cursor-pointer";
 
 const variants = {
-  primary:
-    "bg-accent-primary/90 text-primary hover:bg-accent-primary hover:ring-2 hover:ring-offset-2 hover:ring-offset-background-dark hover:ring-accent-primary",
-  secondary:
-    "bg-background-dark text-primary hover:bg-background-dark/90 shadow-sm hover:shadow-md",
-  outline:
-    "bg-background-dark border border-white/10 text-primary hover:bg-background-dark hover:ring-2 hover:ring-offset-2 hover:ring-offset-background hover:ring-background-dark/90",
-  ghost: "bg-white/10 text-primary hover:bg-white/20",
+  primaryDark:
+    "bg-accent-primary text-primary ring-offset-2 ring-offset-neutral-800 hover:ring-2 hover:ring-accent-primary",
+  primaryLight:
+    "bg-accent-primary text-primary ring-offset-2 ring-offset-background hover:ring-2 hover:ring-accent-primary",
+  secondaryLight:
+    "bg-neutral-800 text-primary ring-offset-2 ring-offset-background hover:ring-2 hover:ring-neutral-800",
+  ghost: "bg-transparent text-zinc-500 hover:text-zinc-800",
 };
 
 const sizes = {
-  sm: "py-2 px-4 text-sm",
+  sm: "py-2 px-4 text-xs",
   md: "py-3 px-6 text-sm",
   lg: "py-4 px-8 text-sm",
 };
 
-const classes = clsx(base, variants[variant], sizes[size], className);
+const classes = clsx(
+  base,
+  variants[variant],
+  sizes[size],
+  disabled && "cursor-not-allowed pointer-events-none opacity-50",
+  className,
+);
 ---
 
 {
   href ? (
-    <a href={href} class={classes}>
+    <a href={href} class={classes} aria-disabled={disabled ? "true" : undefined} {...rest}>
       <slot />
     </a>
   ) : (
-    <button type={type} class={classes} role="button">
+    <button type={type} class={classes} role="button" disabled={disabled} {...rest}>
       <slot />
     </button>
   )

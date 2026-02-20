@@ -1,64 +1,29 @@
 ---
-const titleHtml = `Profesionální <span class=\"text-accent-primary\">revize</span> a <br /><span class=\"text-accent-primary\">elektroinstalace</span>`;
+const titleHtml = `Elektroinstalace a <br />revize bez starostí`;
 const description =
-  "Provádíme elektroinstalace, revize, montáže a opravy elektrozařízení v Klatovech a okolí. Máme za sebou roky praxe, a tak víme, že nejdůležitější je kvalitní, bezpečná a poctivě odvedená práce.";
+  "Profesionální diagnostika a servis slaboproudých instalací. Od rodinných domů po rozsáhlé systémy v bytových domech.";
 
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-import ClipboardIcon from "../assets/icons/clipboard-check.svg";
-import Hammer from "../assets/icons/hammer.svg";
-import ZapIcon from "../assets/icons/zap.svg";
-import Wrench from "../assets/icons/wrench.svg";
-
-import PageHero from "../components/sections/shared/PageHero.astro";
-import Services from "../components/sections/home/Services.astro";
-import QualitySection from "../components/sections/home/QualitySection.astro";
-import PortfolioShowcase from "../components/sections/services/PortfolioShowcase.astro";
+import AboutUsSection from "../components/sections/shared/AboutUsSection.astro";
+import PortfolioShowcaseAlternating from "../components/sections/shared/PortfolioShowcaseAlternating.astro";
 import ContactSection from "../components/sections/shared/ContactSection.astro";
-
-const serviceBoxes = [
-  {
-    icon: ZapIcon,
-    title: "Elektroinstalace",
-    description: "Rodinné domy i bytové domy",
-  },
-  {
-    icon: Hammer,
-    title: "Montáže",
-    description: "Domácí telefony a zvonková tabla",
-  },
-  {
-    icon: ClipboardIcon,
-    title: "Revize",
-    description: "Elektroinstalace i hromosvody",
-  },
-  {
-    icon: Wrench,
-    title: "Opravy",
-    description: "Náhrady starších systémů za nové",
-  },
-];
+import PageHero from "../components/sections/shared/PageHero.astro";
+import HomeServicesCards from "../components/sections/home/HomeServicesCards.astro";
 ---
 
-<BaseLayout heroBackground="/hero-bg.jpg">
+<BaseLayout>
   <PageHero
     id="hero"
     slot="hero"
-    eyebrow="ELEKTRO KLATOVY & PLZEŇ"
+    eyebrow="SERVIS • MONTÁŽE • OPRAVY"
     titleHtml={titleHtml}
     description={description}
-    stats={[
-      { label: "15 let zkušeností v oboru" },
-      { label: "500+ realizací" },
-      { label: "Pojištění odpovědnosti" },
-    ]}
-    primaryCta={{ label: "Nezávazná poptávka", href: "/kontakt" }}
-    secondaryCta={{ label: "+420 775 736 112", href: "tel:+420775736112" }}
-    serviceBoxes={serviceBoxes}
+    primaryCta={{ label: "Prohlédnout služby", href: "/kontakt" }}
+    secondaryCta={{ label: "+420 775 736 112", href: "/sluzby" }}
   />
 
-  <Services />
-  <QualitySection />
-  <PortfolioShowcase />
+  <HomeServicesCards />
+  <AboutUsSection />
+  <PortfolioShowcaseAlternating />
   <ContactSection />
 </BaseLayout>
