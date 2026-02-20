@@ -1,10 +1,5 @@
 ---
-const links = [
-  { href: "/", label: "Domů" },
-  { href: "/sluzby", label: "Služby" },
-  { href: "/o-nas", label: "O nás" },
-  { href: "/reference", label: "Reference" },
-];
+import { ChevronDown } from "@lucide/astro";
 
 const pathname = Astro.url.pathname;
 
@@ -12,19 +7,107 @@ const isActive = (href: string) => {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(href + "/");
 };
+
+const subLinks = [
+  { href: "/sluzby/elektroinstalace", label: "Elektroinstalace" },
+  { href: "/sluzby/revize", label: "Revize" },
+  { href: "/sluzby/opravy-montaze", label: "Opravy a montáže" },
+];
 ---
 
 <nav class="hidden lg:flex items-center gap-8">
-  {
-    links.map((link) => (
-      <a
-        href={link.href}
-        class={`text-sm font-medium transition-colors hover:text-accent-primary ${
-          isActive(link.href) ? "text-accent-primary" : "text-primary/75 "
-        }`}
-      >
-        {link.label}
-      </a>
-    ))
-  }
+  <a
+    href="/"
+    class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/") ? "text-accent-primary" : "text-primary/75"}`}
+  >
+    Domů
+  </a>
+
+  <div class="relative" data-dropdown>
+    <button
+      type="button"
+      data-dropdown-trigger
+      aria-expanded="false"
+      aria-haspopup="true"
+      class={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/sluzby") ? "text-accent-primary" : "text-primary/75"}`}
+    >
+      Služby
+      <ChevronDown class="h-4 w-4 transition-transform duration-200" />
+    </button>
+    <div
+      data-dropdown-panel
+      class="absolute top-full left-0 mt-2 w-48 hidden bg-background-dark border border-white/10 rounded-lg shadow-lg shadow-black/30 py-2"
+    >
+      {
+        subLinks.map((link) => (
+          <a
+            href={link.href}
+            class={`block px-4 py-2.5 text-sm transition-colors hover:text-accent-primary hover:bg-white/5 ${isActive(link.href) ? "text-accent-primary" : "text-primary/75"}`}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  <a
+    href="/o-nas"
+    class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/o-nas") ? "text-accent-primary" : "text-primary/75"}`}
+  >
+    O nás
+  </a>
+
+  <a
+    href="/reference"
+    class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/reference") ? "text-accent-primary" : "text-primary/75"}`}
+  >
+    Reference
+  </a>
 </nav>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const dropdown = document.querySelector("[data-dropdown]");
+    if (!dropdown) return;
+
+    const trigger = dropdown.querySelector("[data-dropdown-trigger]");
+    const panel = dropdown.querySelector("[data-dropdown-panel]");
+    const chevron = trigger?.querySelector("svg");
+
+    if (!trigger || !panel) return;
+
+    const openDropdown = () => {
+      trigger.setAttribute("aria-expanded", "true");
+      panel.classList.remove("hidden");
+      chevron?.classList.add("rotate-180");
+    };
+
+    const closeDropdown = () => {
+      trigger.setAttribute("aria-expanded", "false");
+      panel.classList.add("hidden");
+      chevron?.classList.remove("rotate-180");
+    };
+
+    trigger.addEventListener("click", () => {
+      const isOpen = trigger.getAttribute("aria-expanded") === "true";
+      if (isOpen) {
+        closeDropdown();
+      } else {
+        openDropdown();
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!dropdown.contains(e.target as Node)) {
+        closeDropdown();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeDropdown();
+      }
+    });
+  });
+</script>

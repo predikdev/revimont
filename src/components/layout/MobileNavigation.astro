@@ -1,12 +1,23 @@
 ---
-import { X, Phone } from "@lucide/astro";
+import { X, Phone, ChevronDown } from "@lucide/astro";
 
 import LogoInline from "./LogoInline.astro";
 import Button from "../ui/Button.astro";
 
+const pathname = Astro.url.pathname;
+
+const isActive = (href: string) => {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(href + "/");
+};
+
+const subLinks = [
+  { href: "/sluzby/elektroinstalace", label: "Elektroinstalace" },
+  { href: "/sluzby/revize", label: "Revize" },
+  { href: "/sluzby/opravy-montaze", label: "Opravy a montáže" },
+];
+
 const links = [
-  { href: "/", label: "Domů" },
-  { href: "/sluzby", label: "Služby" },
   { href: "/o-nas", label: "O nás" },
   { href: "/reference", label: "Reference" },
   { href: "/kontakt", label: "Kontakt" },
@@ -43,6 +54,42 @@ const links = [
 
       <nav class="mt-16 flex-1">
         <ul class="flex flex-col gap-1">
+          <li>
+            <a
+              href="/"
+              class="block py-4 text-2xl font-medium text-primary hover:text-accent-primary transition-colors border-b border-white/10"
+            >
+              Domů
+            </a>
+          </li>
+
+          <!-- Služby accordion -->
+          <li class="border-b border-white/10">
+            <button
+              type="button"
+              data-accordion-toggle
+              aria-expanded="false"
+              class={`flex w-full items-center justify-between py-4 text-2xl font-medium transition-colors hover:text-accent-primary ${isActive("/sluzby") ? "text-accent-primary" : "text-primary"}`}
+            >
+              Služby
+              <ChevronDown class="h-6 w-6 transition-transform duration-200" />
+            </button>
+            <ul data-accordion-panel class="hidden pb-2">
+              {
+                subLinks.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      class={`block py-2.5 pl-4 text-lg font-medium transition-colors hover:text-accent-primary ${isActive(link.href) ? "text-accent-primary" : "text-primary/60"}`}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </li>
+
           {
             links.map((link) => (
               <li>
@@ -99,9 +146,26 @@ const links = [
     closeBtn?.addEventListener("click", closeMenu);
     backdrop?.addEventListener("click", closeMenu);
 
+    // Accordion toggle
+    const accordionToggle = menu.querySelector("[data-accordion-toggle]");
+    const accordionPanel = menu.querySelector("[data-accordion-panel]");
+    const accordionChevron = accordionToggle?.querySelector("svg");
+
+    accordionToggle?.addEventListener("click", () => {
+      const isOpen = accordionToggle.getAttribute("aria-expanded") === "true";
+      accordionToggle.setAttribute("aria-expanded", String(!isOpen));
+      accordionPanel?.classList.toggle("hidden");
+      accordionChevron?.classList.toggle("rotate-180");
+    });
+
     menu.addEventListener("click", (event) => {
       if (!(event.target instanceof Element)) return;
-      if (event.target.closest("a,button,[data-menu-close]")) closeMenu();
+      if (
+        event.target.closest(
+          "a[href],button:not([data-accordion-toggle]),[data-menu-close]"
+        )
+      )
+        closeMenu();
     });
 
     document.addEventListener("keydown", (event) => {
