@@ -17,7 +17,12 @@ const services = [
     description:
       "Montáž odolných zvonkových tabel s moderním designem. Zabezpečíme vstup do vašeho objektu pomocí čteček čipů, karet nebo kódových klávesnic.",
     icon: Bell,
-    bullets: ["Antivandal provedení", "Čtečky čipů a RFID", "Podsvícení jmenovek", "Moderní design"],
+    bullets: [
+      "Antivandal provedení",
+      "Čtečky čipů a RFID",
+      "Podsvícení jmenovek",
+      "Moderní design",
+    ],
   },
   {
     number: "03",
@@ -38,15 +43,19 @@ const services = [
 ];
 ---
 
-<SectionWrapper background="light" withGrid class="bg-[#F7F6F2]">
+<SectionWrapper background="light" withGrid class="bg-background">
   {/* Header */}
   <div class="mb-12">
     <div class="mb-4 flex items-center gap-3">
-      <span class="h-px w-8 bg-accent-primary" aria-hidden="true" />
+      <span class="h-px w-8 bg-accent-primary" aria-hidden="true"></span>
       <p class="text-sm font-semibold uppercase tracking-widest text-accent-primary">Naše služby</p>
     </div>
-    <h2 class="mb-5 font-sora text-5xl font-bold leading-tight text-black">Montáže a opravy domácích systémů</h2>
-    <p class="max-w-xl text-base leading-relaxed text-black/70">
+    <h2
+      class="mb-5 font-sora text-4xl font-bold leading-tight text-neutral-800 sm:text-5xl lg:text-6xl"
+    >
+      Montáže a opravy domácích systémů
+    </h2>
+    <p class="max-w-xl text-base leading-relaxed text-neutral-800/70">
       Navrhujeme, montujeme a servisujeme domovní telefony, zvonková tabla a vstupní systémy.
       Dodáváme funkční řešení pro rodinné domy, bytové domy i firemní objekty.
     </p>
@@ -58,7 +67,7 @@ const services = [
       services.map((service) => {
         const ServiceIcon = service.icon;
         return (
-          <div class="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white p-8 shadow-[0_4px_24px_-8px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_-12px_rgba(0,0,0,0.16)]">
+          <div class="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-background p-8 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
             {/* Hover accent line – slides in from left */}
             <span
               aria-hidden="true"
@@ -76,7 +85,7 @@ const services = [
             </div>
 
             {/* Title & Description */}
-            <h3 class="mb-3 text-xl font-bold text-neutral-900">{service.title}</h3>
+            <h3 class="mb-3 text-xl font-bold text-neutral-800">{service.title}</h3>
             <p class="mb-auto text-sm leading-relaxed text-neutral-500">{service.description}</p>
 
             {/* Divider */}

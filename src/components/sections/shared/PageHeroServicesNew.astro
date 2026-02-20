@@ -33,7 +33,7 @@ const {
 <section
   slot={slot}
   id={id}
-  class="relative isolate overflow-hidden bg-neutral-950 pt-16 pb-20 lg:pt-24 lg:pb-24"
+  class="relative isolate overflow-hidden bg-neutral-800 pt-16 pb-20 lg:pt-24 lg:pb-24"
 >
   <div class="absolute inset-0">
     <img
@@ -73,11 +73,11 @@ const {
         {
           titleHtml ? (
             <h1
-              class="mt-5 font-sora text-4xl leading-none font-semibold tracking-tight text-primary drop-shadow-[0_4px_26px_rgba(0,0,0,0.42)] sm:text-5xl lg:text-6xl"
+              class="mt-5 font-sora text-3xl leading-none font-semibold tracking-tight text-neutral-50 drop-shadow-lg sm:text-5xl lg:text-6xl"
               set:html={titleHtml}
             />
           ) : (
-            <h1 class="mt-5 font-sora text-4xl leading-none font-semibold tracking-tight text-primary drop-shadow-[0_4px_26px_rgba(0,0,0,0.42)] sm:text-5xl lg:text-6xl">
+            <h1 class="mt-5 font-sora text-3xl leading-none font-semibold tracking-tight text-neutral-50 drop-shadow-lg sm:text-5xl lg:text-6xl">
               {title}
             </h1>
           )
@@ -86,7 +86,7 @@ const {
 
       <div class="max-w-md lg:ml-auto lg:pb-5">
         <p
-          class="text-base leading-relaxed text-secondary drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)] sm:text-lg"
+          class="text-base leading-relaxed text-neutral-300 drop-shadow sm:text-lg"
         >
           {description}
         </p>
