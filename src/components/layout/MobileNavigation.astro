@@ -1,6 +1,5 @@
 ---
-import CloseMenu from "../../assets/icons/square-x.svg";
-import PhoneIcon from "../../assets/icons/phone.svg";
+import { X, Phone } from "@lucide/astro";
 
 import LogoInline from "./LogoInline.astro";
 import Button from "../ui/Button.astro";
@@ -38,7 +37,7 @@ const links = [
           data-menu-close
           class="p-2 -m-2 text-primary hover:text-accent-primary transition-colors"
         >
-          <CloseMenu class="h-6 w-6" />
+          <X class="h-6 w-6" />
         </button>
       </div>
 
@@ -64,7 +63,7 @@ const links = [
           href="tel:+420775736112"
           class="flex items-center justify-center gap-3 py-3 text-primary hover:text-accent-primary transition-colors group"
         >
-          <PhoneIcon class="w-5 h-5" />
+          <Phone class="w-5 h-5" />
           <span class="text-lg font-semibold">+420 775 736 112</span>
         </a>
         <Button variant="primary" href="/kontakt" class="w-full" size="lg">

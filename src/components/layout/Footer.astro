@@ -1,6 +1,5 @@
 ---
-import MapPin from "../../assets/icons/map-pin.svg";
-import Clock from "../../assets/icons/clock.svg";
+import { MapPin, Clock } from "@lucide/astro";
 
 const year = new Date().getFullYear();
 
@@ -10,11 +9,16 @@ interface Props {
   description?: string;
 }
 
-const { eyebrow, title, description } = Astro.props;
+const { eyebrow } = Astro.props;
 ---
 
-<footer class="bg-background-dark">
-  <section class="py-20">
+<footer class="relative overflow-hidden bg-neutral-800 border-tr border-tl rounded-lg">
+  <div
+    class="mask-image-gradient pointer-events-none absolute inset-0 bg-grid-pattern-dark opacity-20"
+  >
+  </div>
+
+  <section class="relative z-10 py-20">
     <div class="container">
       <div class="grid lg:grid-cols-[1fr_1fr] gap-12 items-center min-w-0">
         <div class="space-y-6">
@@ -41,7 +45,7 @@ const { eyebrow, title, description } = Astro.props;
                 <MapPin class="w-5 h-5 text-accent-primary" />
               </div>
               <div>
-                <h3 class="font-semibold text-white mb-1">Náměstí Míru 62</h3>
+                <h3 class="font-semibold text-primary mb-1">Náměstí Míru 62</h3>
                 <p class="text-secondary/80">339 01 Klatovy</p>
               </div>
             </div>
@@ -75,7 +79,7 @@ const { eyebrow, title, description } = Astro.props;
     </div>
   </section>
 
-  <div class="bg-background-dark py-6">
+  <div class="relative z-10 py-6">
     <div class="container">
       <div
         class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondary pt-8 border-t border-secondary"

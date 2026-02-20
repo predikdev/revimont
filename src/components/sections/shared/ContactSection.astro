@@ -1,19 +1,17 @@
 ---
 import SectionWrapper from "../../ui/SectionWrapper.astro";
-import Phone from "../../../assets/icons/phone.svg";
-import Mail from "../../../assets/icons/mail.svg";
-import MapPin from "../../../assets/icons/map-pin.svg";
+import { Phone, Mail, MapPin } from "@lucide/astro";
 import Button from "../../ui/Button.astro";
 ---
 
 <SectionWrapper background="light" withGrid>
   <div
-    class="bg-background rounded-lg shadow-xl overflow-hidden max-w-6xl mx-auto border border-gray-200"
+    class="bg-neutral-800/95 rounded-lg shadow-xl overflow-hidden mx-auto border border-gray-200"
   >
     <div class="grid lg:grid-cols-[35%_65%]">
-      <div class="bg-background-dark p-8 lg:p-12">
+      <div class="bg-neutral-800/95 p-8 lg:p-12 border-r border-neutral-600">
         <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Pojď'me se spojit</h2>
-        <p class="text-secondary/80 mb-12 leading-relaxed">
+        <p class="text-secondary mb-12 leading-relaxed">
           Máte dotaz nebo chcete nezávaznou cenovou nabídku? Ozvěte se nám, rádi vám poradíme.
         </p>
 
@@ -25,7 +23,7 @@ import Button from "../../ui/Button.astro";
               <Phone class="w-5 h-5 text-accent-primary" />
             </div>
             <div>
-              <p class="text-secondary/80 text-sm mb-1">Zavolejte nám</p>
+              <p class="text-secondary text-sm mb-1">Zavolejte nám</p>
               <a
                 href="tel:+420775736112"
                 class="text-primary text-lg font-semibold hover:text-accent-primary transition-colors"
@@ -42,7 +40,7 @@ import Button from "../../ui/Button.astro";
               <Mail class="w-5 h-5 text-accent-primary" />
             </div>
             <div>
-              <p class="text-secondary/80 text-sm mb-1">Napište nám</p>
+              <p class="text-secondary text-sm mb-1">Napište nám</p>
               <a
                 href="mailto:info@revimont.cz"
                 class="text-primary text-lg font-semibold hover:text-accent-primary transition-colors"
@@ -59,20 +57,20 @@ import Button from "../../ui/Button.astro";
               <MapPin class="w-5 h-5 text-accent-primary" />
             </div>
             <div>
-              <p class="text-secondary/80 text-sm mb-1">Sídlo firmy</p>
+              <p class="text-secondary text-sm mb-1">Sídlo firmy</p>
               <p class="text-primary text-lg font-semibold">Klatovy, Česká republika</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="bg-background p-8 lg:p-12">
-        <h3 class="text-2xl md:text-3xl font-bold text-black mb-8">Nezávazná poptávka</h3>
+      <div class="bg-neutral-800/95 p-8 lg:p-12">
+        <h3 class="text-2xl md:text-3xl font-bold text-primary mb-8">Nezávazná poptávka</h3>
 
         <form class="space-y-6">
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
-              <label for="name" class="block text-sm font-semibold text-black mb-2">
+              <label for="name" class="block text-sm font-medium text-primary/80 mb-2">
                 Jméno a příjmení
               </label>
               <input
@@ -86,7 +84,7 @@ import Button from "../../ui/Button.astro";
             </div>
 
             <div>
-              <label for="phone" class="block text-sm font-semibold text-black mb-2">
+              <label for="phone" class="block text-sm font-medium text-primary/80 mb-2">
                 Telefon
               </label>
               <input
@@ -101,7 +99,9 @@ import Button from "../../ui/Button.astro";
           </div>
 
           <div>
-            <label for="email" class="block text-sm font-semibold text-black mb-2"> E-mail </label>
+            <label for="email" class="block text-sm font-medium text-primary/80 mb-2">
+              E-mail
+            </label>
             <input
               type="email"
               id="email"
@@ -113,7 +113,7 @@ import Button from "../../ui/Button.astro";
           </div>
 
           <div>
-            <label for="message" class="block text-sm font-semibold text-black mb-2">
+            <label for="message" class="block text-sm font-medium text-primary/80 mb-2">
               O co máte zájem?
             </label>
             <textarea
@@ -133,7 +133,7 @@ import Button from "../../ui/Button.astro";
               class="mt-1 w-4 h-4 text-accent-primary border-gray-300 rounded focus:ring-accent-primary"
               required
             />
-            <label for="gdpr" class="text-sm text-black/80">
+            <label for="gdpr" class="text-sm text-primary/80">
               Souhlasím se zpracováním osobních údajů pro účely komunikace.
             </label>
           </div>

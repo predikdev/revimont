@@ -1,6 +1,5 @@
 ---
-import PhoneIcon from "../../assets/icons/phone.svg";
-import OpenMenu from "../../assets/icons/square-menu.svg";
+import { Phone, Menu } from "@lucide/astro";
 
 import LogoInline from "./LogoInline.astro";
 import Navigation from "./Navigation.astro";
@@ -24,10 +23,10 @@ import Button from "../ui/Button.astro";
         href="tel:+420775736112"
         class="flex items-center gap-2 text-primary/75 hover:text-accent-primary transition-colors"
       >
-        <img src={PhoneIcon.src} alt="Telefon" class="w-4 h-4 transition-all" />
+        <Phone class="w-4 h-4 transition-all" aria-hidden="true" />
         <span class="text-sm font-medium">+420 775 736 112</span>
       </a>
-      <Button variant="primary" href="/kontakt">Poptávka</Button>
+      <Button variant="primaryDark" href="/kontakt">Poptávka</Button>
     </div>
 
     <button
@@ -36,7 +35,7 @@ import Button from "../ui/Button.astro";
       data-menu-open
       class="lg:hidden text-primary/90 group-data-[scrolled=true]:text-gray-900 transition hover:text-primary"
     >
-      <OpenMenu class="h-6 w-6" />
+      <Menu class="h-6 w-6" />
     </button>
   </div>
 </header>
@@ -50,11 +49,11 @@ import Button from "../ui/Button.astro";
       const currentScroll = window.pageYOffset;
 
       if (currentScroll > 30) {
-        header?.classList.add("bg-background-darker", "shadow-lg");
+        header?.classList.add("bg-neutral-800/95", "backdrop-blur-sm", "shadow-lg");
         header?.classList.remove("py-2");
         header?.setAttribute("data-scrolled", "true");
       } else {
-        header?.classList.remove("bg-background-darker", "shadow-lg");
+        header?.classList.remove("bg-neutral-800/95", "backdrop-blur-sm", "shadow-lg");
         header?.classList.add("py-2");
         header?.setAttribute("data-scrolled", "false");
       }
