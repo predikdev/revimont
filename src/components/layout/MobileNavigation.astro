@@ -30,48 +30,60 @@ const links = [
   data-open="false"
 >
   <div
-    class="absolute inset-0 bg-black/90 opacity-0 transition-opacity duration-300 group-data-[open=true]:opacity-100 group-data-[open=true]:pointer-events-auto backdrop-blur-sm"
+    class="absolute inset-0 bg-neutral-800/90 opacity-0 transition-opacity duration-300 group-data-[open=true]:opacity-100 group-data-[open=true]:pointer-events-auto backdrop-blur-sm"
     data-menu-backdrop
   >
   </div>
 
   <div
-    class="absolute inset-0 translate-y-full bg-background-dark transition-transform duration-300 ease-out group-data-[open=true]:translate-y-0 group-data-[open=true]:pointer-events-auto overflow-y-auto"
+    class="absolute inset-0 translate-y-full bg-background transition-transform duration-300 ease-out group-data-[open=true]:translate-y-0 group-data-[open=true]:pointer-events-auto overflow-y-auto"
   >
     <div class="container min-h-full flex flex-col py-6">
       <!-- Header -->
       <div class="flex items-center justify-between">
-        <LogoInline class="w-40" dark={false} />
+        <LogoInline class="w-40" dark={true} />
         <button
           type="button"
           aria-label="Zavřít menu"
           data-menu-close
-          class="p-2 -m-2 text-primary hover:text-accent-primary transition-colors"
+          class="p-2 -m-2 text-neutral-800/95"
         >
           <X class="h-6 w-6" />
         </button>
       </div>
 
-      <nav class="mt-16 flex-1">
-        <ul class="flex flex-col gap-1">
+      <div class="mt-6 border-b border-neutral-200"></div>
+
+      <nav class="mt-2 flex-1 pb-10">
+        <ul class="flex flex-col">
           <li>
             <a
               href="/"
-              class="block py-4 text-2xl font-medium text-primary hover:text-accent-primary transition-colors border-b border-white/10"
+              class={`flex items-center gap-4 py-3.5 px-3 rounded-xl text-xl font-semibold transition-colors ${isActive("/") ? "bg-accent-primary/10 text-accent-primary" : "text-neutral-800"}`}
             >
+              <span
+                class={`text-sm font-sora w-6 shrink-0 ${isActive("/") ? "" : "text-neutral-400"}`}
+                >01</span
+              >
               Domů
             </a>
           </li>
 
           <!-- Služby accordion -->
-          <li class="border-b border-white/10">
+          <li>
             <button
               type="button"
               data-accordion-toggle
               aria-expanded="false"
-              class={`flex w-full items-center justify-between py-4 text-2xl font-medium transition-colors hover:text-accent-primary ${isActive("/sluzby") ? "text-accent-primary" : "text-primary"}`}
+              class={`flex w-full items-center justify-between py-3.5 px-3 rounded-xl text-xl font-semibold transition-colors hover:text-accent-primary ${isActive("/sluzby") ? "bg-accent-primary/10 text-accent-primary" : "text-neutral-800"}`}
             >
-              Služby
+              <span class="flex items-center gap-4">
+                <span
+                  class={`text-sm font-sora w-6 shrink-0 ${isActive("/sluzby") ? "" : "text-neutral-400"}`}
+                  >02</span
+                >
+                Služby
+              </span>
               <ChevronDown class="h-6 w-6 transition-transform duration-200" />
             </button>
             <ul data-accordion-panel class="hidden pb-2">
@@ -80,7 +92,7 @@ const links = [
                   <li>
                     <a
                       href={link.href}
-                      class={`block py-2.5 pl-4 text-lg font-medium transition-colors hover:text-accent-primary ${isActive(link.href) ? "text-accent-primary" : "text-primary/60"}`}
+                      class={`block py-2.5 pl-10 text-base font-semibold transition-colors hover:text-accent-primary ${isActive(link.href) ? "text-accent-primary" : "text-neutral-800/80"}`}
                     >
                       {link.label}
                     </a>
@@ -91,12 +103,17 @@ const links = [
           </li>
 
           {
-            links.map((link) => (
+            links.map((link, i) => (
               <li>
                 <a
                   href={link.href}
-                  class="block py-4 text-2xl font-medium text-primary hover:text-accent-primary transition-colors border-b border-white/10"
+                  class={`flex items-center gap-4 py-3.5 px-3 rounded-xl text-xl font-semibold transition-colors ${isActive(link.href) ? "bg-accent-primary/10 text-accent-primary" : "text-neutral-800"}`}
                 >
+                  <span
+                    class={`text-sm font-sora w-6 shrink-0 ${isActive(link.href) ? "" : "text-neutral-400"}`}
+                  >
+                    {String(i + 3).padStart(2, "0")}
+                  </span>
                   {link.label}
                 </a>
               </li>
@@ -105,15 +122,15 @@ const links = [
         </ul>
       </nav>
 
-      <div class="mt-auto pt-8 space-y-4 border-t border-white/10">
+      <div class="mt-auto border-t border-neutral-200 pt-6 space-y-4">
         <a
           href="tel:+420775736112"
-          class="flex items-center justify-center gap-3 py-3 text-primary hover:text-accent-primary transition-colors group"
+          class="flex items-center justify-center gap-3 py-3 text-neutral-800"
         >
           <Phone class="w-5 h-5" />
           <span class="text-lg font-semibold">+420 775 736 112</span>
         </a>
-        <Button variant="primary" href="/kontakt" class="w-full" size="lg">
+        <Button variant="primaryDark" href="/kontakt" class="w-full" size="lg">
           Nezávazná poptávka
         </Button>
       </div>
@@ -160,11 +177,7 @@ const links = [
 
     menu.addEventListener("click", (event) => {
       if (!(event.target instanceof Element)) return;
-      if (
-        event.target.closest(
-          "a[href],button:not([data-accordion-toggle]),[data-menu-close]"
-        )
-      )
+      if (event.target.closest("a[href],button:not([data-accordion-toggle]),[data-menu-close]"))
         closeMenu();
     });
 
