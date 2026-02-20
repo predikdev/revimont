@@ -6,12 +6,12 @@ import Button from "../../ui/Button.astro";
 
 <SectionWrapper background="light" withGrid>
   <div
-    class="bg-neutral-800/95 rounded-lg shadow-xl overflow-hidden mx-auto border border-gray-200"
+    class="bg-neutral-800/95 rounded-lg shadow-xl overflow-hidden mx-auto border border-neutral-200"
   >
     <div class="grid lg:grid-cols-[35%_65%]">
       <div class="bg-neutral-800/95 p-8 lg:p-12 border-r border-neutral-600">
-        <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Pojď'me se spojit</h2>
-        <p class="text-secondary mb-12 leading-relaxed">
+        <h2 class="text-3xl md:text-4xl font-bold text-neutral-50 mb-4">Pojď'me se spojit</h2>
+        <p class="text-neutral-300 mb-12 leading-relaxed">
           Máte dotaz nebo chcete nezávaznou cenovou nabídku? Ozvěte se nám, rádi vám poradíme.
         </p>
 
@@ -23,10 +23,10 @@ import Button from "../../ui/Button.astro";
               <Phone class="w-5 h-5 text-accent-primary" />
             </div>
             <div>
-              <p class="text-secondary text-sm mb-1">Zavolejte nám</p>
+              <p class="text-neutral-300 text-sm mb-1">Zavolejte nám</p>
               <a
                 href="tel:+420775736112"
-                class="text-primary text-lg font-semibold hover:text-accent-primary transition-colors"
+                class="text-neutral-50 text-lg font-semibold hover:text-accent-primary transition-colors"
               >
                 +420 775 736 112
               </a>
@@ -40,10 +40,10 @@ import Button from "../../ui/Button.astro";
               <Mail class="w-5 h-5 text-accent-primary" />
             </div>
             <div>
-              <p class="text-secondary text-sm mb-1">Napište nám</p>
+              <p class="text-neutral-300 text-sm mb-1">Napište nám</p>
               <a
                 href="mailto:info@revimont.cz"
-                class="text-primary text-lg font-semibold hover:text-accent-primary transition-colors"
+                class="text-neutral-50 text-lg font-semibold hover:text-accent-primary transition-colors"
               >
                 info@revimont.cz
               </a>
@@ -57,20 +57,20 @@ import Button from "../../ui/Button.astro";
               <MapPin class="w-5 h-5 text-accent-primary" />
             </div>
             <div>
-              <p class="text-secondary text-sm mb-1">Sídlo firmy</p>
-              <p class="text-primary text-lg font-semibold">Klatovy, Česká republika</p>
+              <p class="text-neutral-300 text-sm mb-1">Sídlo firmy</p>
+              <p class="text-neutral-50 text-lg font-semibold">Klatovy, Česká republika</p>
             </div>
           </div>
         </div>
       </div>
 
       <div class="bg-neutral-800/95 p-8 lg:p-12">
-        <h3 class="text-2xl md:text-3xl font-bold text-primary mb-8">Nezávazná poptávka</h3>
+        <h3 class="text-2xl md:text-3xl font-bold text-neutral-50 mb-8">Nezávazná poptávka</h3>
 
         <form class="space-y-6">
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
-              <label for="name" class="block text-sm font-medium text-primary/80 mb-2">
+              <label for="name" class="block text-sm font-medium text-neutral-50/80 mb-2">
                 Jméno a příjmení
               </label>
               <input
@@ -78,13 +78,13 @@ import Button from "../../ui/Button.astro";
                 id="name"
                 name="name"
                 placeholder="Jan Novák"
-                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent transition-all"
+                class="w-full px-4 py-3 bg-background border border-neutral-200 rounded focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent transition-all"
                 required
               />
             </div>
 
             <div>
-              <label for="phone" class="block text-sm font-medium text-primary/80 mb-2">
+              <label for="phone" class="block text-sm font-medium text-neutral-50/80 mb-2">
                 Telefon
               </label>
               <input
@@ -92,14 +92,14 @@ import Button from "../../ui/Button.astro";
                 id="phone"
                 name="phone"
                 placeholder="+420 777 000 000"
-                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent transition-all"
+                class="w-full px-4 py-3 bg-background border border-neutral-200 rounded focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent transition-all"
                 required
               />
             </div>
           </div>
 
           <div>
-            <label for="email" class="block text-sm font-medium text-primary/80 mb-2">
+            <label for="email" class="block text-sm font-medium text-neutral-50/80 mb-2">
               E-mail
             </label>
             <input
@@ -107,13 +107,13 @@ import Button from "../../ui/Button.astro";
               id="email"
               name="email"
               placeholder="jan.novak@email.cz"
-              class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent transition-all"
+              class="w-full px-4 py-3 bg-background border border-neutral-200 rounded focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent transition-all"
               required
             />
           </div>
 
           <div>
-            <label for="message" class="block text-sm font-medium text-primary/80 mb-2">
+            <label for="message" class="block text-sm font-medium text-neutral-50/80 mb-2">
               O co máte zájem?
             </label>
             <textarea
@@ -121,7 +121,7 @@ import Button from "../../ui/Button.astro";
               name="message"
               rows="5"
               placeholder="Popište stručně vaši poptávku..."
-              class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent transition-all resize-none"
+              class="w-full px-4 py-3 bg-background border border-neutral-200 rounded focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent transition-all resize-none"
               required></textarea>
           </div>
 
@@ -130,10 +130,10 @@ import Button from "../../ui/Button.astro";
               type="checkbox"
               id="gdpr"
               name="gdpr"
-              class="mt-1 w-4 h-4 text-accent-primary border-gray-300 rounded focus:ring-accent-primary"
+              class="mt-1 w-4 h-4 text-accent-primary border-neutral-300 rounded focus:ring-accent-primary"
               required
             />
-            <label for="gdpr" class="text-sm text-primary/80">
+            <label for="gdpr" class="text-sm text-neutral-50/80">
               Souhlasím se zpracováním osobních údajů pro účely komunikace.
             </label>
           </div>

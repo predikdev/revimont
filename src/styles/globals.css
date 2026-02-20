@@ -16,19 +16,8 @@
 
 :root {
   /* Colors */
-  /*--background: oklch(0.86 0 0);*/
-  --background-darker: oklch(28.5% 0 0);
   --background: oklch(96.7% 0.003 264.542);
-  --background-dark: oklch(32.11% 0 0);
-  --background-surface: #18181b;
-  --bg-dark: #0f0f11;
-  --text-primary: oklch(0.9846 0.0017 247.84);
-  --text-secondary: oklch(98.46% 0.0017 247.84 / 0.75);
-  --text-black: oklch(25.2% 0 0);
   --orange-primary: oklch(67.66% 0.1838 40.03);
-  --orange-secondary: oklch(67.66% 0.1838 40.03 / 0.15);
-  --overlay: oklch(0.22 0 0 / 0.7);
-  --border-color: oklch(83.9% 0 0);
 
   /* Font sizes */
   --font-small: clamp(0.8125rem, 0.78rem + 0.15vw, 0.875rem);
@@ -46,17 +35,7 @@
 @theme {
   /* Colors */
   --color-background: var(--background);
-  --color-background-dark: var(--background-dark);
-  --color-background-darker: var(--background-darker);
-  --color-background-surface: var(--background-surface);
-  --color-background-bg: var(--bg-dark);
-  --color-primary: var(--text-primary);
-  --color-secondary: var(--text-secondary);
-  --color-black: var(--text-black);
   --color-accent-primary: var(--orange-primary);
-  --color-accent-secondary: var(--orange-secondary);
-  --color-overlay: var(--overlay);
-  --color-border: var(--border-color);
 
   /* Line heights */
   --leading-small: var(--lh-small);

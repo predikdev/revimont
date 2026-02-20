@@ -54,7 +54,7 @@ const stats = [
     />
 
     <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-12 mb-16">
-      <div class="overflow-hidden rounded-lg border border-border/70">
+      <div class="overflow-hidden rounded-lg border border-neutral-300/70">
         <Image
           src={FirmaImage}
           alt="Elektrotechnik při práci na vedení"
@@ -71,10 +71,10 @@ const stats = [
               </div>
 
               <div>
-                <h3 class="font-sora text-lg font-semibold leading-tight text-black">
+                <h3 class="font-sora text-lg font-semibold leading-tight text-neutral-800">
                   {item.title}
                 </h3>
-                <p class="mt-2 text-base leading-relaxed text-black/60">{item.description}</p>
+                <p class="mt-2 text-base leading-relaxed text-neutral-800/60">{item.description}</p>
               </div>
             </article>
           ))
@@ -88,7 +88,7 @@ const stats = [
           <div
             class:list={[
               "text-center lg:px-8",
-              index < stats.length - 1 && "lg:border-r lg:border-border/70",
+              index < stats.length - 1 && "lg:border-r lg:border-neutral-300/70",
             ]}
           >
             <p class="font-sora text-4xl font-bold leading-none text-accent-primary">

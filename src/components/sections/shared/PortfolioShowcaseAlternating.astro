@@ -65,14 +65,14 @@ const projects = [
                   class="h-full w-full object-cover"
                   loading="lazy"
                 />
-                <div class="pointer-events-none absolute inset-0 bg-linear-to-t from-black/35 via-transparent to-transparent" />
+                <div class="pointer-events-none absolute inset-0 bg-linear-to-t from-neutral-900/35 via-transparent to-transparent" />
               </div>
             </a>
 
             <div class:list={["max-w-xl", index === 1 ? "md:order-1" : "md:order-2"]}>
-              <h3 class="font-sora text-4xl leading-tight font-bold text-black">{project.title}</h3>
+              <h3 class="font-sora text-4xl leading-tight font-bold text-neutral-800">{project.title}</h3>
               <p class="mt-3 text-sm font-semibold text-accent-primary">{project.meta}</p>
-              <p class="mt-5 text-base leading-relaxed text-black/70">{project.description}</p>
+              <p class="mt-5 text-base leading-relaxed text-neutral-800/70">{project.description}</p>
 
               <div class="mt-6">
                 <Button

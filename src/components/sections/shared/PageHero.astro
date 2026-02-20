@@ -115,11 +115,11 @@ const [cardOne, cardTwo, cardThree] = [
         {
           titleHtml ? (
             <h1
-              class="mt-4 font-sora text-4xl font-semibold text-primary sm:text-5xl xl:text-6xl"
+              class="mt-4 font-sora text-4xl font-semibold text-neutral-50 sm:text-5xl xl:text-6xl"
               set:html={titleHtml}
             />
           ) : title ? (
-            <h1 class="mt-4 font-sora text-4xl font-semibold text-primary sm:text-5xl lg:text-6xl">
+            <h1 class="mt-4 font-sora text-4xl font-semibold text-neutral-50 sm:text-5xl lg:text-6xl">
               {title}
             </h1>
           ) : null
@@ -127,7 +127,7 @@ const [cardOne, cardTwo, cardThree] = [
 
         {
           description ? (
-            <p class="mt-4 text-base leading-relaxed text-secondary sm:text-lg">{description}</p>
+            <p class="mt-4 text-base leading-relaxed text-neutral-300 sm:text-lg">{description}</p>
           ) : null
         }
 
@@ -164,7 +164,7 @@ const [cardOne, cardTwo, cardThree] = [
                 [cardOne, cardTwo, cardThree].map((card, index) => (
                   <article
                     class:list={[
-                      "rounded-lg border border-white/10 bg-neutral-800/95 p-4 sm:p-5 shadow-2xl",
+                      "rounded-lg border border-neutral-700/40 bg-neutral-800/95 p-4 sm:p-5 shadow-2xl",
                       index === 0 ? "lg:col-start-2 lg:-col-end-1 lg:row-start-1" : "",
                       index === 1 ? "lg:col-start-1 lg:col-end-4 lg:row-start-2" : "",
                       index === 2 ? "lg:col-start-2 lg:-col-end-1 lg:row-start-3" : "",
@@ -173,10 +173,10 @@ const [cardOne, cardTwo, cardThree] = [
                     <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-accent-primary/80">
                       {card.value ?? "Služba"}
                     </p>
-                    <h3 class="mt-3 text-sm font-semibold uppercase tracking-wide text-primary sm:text-base">
+                    <h3 class="mt-3 text-sm font-semibold uppercase tracking-wide text-neutral-50 sm:text-base">
                       {card.title}
                     </h3>
-                    <p class="mt-2 text-xs leading-relaxed text-secondary sm:text-sm">
+                    <p class="mt-2 text-xs leading-relaxed text-neutral-300 sm:text-sm">
                       {card.description}
                     </p>
                   </article>

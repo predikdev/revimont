@@ -18,7 +18,7 @@ const subLinks = [
 <nav class="hidden lg:flex items-center gap-8">
   <a
     href="/"
-    class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/") ? "text-accent-primary" : "text-primary/75"}`}
+    class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/") ? "text-accent-primary" : "text-neutral-50/75"}`}
   >
     Domů
   </a>
@@ -29,20 +29,20 @@ const subLinks = [
       data-dropdown-trigger
       aria-expanded="false"
       aria-haspopup="true"
-      class={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/sluzby") ? "text-accent-primary" : "text-primary/75"}`}
+      class={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/sluzby") ? "text-accent-primary" : "text-neutral-50/75"}`}
     >
       Služby
       <ChevronDown class="h-4 w-4 transition-transform duration-200" />
     </button>
     <div
       data-dropdown-panel
-      class="absolute top-full left-0 mt-2 w-48 hidden bg-background-dark border border-white/10 rounded-lg shadow-lg shadow-black/30 py-2"
+      class="absolute top-full left-0 mt-2 w-48 hidden bg-neutral-800 border border-neutral-700/40 rounded-lg shadow-lg shadow-neutral-900/30 py-2"
     >
       {
         subLinks.map((link) => (
           <a
             href={link.href}
-            class={`block px-4 py-2.5 text-sm transition-colors hover:text-accent-primary hover:bg-white/5 ${isActive(link.href) ? "text-accent-primary" : "text-primary/75"}`}
+            class={`block px-4 py-2.5 text-sm transition-colors hover:text-accent-primary hover:bg-background/5 ${isActive(link.href) ? "text-accent-primary" : "text-neutral-50/75"}`}
           >
             {link.label}
           </a>
@@ -53,14 +53,14 @@ const subLinks = [
 
   <a
     href="/o-nas"
-    class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/o-nas") ? "text-accent-primary" : "text-primary/75"}`}
+    class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/o-nas") ? "text-accent-primary" : "text-neutral-50/75"}`}
   >
     O nás
   </a>
 
   <a
     href="/reference"
-    class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/reference") ? "text-accent-primary" : "text-primary/75"}`}
+    class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/reference") ? "text-accent-primary" : "text-neutral-50/75"}`}
   >
     Reference
   </a>

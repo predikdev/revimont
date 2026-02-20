@@ -113,7 +113,7 @@ const renderedSteps: RenderedApproachStep[] = steps.slice(0, 5).map((step, index
         renderedSteps.map((step, index) => (
           <li class="relative text-center">
             {index < renderedSteps.length - 1 && (
-              <span class="pointer-events-none absolute top-6 left-[calc(50%+2rem)] hidden h-px w-[calc(100%-4rem)] bg-zinc-200 md:block" />
+              <span class="pointer-events-none absolute top-6 left-[calc(50%+2rem)] hidden h-px w-[calc(100%-4rem)] bg-neutral-200 md:block" />
             )}
             <button
               type="button"
@@ -123,13 +123,13 @@ const renderedSteps: RenderedApproachStep[] = steps.slice(0, 5).map((step, index
               aria-current={index === 0 ? "step" : "false"}
               class="group mx-auto flex w-full flex-col items-center"
             >
-              <span class="flex h-14 w-14 items-center justify-center rounded-full border border-zinc-200 bg-zinc-100 text-zinc-400 transition-all duration-300 group-data-[active=true]:border-accent-primary group-data-[active=true]:bg-accent-primary group-data-[active=true]:text-white group-data-[active=true]:shadow-[0_12px_26px_-14px_rgba(251,146,60,0.85)]">
+              <span class="flex h-14 w-14 items-center justify-center rounded-full border border-neutral-200 bg-neutral-100 text-neutral-400 transition-all duration-300 group-data-[active=true]:border-accent-primary group-data-[active=true]:bg-accent-primary group-data-[active=true]:text-neutral-50 group-data-[active=true]:shadow-lg">
                 <step.icon class="h-5 w-5" />
               </span>
-              <span class="mt-3 text-sm font-bold text-zinc-400 transition-colors duration-300 group-data-[active=true]:text-accent-primary">
+              <span class="mt-3 text-sm font-bold text-neutral-400 transition-colors duration-300 group-data-[active=true]:text-accent-primary">
                 {step.order}
               </span>
-              <span class="mt-1 text-sm leading-tight font-semibold text-zinc-500 transition-colors duration-300 group-data-[active=true]:text-zinc-800">
+              <span class="mt-1 text-sm leading-tight font-semibold text-neutral-500 transition-colors duration-300 group-data-[active=true]:text-neutral-800">
                 {step.title}
               </span>
             </button>
@@ -145,7 +145,7 @@ const renderedSteps: RenderedApproachStep[] = steps.slice(0, 5).map((step, index
             data-step-card
             data-step-card-index={index}
             class:list={[
-              "overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-[0_24px_52px_-34px_rgba(39,39,42,0.42)]",
+              "overflow-hidden rounded-2xl border border-neutral-200 bg-background shadow-xl",
               index !== 0 && "hidden",
             ]}
           >
@@ -158,11 +158,11 @@ const renderedSteps: RenderedApproachStep[] = steps.slice(0, 5).map((step, index
                   </p>
                   <p class="mt-6 text-sm font-bold text-accent-primary">Krok {step.order}</p>
                   {step.nextTitle ? (
-                    <p class="mt-1 text-sm text-zinc-400">
-                      Dále: <span class="font-medium text-zinc-500">{step.nextTitle}</span>
+                    <p class="mt-1 text-sm text-neutral-400">
+                      Dále: <span class="font-medium text-neutral-500">{step.nextTitle}</span>
                     </p>
                   ) : (
-                    <p class="mt-1 text-sm text-zinc-400 font-medium">Poslední krok</p>
+                    <p class="mt-1 text-sm text-neutral-400 font-medium">Poslední krok</p>
                   )}
                 </div>
 
@@ -182,10 +182,10 @@ const renderedSteps: RenderedApproachStep[] = steps.slice(0, 5).map((step, index
               {/* Right content */}
               <div class="flex flex-1 flex-col justify-between p-8">
                 <div>
-                  <h3 class="font-sora text-3xl font-bold text-zinc-800 leading-tight">
+                  <h3 class="font-sora text-3xl font-bold text-neutral-800 leading-tight">
                     {step.title}
                   </h3>
-                  <p class="mt-3 text-base leading-relaxed text-zinc-500">{step.description}</p>
+                  <p class="mt-3 text-base leading-relaxed text-neutral-500">{step.description}</p>
 
                   <ul class="mt-6 flex flex-col gap-3">
                     {step.bullets.map((bullet) => (
@@ -193,14 +193,14 @@ const renderedSteps: RenderedApproachStep[] = steps.slice(0, 5).map((step, index
                         <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-accent-primary/40 bg-accent-primary/10">
                           <Check class="h-3 w-3 text-accent-primary" />
                         </span>
-                        <span class="text-sm font-medium text-zinc-700">{bullet}</span>
+                        <span class="text-sm font-medium text-neutral-700">{bullet}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
                 {/* Navigation */}
-                <div class="mt-8 flex items-center justify-between border-t border-zinc-100 pt-6">
+                <div class="mt-8 flex items-center justify-between border-t border-neutral-100 pt-6">
                   <Button
                     variant="ghost"
                     size="sm"
@@ -220,7 +220,7 @@ const renderedSteps: RenderedApproachStep[] = steps.slice(0, 5).map((step, index
                     data-step-next
                     data-current-index={index}
                     disabled={index === renderedSteps.length - 1}
-                    class="shadow-[0_8px_20px_-8px_rgba(251,146,60,0.7)]"
+                    class="shadow-md"
                   >
                     Další krok
                     <ArrowRight class="h-4 w-4" />

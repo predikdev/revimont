@@ -17,7 +17,7 @@ import Footer from "../components/layout/Footer.astro";
     <meta name="generator" content={Astro.generator} />
     <title>Revimont Klatovy</title>
   </head>
-  <body class="text-zinc-800">
+  <body class="text-neutral-800">
     <MobileNavigation />
     <Header />
     <div class="hero-wrapper">
@@ -40,7 +40,7 @@ import Footer from "../components/layout/Footer.astro";
     content: "";
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(to right, #2a2a2a, rgba(42, 42, 42, 0.95));
+    background-image: linear-gradient(to right, var(--color-neutral-800), var(--color-neutral-800));
     z-index: 1;
     pointer-events: none;
   }
