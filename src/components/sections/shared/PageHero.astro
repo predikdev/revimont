@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import electricImage from "../../../assets/images/hero_image.jpg";
 import Button from "../../ui/Button.astro";
 
 interface Cta {
@@ -22,7 +25,7 @@ interface Props {
   primaryCta?: Cta;
   secondaryCta?: Cta;
   bentoCards?: BentoCard[];
-  backgroundImageSrc?: string;
+  backgroundImage?: ImageMetadata;
   backgroundImageAlt?: string;
 }
 
@@ -36,7 +39,7 @@ const {
   primaryCta,
   secondaryCta,
   bentoCards = [],
-  backgroundImageSrc = "https://images.pexels.com/photos/28942196/pexels-photo-28942196.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=2000",
+  backgroundImage = electricImage,
   backgroundImageAlt = "Vnitřek elektrického rozvaděče s vodiči",
 } = Astro.props;
 
@@ -82,11 +85,15 @@ const [cardOne, cardTwo, cardThree] = [
 
 <section slot={slot} id={id} class="relative isolate overflow-hidden bg-neutral-800/95 py-32 lg:py-64">
   <div class="absolute inset-0">
-    <img
-      src={backgroundImageSrc}
+    <Image
+      src={backgroundImage}
       alt={backgroundImageAlt}
+      widths={[640, 1024, 1280, 1920]}
+      sizes="100vw"
       class="h-full w-full object-cover object-center"
-      loading="lazy"
+      loading="eager"
+      fetchpriority="high"
+      quality={80}
     />
   </div>
 

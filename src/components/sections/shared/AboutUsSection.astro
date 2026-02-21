@@ -58,7 +58,11 @@ const stats = [
         <Image
           src={FirmaImage}
           alt="Elektrotechnik při práci na vedení"
+          widths={[400, 800, 1200]}
+          sizes="(min-width: 1024px) 50vw, 100vw"
           class="h-full w-full object-cover"
+          loading="lazy"
+          quality={80}
         />
       </div>
 

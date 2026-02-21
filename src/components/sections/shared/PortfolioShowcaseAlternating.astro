@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import SectionWrapper from "../../ui/SectionWrapper.astro";
 import SectionHeader from "../../ui/SectionHeader.astro";
 import Button from "../../ui/Button.astro";
@@ -16,13 +18,13 @@ interface Props {
 
 const { title = "Ukázky našich elektroinstalací", eyebrow = "Portfolio" } = Astro.props;
 
-const projects = [
+const projects: { title: string; description: string; meta: string; image: ImageMetadata; href: string }[] = [
   {
     title: "Elektroinstalace haly",
     description:
       "Realizace elektroinstalace v průmyslovém prostoru, kde se řeší hlavně rychlost, bezpečnost a přesnost provedení. Probíhala montáž vedení a příprava rozvodů ve výšce tak, aby navazující části instalace šly napojit bez zdržení. Důraz byl na čistou trasu, logické vedení a funkční předání bez improvizací.",
     meta: "Klatovy",
-    image: Prace02.src,
+    image: Prace02,
     href: "/reference/projekt-1",
   },
   {
@@ -30,7 +32,7 @@ const projects = [
     description:
       "U tohoto projektu šlo o kontrolu a úpravu rozvaděče, aby byl přehledný a hlavně bezpečný. Byly prověřené okruhy, jištění a funkce ochranných prvků, a doplněno vše, co bylo potřeba pro spolehlivý provoz. Výsledkem je čisté a srozumitelné řešení, které se dá bez problémů servisovat i do budoucna.",
     meta: "Sušice",
-    image: Prace01.src,
+    image: Prace01,
     href: "/reference/projekt-2",
   },
   {
@@ -38,7 +40,7 @@ const projects = [
     description:
       "Tady je vidět příprava venkovního rozvaděče před finálním dokončením. Osazení prvků, svorkování a hlavně pečlivé značení vodičů, aby bylo zapojení jasné a bez chyb i při dalších krocích na stavbě. Cíl je jednoduchý: aby připojení a následný servis byly rychlé, bezpečné a bez překvapení.",
     meta: "Železná Ruda",
-    image: Prace03.src,
+    image: Prace03,
     href: "/reference/projekt-3",
   },
 ];
@@ -59,11 +61,14 @@ const projects = [
               class:list={["relative block", index === 1 ? "md:order-2" : "md:order-1"]}
             >
               <div class="relative h-64 overflow-hidden rounded-xl md:h-72 lg:h-80">
-                <img
+                <Image
                   src={project.image}
                   alt={project.title}
+                  widths={[400, 800, 1200]}
+                  sizes="(min-width: 768px) 50vw, 100vw"
                   class="h-full w-full object-cover"
                   loading="lazy"
+                  quality={80}
                 />
                 <div class="pointer-events-none absolute inset-0 bg-linear-to-t from-neutral-900/35 via-transparent to-transparent" />
               </div>
