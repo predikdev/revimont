@@ -1,7 +1,10 @@
 ---
+import { getImage } from "astro:assets";
+import heroImage from "../assets/images/hero_image.jpg";
+
 const titleHtml = `Elektroinstalace a <br />revize bez starostí`;
 const description =
-  "Profesionální diagnostika a servis slaboproudých instalací. Od rodinných domů po rozsáhlé systémy v bytových domech.";
+  "Provádíme elektroinstalace, revize, montáže a opravy elektrozařízení v Klatovech a okolí. Máme za sebou roky praxe, a tak víme, že nejdůležitější je kvalitní, bezpečná a poctivě odvedená práce.";
 
 import BaseLayout from "../layouts/BaseLayout.astro";
 import AboutUsSection from "../components/sections/shared/AboutUsSection.astro";
@@ -9,9 +12,27 @@ import PortfolioShowcaseAlternating from "../components/sections/shared/Portfoli
 import ContactSection from "../components/sections/shared/ContactSection.astro";
 import PageHero from "../components/sections/shared/PageHero.astro";
 import HomeServicesCards from "../components/sections/home/HomeServicesCards.astro";
+
+const [img640, img1024, img1280, img1920] = await Promise.all([
+  getImage({ src: heroImage, width: 640, format: "webp", quality: 80 }),
+  getImage({ src: heroImage, width: 1024, format: "webp", quality: 80 }),
+  getImage({ src: heroImage, width: 1280, format: "webp", quality: 80 }),
+  getImage({ src: heroImage, width: 1920, format: "webp", quality: 80 }),
+]);
+
+const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 1280w, ${img1920.src} 1920w`;
 ---
 
 <BaseLayout>
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    imagesrcset={preloadSrcset}
+    imagesizes="100vw"
+    fetchpriority="high"
+  />
+
   <PageHero
     id="hero"
     slot="hero"

@@ -16,6 +16,7 @@ import Footer from "../components/layout/Footer.astro";
     <meta name="robots" content="noindex,nofollow,noarchive,nosnippet" />
     <meta name="generator" content={Astro.generator} />
     <title>Revimont Klatovy</title>
+    <slot name="head" />
   </head>
   <body class="text-neutral-800">
     <MobileNavigation />
