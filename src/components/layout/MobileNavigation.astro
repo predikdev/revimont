@@ -59,6 +59,7 @@ const links = [
           <li>
             <a
               href="/"
+              aria-current={isActive("/") ? "page" : undefined}
               class={`flex items-center gap-4 py-3.5 px-3 rounded-xl text-xl font-semibold transition-colors ${isActive("/") ? "bg-accent-primary/10 text-accent-primary" : "text-neutral-800"}`}
             >
               <span
@@ -92,6 +93,7 @@ const links = [
                   <li>
                     <a
                       href={link.href}
+                      aria-current={isActive(link.href) ? "page" : undefined}
                       class={`block py-2.5 pl-10 text-base font-semibold transition-colors hover:text-accent-primary ${isActive(link.href) ? "text-accent-primary" : "text-neutral-800/80"}`}
                     >
                       {link.label}
@@ -107,6 +109,7 @@ const links = [
               <li>
                 <a
                   href={link.href}
+                  aria-current={isActive(link.href) ? "page" : undefined}
                   class={`flex items-center gap-4 py-3.5 px-3 rounded-xl text-xl font-semibold transition-colors ${isActive(link.href) ? "bg-accent-primary/10 text-accent-primary" : "text-neutral-800"}`}
                 >
                   <span
@@ -125,10 +128,11 @@ const links = [
       <div class="mt-auto border-t border-neutral-200 pt-6 space-y-4">
         <a
           href="tel:+420775736112"
+          aria-label="Zavolejte nám: +420 775 736 112"
           class="flex items-center justify-center gap-3 py-3 text-neutral-800"
         >
-          <Phone class="w-5 h-5" />
-          <span class="text-lg font-semibold">+420 775 736 112</span>
+          <Phone class="w-5 h-5" aria-hidden="true" />
+          <span class="text-lg font-semibold" aria-hidden="true">+420 775 736 112</span>
         </a>
         <Button variant="primaryDark" href="/kontakt" class="w-full" size="lg">
           Nezávazná poptávka

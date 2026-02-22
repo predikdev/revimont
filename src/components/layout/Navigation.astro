@@ -18,6 +18,7 @@ const subLinks = [
 <nav class="hidden lg:flex items-center gap-8">
   <a
     href="/"
+    aria-current={isActive("/") ? "page" : undefined}
     class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/") ? "text-accent-primary" : "text-neutral-50/75"}`}
   >
     Domů
@@ -42,6 +43,7 @@ const subLinks = [
         subLinks.map((link) => (
           <a
             href={link.href}
+            aria-current={isActive(link.href) ? "page" : undefined}
             class={`block px-4 py-2.5 text-sm transition-colors hover:text-accent-primary hover:bg-background/5 ${isActive(link.href) ? "text-accent-primary" : "text-neutral-50/75"}`}
           >
             {link.label}
@@ -53,6 +55,7 @@ const subLinks = [
 
   <a
     href="/o-nas"
+    aria-current={isActive("/o-nas") ? "page" : undefined}
     class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/o-nas") ? "text-accent-primary" : "text-neutral-50/75"}`}
   >
     O nás
@@ -60,6 +63,7 @@ const subLinks = [
 
   <a
     href="/reference"
+    aria-current={isActive("/reference") ? "page" : undefined}
     class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/reference") ? "text-accent-primary" : "text-neutral-50/75"}`}
   >
     Reference
@@ -107,7 +111,41 @@ const subLinks = [
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         closeDropdown();
+        (trigger as HTMLElement).focus();
       }
+    });
+
+    // Keyboard arrow navigation within dropdown
+    const dropdownItems = Array.from(panel.querySelectorAll("a")) as HTMLAnchorElement[];
+
+    (trigger as HTMLElement).addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        openDropdown();
+        dropdownItems[0]?.focus();
+      }
+    });
+
+    dropdownItems.forEach((item, index) => {
+      item.addEventListener("keydown", (e: KeyboardEvent) => {
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          dropdownItems[index + 1]?.focus();
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          if (index === 0) {
+            (trigger as HTMLElement).focus();
+          } else {
+            dropdownItems[index - 1]?.focus();
+          }
+        } else if (e.key === "Escape") {
+          e.preventDefault();
+          closeDropdown();
+          (trigger as HTMLElement).focus();
+        } else if (e.key === "Tab") {
+          closeDropdown();
+        }
+      });
     });
   });
 </script>
