@@ -48,42 +48,45 @@ const resolvedBentoCards =
     ? bentoCards
     : [
         {
-          title: "Klatovy a okolí",
-          description: "Rychlé výjezdy po regionu a spolehlivé termíny.",
-          value: "< 24h",
-        },
-        {
-          title: "Diagnostika",
-          description: "Přesná lokalizace závad měřící technikou.",
-          value: "99%",
+          title: "Odborné montáže",
+          description: "Kompletní elektroinstalace pro rodinné domy, byty i komerční prostory.",
+          value: "Praxe",
         },
         {
           title: "Revize",
-          description: "Kompletní výstupy a doporučení dalšího postupu.",
+          description: "Zajišťujeme veškerou dokumentaci a revizní zprávy v souladu s normami ČSN.",
           value: "ČSN",
         },
         {
-          title: "Servis 7/7",
-          description: "Domluva termínu dle vašich možností.",
+          title: "Individuální přístup",
+          description: "Návrh optimálního řešení na míru vašim konkrétním potřebám.",
         },
       ];
 
 const [cardOne, cardTwo, cardThree] = [
   resolvedBentoCards[0] ?? {
-    title: "Rychlý výjezd",
-    description: "Termín bez průtahů.",
-    value: "< 24h",
+    title: "Odborné montáže",
+    description: "Kompletní elektroinstalace a montáže.",
+    value: "Praxe",
   },
   resolvedBentoCards[1] ?? {
-    title: "Diagnostika",
-    description: "Přesná lokalizace závad.",
-    value: "99%",
+    title: "Kvalitní materiály",
+    description: "Prověřené komponenty od předních výrobců.",
+    value: "Kvalita",
   },
-  resolvedBentoCards[2] ?? { title: "Revize", description: "Kompletní výstup.", value: "ČSN" },
+  resolvedBentoCards[2] ?? {
+    title: "Platné revize",
+    description: "Revizní zprávy dle norem ČSN.",
+    value: "ČSN",
+  },
 ];
 ---
 
-<section slot={slot} id={id} class="relative isolate overflow-hidden bg-neutral-800/95 py-32 lg:py-64">
+<section
+  slot={slot}
+  id={id}
+  class="relative isolate overflow-hidden bg-neutral-800/95 py-32 lg:py-64"
+>
   <div class="absolute inset-0">
     <Image
       src={backgroundImage}
@@ -142,13 +145,13 @@ const [cardOne, cardTwo, cardThree] = [
           primaryCta || secondaryCta ? (
             <div class="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
               {primaryCta ? (
-                <Button variant="primary" href={primaryCta.href} size="md">
+                <Button variant="primaryDark" href={primaryCta.href} size="md">
                   {primaryCta.label}
                 </Button>
               ) : null}
               {secondaryCta ? (
                 <Button
-                  variant="outline"
+                  variant="secondaryOutline"
                   href={secondaryCta.href}
                   class="hidden sm:inline-flex"
                   size="md"
