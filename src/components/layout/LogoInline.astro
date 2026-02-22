@@ -3,11 +3,12 @@ const { class: classname = "", dark = false } = Astro.props;
 const fillColor = dark ? "var(--color-neutral-800)" : "var(--color-neutral-50)";
 ---
 
-<a href="/">
+<a href="/" aria-label="Revimont Klatovy – přejít na úvod">
   <svg
     viewBox="0 0 218 37"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
     class={`transition-all duration-300 ${classname}`}
   >
     <g clip-path="url(#clip0_149_1797)">
