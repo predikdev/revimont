@@ -36,9 +36,9 @@ const highlights = [
 
 const stats = [
   { value: "15+", label: "Let zkušeností" },
-  { value: "2 500+", label: "Dokončených projektů" },
-  { value: "98%", label: "Spokojených zákazníků" },
-  { value: "24/7", label: "Havarijní servis" },
+  { value: "300+", label: "Dokončených projektů" },
+  { value: "100%", label: "Funkčnost" },
+  { value: "Klatovy", label: "A široké okolí" },
 ];
 ---
 
@@ -70,7 +70,7 @@ const stats = [
         {
           highlights.map((item) => (
             <article class="flex items-start gap-4">
-              <div class="mt-0.5 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-accent-primary/10 text-accent-primary">
+              <div aria-hidden="true" class="mt-0.5 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-accent-primary/10 text-accent-primary">
                 <item.icon class="h-6 w-6" />
               </div>
 
@@ -86,22 +86,23 @@ const stats = [
       </div>
     </div>
 
-    <div class="grid gap-6 pt-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0 lg:pt-12">
-      {
-        stats.map((stat, index) => (
-          <div
-            class:list={[
-              "text-center lg:px-8",
-              index < stats.length - 1 && "lg:border-r lg:border-neutral-300/70",
-            ]}
-          >
-            <p class="font-sora text-4xl font-bold leading-none text-accent-primary">
-              {stat.value}
-            </p>
-            <p class="mt-4 text-lg font-semibold text-neutral-800/95">{stat.label}</p>
-          </div>
-        ))
-      }
+    <div class="mt-10 border-t border-neutral-200 pt-8">
+      <div class="grid w-full grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:gap-x-8">
+        {
+          stats.map((stat, index) => (
+            <div
+              class:list={["flex flex-col", index > 0 && "md:border-l md:border-neutral-200 md:pl-8"]}
+            >
+              <span class="font-sora text-2xl font-bold text-accent-primary sm:text-3xl">
+                {stat.value}
+              </span>
+              <span class="text-xs font-semibold tracking-wide uppercase text-neutral-500">
+                {stat.label}
+              </span>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </div>
 </SectionWrapper>

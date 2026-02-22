@@ -2,6 +2,9 @@
 import SectionWrapper from "../../ui/SectionWrapper.astro";
 import { Phone, Mail, MapPin } from "@lucide/astro";
 import Button from "../../ui/Button.astro";
+
+const companyAddress = "K Letišti 487, 339 01 Klatovy";
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(companyAddress)}`;
 ---
 
 <SectionWrapper background="light" withGrid>
@@ -20,12 +23,13 @@ import Button from "../../ui/Button.astro";
             <div
               class="shrink-0 w-12 h-12 bg-background/10 rounded flex items-center justify-center"
             >
-              <Phone class="w-5 h-5 text-accent-primary" />
+              <Phone class="w-5 h-5 text-accent-primary" aria-hidden="true" />
             </div>
             <div>
               <p class="text-neutral-300 text-sm mb-1">Zavolejte nám</p>
               <a
                 href="tel:+420775736112"
+                aria-label="Zavolejte nám: +420 775 736 112"
                 class="text-neutral-50 text-lg font-semibold hover:text-accent-primary transition-colors"
               >
                 +420 775 736 112
@@ -37,12 +41,13 @@ import Button from "../../ui/Button.astro";
             <div
               class="shrink-0 w-12 h-12 bg-background/10 rounded flex items-center justify-center"
             >
-              <Mail class="w-5 h-5 text-accent-primary" />
+              <Mail class="w-5 h-5 text-accent-primary" aria-hidden="true" />
             </div>
             <div>
               <p class="text-neutral-300 text-sm mb-1">Napište nám</p>
               <a
                 href="mailto:info@revimont.cz"
+                aria-label="Napište nám e-mail: info@revimont.cz"
                 class="text-neutral-50 text-lg font-semibold hover:text-accent-primary transition-colors"
               >
                 info@revimont.cz
@@ -54,11 +59,19 @@ import Button from "../../ui/Button.astro";
             <div
               class="shrink-0 w-12 h-12 bg-background/10 rounded flex items-center justify-center"
             >
-              <MapPin class="w-5 h-5 text-accent-primary" />
+              <MapPin class="w-5 h-5 text-accent-primary" aria-hidden="true" />
             </div>
             <div>
               <p class="text-neutral-300 text-sm mb-1">Sídlo firmy</p>
-              <p class="text-neutral-50 text-lg font-semibold">Klatovy, Česká republika</p>
+              <a
+                href={mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Otevřít adresu ${companyAddress} v mapách`}
+                class="inline-block text-neutral-50 text-lg font-semibold transition-colors hover:text-accent-primary focus:outline-none focus:ring-2 focus:ring-accent-primary rounded"
+              >
+                {companyAddress}
+              </a>
             </div>
           </div>
         </div>
@@ -138,7 +151,9 @@ import Button from "../../ui/Button.astro";
             </label>
           </div>
 
-          <Button type="submit" variant="primary" class="w-full py-4"> Odeslat poptávku </Button>
+          <Button type="submit" variant="primaryDark" class="w-full py-4">
+            Odeslat poptávku
+          </Button>
         </form>
       </div>
     </div>

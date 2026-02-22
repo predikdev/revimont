@@ -11,7 +11,7 @@ const services = [
       "Kompletní návrh a realizace elektrických rozvodů pro novostavby, rekonstrukce i komerční objekty.",
     link: "/sluzby/elektroinstalace",
     icon: Zap,
-    bullets: ["Novostavby", "Rekonstrukce", "Rozvaděče", "Hromosvody"],
+    bullets: ["Novostavby", "Rekonstrukce", "Bytové domy", "Rozvaděče"],
   },
   {
     number: "02",
@@ -20,16 +20,16 @@ const services = [
       "Pravidelné revize elektroinstalací a zařízení dle platné legislativy včetně vystavení revizních zpráv.",
     link: "/sluzby/revize",
     icon: ShieldCheck,
-    bullets: ["Výchozí revize", "Pravidelné revize", "Revizní zprávy", "Kontrola bezpečnosti"],
+    bullets: ["Výchozí revize", "Pravidelné revize", "Revize hromosvodů", "Kontrola bezpečnosti"],
   },
   {
     number: "03",
-    title: "Servisní práce",
+    title: "Montáže a opravy",
     description:
       "Opravy poruch, údržba a modernizace stávajících elektrických instalací včetně havarijního servisu.",
     link: "/sluzby",
     icon: Wrench,
-    bullets: ["Diagnostika závad", "Rychlé opravy", "Výměna prvků", "Modernizace rozvodů"],
+    bullets: ["Domácí telefony", "Zvonková tabla", "Rozvody domáchích telefonů", "Modernizace systémů"],
   },
 ];
 ---
@@ -39,7 +39,7 @@ const services = [
   <div class="mb-14 md:mb-18">
     <!-- Eyebrow -->
     <div class="mb-5 flex items-center gap-3">
-      <span class="h-px w-8 bg-accent-primary"></span>
+      <span aria-hidden="true" class="h-px w-8 bg-accent-primary"></span>
       <span class="text-sm font-semibold uppercase tracking-widest text-accent-primary">
         Naše služby
       </span>
@@ -51,6 +51,7 @@ const services = [
       <span class="relative inline-block pb-3">
         vaši nemovitost
         <span
+          aria-hidden="true"
           class="absolute bottom-0 left-0 h-[3px] w-full rounded-full bg-accent-primary"
         ></span>
       </span>
@@ -69,15 +70,15 @@ const services = [
       services.map((service) => (
         <article class="group relative overflow-hidden rounded-2xl border border-neutral-300/60 bg-background p-8 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl md:p-10">
           <!-- Orange top accent line -->
-          <span class="absolute left-1/2 top-0 h-[3px] w-4/5 -translate-x-1/2 bg-accent-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <span aria-hidden="true" class="absolute left-1/2 top-0 h-[3px] w-4/5 -translate-x-1/2 bg-accent-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
           <!-- Number badge -->
-          <span class="absolute right-7 top-6 font-sora text-sm font-bold tracking-wide text-accent-primary/30">
+          <span aria-hidden="true" class="absolute right-7 top-6 font-sora text-sm font-bold tracking-wide text-accent-primary/30">
             {service.number}
           </span>
 
           <!-- Icon -->
-          <div class="mb-7 inline-flex h-13 w-13 items-center justify-center rounded-xl bg-accent-primary/10 text-accent-primary transition-colors duration-300 group-hover:bg-accent-primary/[0.16]">
+          <div aria-hidden="true" class="mb-7 inline-flex h-13 w-13 items-center justify-center rounded-xl bg-accent-primary/10 text-accent-primary transition-colors duration-300 group-hover:bg-accent-primary/[0.16]">
             <service.icon class="h-5 w-5" />
           </div>
 
@@ -88,13 +89,13 @@ const services = [
           <p class="mt-3 text-[0.9375rem] leading-relaxed text-neutral-800/55">{service.description}</p>
 
           <!-- Divider -->
-          <hr class="my-6 border-neutral-300/50" />
+          <hr aria-hidden="true" class="my-6 border-neutral-300/50" />
 
           <!-- Bullets -->
           <ul class="space-y-3">
             {service.bullets.map((bullet) => (
               <li class="flex items-center gap-3 text-sm text-neutral-800/65">
-                <span class="h-2 w-2 shrink-0 rounded-full bg-accent-primary" />
+                <span aria-hidden="true" class="h-2 w-2 shrink-0 rounded-full bg-accent-primary" />
                 <span>{bullet}</span>
               </li>
             ))}
@@ -103,10 +104,11 @@ const services = [
           <!-- CTA link -->
           <a
             href={service.link}
+            aria-label={`Zjistit více o ${service.title}`}
             class="group/link mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-primary"
           >
-            <span>Zjistit více</span>
-            <span class="transition-transform duration-200 group-hover/link:translate-x-0.5">
+            <span aria-hidden="true">Zjistit více</span>
+            <span aria-hidden="true" class="transition-transform duration-200 group-hover/link:translate-x-0.5">
               →
             </span>
           </a>

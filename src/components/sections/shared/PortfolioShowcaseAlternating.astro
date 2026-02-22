@@ -51,7 +51,7 @@ const projects: { title: string; description: string; meta: string; image: Image
     <SectionHeader eyebrow={eyebrow} title={title} class="mb-0" background="light" />
   </div>
 
-  <div class="flex w-full flex-col gap-14 lg:gap-24">
+  <div class="flex w-full flex-col gap-20 lg:gap-32">
     {
       projects.map((project, index) => (
         <article>
@@ -70,7 +70,7 @@ const projects: { title: string; description: string; meta: string; image: Image
                   loading="lazy"
                   quality={80}
                 />
-                <div class="pointer-events-none absolute inset-0 bg-linear-to-t from-neutral-900/35 via-transparent to-transparent" />
+                <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-linear-to-t from-neutral-900/35 via-transparent to-transparent" />
               </div>
             </a>
 
@@ -87,7 +87,7 @@ const projects: { title: string; description: string; meta: string; image: Image
                   class="w-fit px-5 py-2.5"
                 >
                   Detail projektu
-                  <ChevronRight class="h-4 w-4" />
+                  <ChevronRight aria-hidden="true" class="h-4 w-4" />
                 </Button>
               </div>
             </div>
