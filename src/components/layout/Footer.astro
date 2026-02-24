@@ -1,5 +1,5 @@
 ---
-import { MapPin, Clock } from "@lucide/astro";
+import { MapPin, Phone, Mail } from "@lucide/astro";
 
 const year = new Date().getFullYear();
 
@@ -45,20 +45,62 @@ const { eyebrow } = Astro.props;
                 <MapPin class="w-5 h-5 text-accent-primary" />
               </div>
               <div>
-                <h3 class="font-semibold text-neutral-50 mb-1">K Letišti 487</h3>
-                <p class="text-neutral-300/80">339 01 Klatovy</p>
+                <a
+                  href="https://maps.google.com/maps?q=K+Leti%C5%A1ti+487,+339+01+Klatovy"
+                  class="group block"
+                  aria-label="Otevřít adresu K Letišti 487, 339 01 Klatovy v mapách"
+                >
+                  <h3 class="font-semibold text-neutral-50 mb-1 transition-colors group-hover:text-accent-primary">
+                    K Letišti 487
+                  </h3>
+                  <p class="text-neutral-300/80 transition-colors group-hover:text-accent-primary">
+                    339 01 Klatovy
+                  </p>
+                </a>
               </div>
             </div>
 
             <div class="flex items-start gap-4">
               <div
-                class="shrink-0 w-12 h-12 bg-background/10 rounded flex items-center justify-center"
+                class="shrink-0 w-12 h-12 bg-background/10 rounded-lg flex items-center justify-center"
               >
-                <Clock class="w-5 h-5 text-accent-primary" />
+                <Phone class="w-5 h-5 text-accent-primary" />
               </div>
               <div>
-                <h3 class="font-semibold text-neutral-50 mb-1">Otevírací doba</h3>
-                <p class="text-neutral-300/80">Po–Pá: 7:00 – 16:00</p>
+                <a
+                  href="tel:+420775736112"
+                  class="group block"
+                  aria-label="Zavolat na číslo +420 775 736 112"
+                >
+                  <h3 class="font-semibold text-neutral-50 mb-1 transition-colors group-hover:text-accent-primary">
+                    Telefon
+                  </h3>
+                  <p class="text-neutral-300/80 transition-colors group-hover:text-accent-primary">
+                    +420 775 736 112
+                  </p>
+                </a>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div
+                class="shrink-0 w-12 h-12 bg-background/10 rounded-lg flex items-center justify-center"
+              >
+                <Mail class="w-5 h-5 text-accent-primary" />
+              </div>
+              <div>
+                <a
+                  href="mailto:info@revimont.cz"
+                  class="group block"
+                  aria-label="Napsat e-mail na info@revimont.cz"
+                >
+                  <h3 class="font-semibold text-neutral-50 mb-1 transition-colors group-hover:text-accent-primary">
+                    E-mail
+                  </h3>
+                  <p class="text-neutral-300/80 transition-colors group-hover:text-accent-primary">
+                    info@revimont.cz
+                  </p>
+                </a>
               </div>
             </div>
           </div>
@@ -66,14 +108,14 @@ const { eyebrow } = Astro.props;
 
         <div class="relative aspect-4/3 w-full rounded-lg shadow-lg min-w-0">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2596.1508777071854!2d13.293759277432164!3d49.40605237141159!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470acff0180278e5%3A0x15bf144195efa395!2sK3%20s.r.o.!5e0!3m2!1scs!2sde!4v1770420582901!5m2!1scs!2sde"
+            src="https://maps.google.com/maps?q=K+Letišti+487,+339+01+Klatovy&output=embed"
             class="absolute inset-0 w-full h-full rounded-2xl"
             style="border:0;"
             allowfullscreen
             allow="fullscreen"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            title="Mapa - Náměstí Míru 62, Klatovy"></iframe>
+            title="Mapa - K Letišti 487, Klatovy"></iframe>
         </div>
       </div>
     </div>

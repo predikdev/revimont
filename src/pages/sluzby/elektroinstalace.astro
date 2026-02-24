@@ -5,7 +5,9 @@ import ElektroServices from "../../components/sections/elektroinstalace/ElektroS
 import ElektroApproach from "../../components/sections/elektroinstalace/ElektroApproach.astro";
 import ElektroWhyUs from "../../components/sections/elektroinstalace/ElektroWhyUs.astro";
 import PortfolioShowcaseAlternating from "../../components/sections/shared/PortfolioShowcaseAlternating.astro";
+// import ContactSection from "../../components/sections/shared/ContactSection.astro";
 import ContactSection from "../../components/sections/shared/ContactSection.astro";
+import elektroImage from "../../assets/images/elektroinstalace.png";
 
 const title = `Elektroinstalace <br /> pro váš domov i firmu`;
 const description =
@@ -19,10 +21,13 @@ const description =
     eyebrow="Elektro Klatovy a okolí"
     titleHtml={title}
     description={description}
+    backgroundImage={elektroImage}
+    backgroundImageAlt="Elektroinstalace — rozvaděč a elektrorozvody"
   />
   <ElektroServices />
   <ElektroApproach />
   <ElektroWhyUs />
   <PortfolioShowcaseAlternating />
+  {/* <ContactSection /> */}
   <ContactSection />
 </BaseLayout>

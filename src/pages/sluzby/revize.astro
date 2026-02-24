@@ -7,10 +7,12 @@ const description =
 
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import RevizeApproach from "../../components/sections/revize/RevizeApproach.astro";
+// import ContactSection from "../../components/sections/shared/ContactSection.astro";
 import ContactSection from "../../components/sections/shared/ContactSection.astro";
 import PageHeroServicesNew from "../../components/sections/shared/PageHeroServicesNew.astro";
 import RevizeServicesV2 from "../../components/sections/revize/RevizeServicesV2.astro";
 import RevizeWhyUs from "../../components/sections/revize/RevizeWhyUs.astro";
+import revizeImage from "../../assets/images/revize.png";
 ---
 
 <BaseLayout heroBackground="/hero-bg.jpg">
@@ -20,10 +22,13 @@ import RevizeWhyUs from "../../components/sections/revize/RevizeWhyUs.astro";
     eyebrow="Revize Klatovy a okolí"
     titleHtml={titleHtml}
     description={description}
+    backgroundImage={revizeImage}
+    backgroundImageAlt="Revize elektroinstalace — měření a kontrola"
   />
 
   <RevizeServicesV2 />
   <RevizeApproach />
   <RevizeWhyUs />
+  {/* <ContactSection /> */}
   <ContactSection />
 </BaseLayout>

@@ -5,7 +5,9 @@ import PageHeroServicesNew from "../../components/sections/shared/PageHeroServic
 import OpravyMontazeServices from "../../components/sections/opravy-montaze/OpravyMontazeServices.astro";
 import OpravyMontazeWhyUs from "../../components/sections/opravy-montaze/OpravyMontazeWhyUs.astro";
 import OpravyMontazeApproach from "../../components/sections/opravy-montaze/OpravyMontazeApproach.astro";
+// import ContactSection from "../../components/sections/shared/ContactSection.astro";
 import ContactSection from "../../components/sections/shared/ContactSection.astro";
+import rekonstrukceImage from "../../assets/images/rekonstrukce.png";
 
 const title = "Montáže a opravy domácích systémů";
 const description =
@@ -19,9 +21,12 @@ const description =
     eyebrow="Opravy a montáže Klatovy a okolí"
     titleHtml={title}
     description={description}
+    backgroundImage={rekonstrukceImage}
+    backgroundImageAlt="Opravy a montáže elektrozařízení"
   />
   <OpravyMontazeServices />
   <OpravyMontazeApproach />
   <OpravyMontazeWhyUs />
+  {/* <ContactSection /> */}
   <ContactSection />
 </BaseLayout>

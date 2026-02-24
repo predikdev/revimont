@@ -34,12 +34,6 @@ const highlights = [
   },
 ];
 
-const stats = [
-  { value: "15+", label: "Let zkušeností" },
-  { value: "300+", label: "Dokončených projektů" },
-  { value: "100%", label: "Funkčnost" },
-  { value: "Klatovy", label: "A široké okolí" },
-];
 ---
 
 <SectionWrapper id={id} background="light" withGrid>
@@ -86,23 +80,5 @@ const stats = [
       </div>
     </div>
 
-    <div class="mt-10 border-t border-neutral-200 pt-8">
-      <div class="grid w-full grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:gap-x-8">
-        {
-          stats.map((stat, index) => (
-            <div
-              class:list={["flex flex-col", index > 0 && "md:border-l md:border-neutral-200 md:pl-8"]}
-            >
-              <span class="font-sora text-2xl font-bold text-accent-primary sm:text-3xl">
-                {stat.value}
-              </span>
-              <span class="text-xs font-semibold tracking-wide uppercase text-neutral-500">
-                {stat.label}
-              </span>
-            </div>
-          ))
-        }
-      </div>
-    </div>
   </div>
 </SectionWrapper>

@@ -1,5 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeroServicesNew from "../components/sections/shared/PageHeroServicesNew.astro";
+// import ContactSectionV2 from "../components/sections/shared/ContactSectionV2.astro";
+import ContactSection from "../components/sections/shared/ContactSection.astro";
+import firmaImage from "../assets/images/firma.jpeg";
 ---
 
-<BaseLayout />
+<BaseLayout>
+  <PageHeroServicesNew
+    slot="hero"
+    eyebrow="Revimont Klatovy"
+    title="Jsme tu pro vás"
+    description="Provádíme elektroinstalace, opravy i revize po celém Klatovsku. Zavolejte nebo napište — rádi se domluvíme."
+    backgroundImage={firmaImage}
+    backgroundImageAlt="Firemní vozový park Revimont Klatovy"
+  />
+  {/* <ContactSectionV2 /> */}
+  <ContactSection showCompanyIds ico="12345678" dic="CZ12345678" />
+</BaseLayout>
