@@ -1,322 +1,67 @@
 ---
 import SectionWrapper from "../../ui/SectionWrapper.astro";
 import SectionHeader from "../../ui/SectionHeader.astro";
-import Button from "../../ui/Button.astro";
-import {
-  Phone,
-  ScanSearch,
-  ClipboardList,
-  Wrench,
-  ShieldCheck,
-  Handshake,
-  Check,
-  ArrowLeft,
-  ArrowRight,
-} from "@lucide/astro";
+import { Phone, Wrench, Handshake, Check } from "@lucide/astro";
 
-interface ApproachStep {
-  title: string;
-  description: string;
-  bullets: string[];
-}
-
-interface RenderedApproachStep extends ApproachStep {
-  order: string;
-  nextTitle?: string;
-  icon: typeof Phone;
-}
-
-interface Props {
-  id?: string;
-  eyebrow?: string;
-  title?: string;
-  description?: string;
-  steps?: ApproachStep[];
-}
-
-const defaultSteps: ApproachStep[] = [
+const steps = [
   {
-    title: "Nahlášení závady",
-    description: "Kontaktujte nás telefonicky nebo e-mailem. Stručně popište závadu nebo záměr, abychom se mohli připravit a přijet vybaveni.",
-    bullets: [
-      "Rychlá odezva",
-      "Konzultace po telefonu",
-      "Domluvení termínu výjezdu",
-    ],
+    number: "01",
+    icon: Phone,
+    title: "Nahlášení a termín",
+    description: "Zavolejte nebo napište — stručně popište závadu. Domluvíme termín výjezdu, přijedeme vybaveni a připraveni.",
+    bullets: ["Rychlá odezva do 2 hodin", "Konzultace po telefonu zdarma", "Domluvení termínu výjezdu"],
   },
   {
-    title: "Výjezd a diagnostika",
-    description: "Na místě prohlédneme stávající systém a zjistíme příčinu závady nebo možnosti nové instalace.",
-    bullets: [
-      "Prohlídka instalace",
-      "Zjištění příčiny poruchy",
-      "Posouzení rozsahu prací",
-    ],
+    number: "02",
+    icon: Wrench,
+    title: "Diagnostika a oprava",
+    description: "Na místě zjistíme příčinu, sdělíme jasnou cenu a opravíme závadu nebo provedeme montáž. Čistě a bez zbytečných průtahů.",
+    bullets: ["Transparentní cenová nabídka", "Odborné provedení opravy", "Kvalitní náhradní díly"],
   },
   {
-    title: "Nabídka a termín",
-    description: "Sdělíme jasnou cenu a termín realizace. Bez skrytých poplatků a bez zbytečného čekání.",
-    bullets: [
-      "Transparentní kalkulace",
-      "Realistický termín",
-      "Výběr z variant řešení",
-    ],
-  },
-  {
-    title: "Oprava nebo montáž",
-    description: "Práci provedeme rychle a čistě. Při montáži minimalizujeme zásahy do zdí a interiéru objektu.",
-    bullets: [
-      "Odborné provedení",
-      "Minimální zásah do objektu",
-      "Kvalitní komponenty",
-    ],
-  },
-  {
-    title: "Funkční test",
-    description: "Po dokončení celý systém otestujeme a ověříme správnou funkci všech prvků a připojení.",
-    bullets: [
-      "Ověření funkce zařízení",
-      "Nastavení a seřízení",
-      "Zápis o provedené práci",
-    ],
-  },
-  {
-    title: "Předání a podpora",
-    description: "Předáme plně funkční systém, vysvětlíme obsluhu a jsme k dispozici pro případné dotazy i záruční servis.",
-    bullets: [
-      "Vysvětlení obsluhy",
-      "Doklady o provedení",
-      "Záruční podpora",
-    ],
+    number: "03",
+    icon: Handshake,
+    title: "Předání a záruka",
+    description: "Celý systém otestujeme, předáme vám doklad o provedení práce a poskytneme záruční servis.",
+    bullets: ["Funkční test po dokončení", "Doklad o provedené práci", "Záruční podpora"],
   },
 ];
-
-const stepIcons = [Phone, ScanSearch, ClipboardList, Wrench, ShieldCheck, Handshake];
-
-const {
-  id = "opravy-montaze-approach",
-  eyebrow = "JAK PRACUJEME",
-  title = "Jak probíhá oprava nebo montáž",
-  description = "Od nahlášení závady po předání hotové práce. Každý krok vedeme tak, aby byl zásah do vašeho každodenního provozu co nejmenší.",
-  steps = defaultSteps,
-} = Astro.props;
-
-const renderedSteps: RenderedApproachStep[] = steps.slice(0, 6).map((step, index) => ({
-  ...step,
-  order: String(index + 1).padStart(2, "0"),
-  nextTitle: steps[index + 1]?.title,
-  icon: stepIcons[index] ?? Phone,
-}));
 ---
 
-<SectionWrapper id={id} background="light" withGrid={true}>
-  <div class="w-full" data-approach-section-v2>
-    <SectionHeader
-      eyebrow={eyebrow}
-      title={title}
-      description={description}
-      background="light"
-      align="left"
-      titleWidth=""
-      descWidth="narrow"
-      class="mb-0"
-    />
+<SectionWrapper background="light" withGrid>
+  <SectionHeader
+    eyebrow="Jak pracujeme"
+    title="Jak probíhá oprava nebo montáž"
+    description="Od nahlášení po předání hotové práce. Bez komplikací, bez čekání."
+    background="light"
+    descWidth="narrow"
+  />
 
-    <ol class="mt-14 hidden md:grid md:grid-cols-6 md:gap-x-3">
-      {
-        renderedSteps.map((step, index) => (
-          <li class="relative text-center">
-            {index < renderedSteps.length - 1 && (
-              <span aria-hidden="true" class="pointer-events-none absolute top-6 left-[calc(50%+2rem)] hidden h-px w-[calc(100%-4rem)] bg-neutral-200 md:block" />
-            )}
-            <button
-              type="button"
-              data-step-trigger
-              data-step-index={index}
-              data-active={index === 0 ? "true" : "false"}
-              aria-current={index === 0 ? "step" : "false"}
-              aria-label={`Krok ${step.order}: ${step.title}`}
-              aria-controls={`${id}-step-panel-${index}`}
-              class="group mx-auto flex w-full flex-col items-center"
-            >
-              <span class="flex h-14 w-14 items-center justify-center rounded-full border border-neutral-200 bg-neutral-100 text-neutral-400 transition-all duration-300 group-data-[active=true]:border-accent-primary group-data-[active=true]:bg-accent-primary group-data-[active=true]:text-neutral-50 group-data-[active=true]:shadow-lg">
-                <step.icon aria-hidden="true" class="h-5 w-5" />
+  <div class="grid md:grid-cols-3 gap-6 mt-12">
+    {steps.map((step) => (
+      <div class="group relative bg-white rounded-xl border border-neutral-200 p-8 shadow-sm transition-shadow duration-200 hover:shadow-md">
+        <span class="absolute top-6 right-6 font-sora text-5xl font-bold text-neutral-100 leading-none select-none transition-colors duration-300 group-hover:text-accent-primary/40" aria-hidden="true">
+          {step.number}
+        </span>
+
+        <div class="w-12 h-12 bg-accent-primary/10 rounded-full flex items-center justify-center mb-6 transition-colors duration-300 group-hover:bg-accent-primary/[0.18]" aria-hidden="true">
+          <step.icon class="w-5 h-5 text-accent-primary transition-transform duration-300 group-hover:scale-110" />
+        </div>
+
+        <h3 class="font-sora text-xl font-bold text-neutral-900 mb-3">{step.title}</h3>
+        <p class="text-sm text-neutral-600 leading-relaxed mb-6">{step.description}</p>
+
+        <ul class="space-y-2">
+          {step.bullets.map((bullet) => (
+            <li class="flex items-center gap-3">
+              <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-primary/10 border border-accent-primary/30" aria-hidden="true">
+                <Check class="h-3 w-3 text-accent-primary" />
               </span>
-              <span aria-hidden="true" class="mt-3 text-sm font-bold text-neutral-400 transition-colors duration-300 group-data-[active=true]:text-accent-primary">
-                {step.order}
-              </span>
-              <span aria-hidden="true" class="mt-1 text-sm leading-tight font-semibold text-neutral-500 transition-colors duration-300 group-data-[active=true]:text-neutral-800">
-                {step.title}
-              </span>
-            </button>
-          </li>
-        ))
-      }
-    </ol>
-
-    <div class="mt-8 md:mt-14">
-      {
-        renderedSteps.map((step, index) => (
-          <article
-            id={`${id}-step-panel-${index}`}
-            data-step-card
-            data-step-card-index={index}
-            aria-live="polite"
-            class:list={[
-              "overflow-hidden rounded-2xl border border-neutral-200 bg-background shadow-xl",
-              index !== 0 && "hidden",
-            ]}
-          >
-            <div class="flex flex-col md:flex-row">
-              {/* Left sidebar */}
-              <div class="flex flex-col justify-between bg-accent-primary/8 p-8 md:w-56 md:shrink-0 md:rounded-l-2xl">
-                <div>
-                  <p aria-hidden="true" class="font-sora text-6xl font-bold text-accent-primary/20 leading-none">
-                    {step.order}
-                  </p>
-                  <p class="mt-6 text-sm font-bold text-accent-primary">Krok {step.order}</p>
-                  {step.nextTitle ? (
-                    <p class="mt-1 text-sm text-neutral-400">
-                      Dále: <span class="font-medium text-neutral-500">{step.nextTitle}</span>
-                    </p>
-                  ) : (
-                    <p class="mt-1 text-sm text-neutral-400 font-medium">Poslední krok</p>
-                  )}
-                </div>
-
-                {/* Dot indicators */}
-                <div aria-hidden="true" class="mt-8 flex gap-1.5">
-                  {renderedSteps.map((_, dotIndex) => (
-                    <span
-                      class:list={[
-                        "h-2 rounded-full transition-all duration-300",
-                        dotIndex === index ? "w-6 bg-accent-primary" : "w-2 bg-accent-primary/25",
-                      ]}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* Right content */}
-              <div class="flex flex-1 flex-col justify-between p-8">
-                <div>
-                  <h3 class="font-sora text-3xl font-bold text-neutral-800 leading-tight">
-                    {step.title}
-                  </h3>
-                  <p class="mt-3 text-base leading-relaxed text-neutral-500">{step.description}</p>
-
-                  <ul class="mt-6 flex flex-col gap-3">
-                    {step.bullets.map((bullet) => (
-                      <li class="flex items-center gap-3">
-                        <span aria-hidden="true" class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-accent-primary/40 bg-accent-primary/10">
-                          <Check class="h-3 w-3 text-accent-primary" />
-                        </span>
-                        <span class="text-sm font-medium text-neutral-700">{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Navigation */}
-                <div class="mt-8 flex items-center justify-between border-t border-neutral-100 pt-6">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    type="button"
-                    data-step-prev
-                    data-current-index={index}
-                    disabled={index === 0}
-                    aria-label={index > 0 ? `Předchozí krok: ${renderedSteps[index - 1]?.title}` : "Předchozí krok"}
-                  >
-                    <ArrowLeft aria-hidden="true" class="h-4 w-4" />
-                    Předchozí krok
-                  </Button>
-
-                  <Button
-                    variant="primaryLight"
-                    size="sm"
-                    type="button"
-                    data-step-next
-                    data-current-index={index}
-                    disabled={index === renderedSteps.length - 1}
-                    class="shadow-md"
-                    aria-label={index < renderedSteps.length - 1 ? `Další krok: ${renderedSteps[index + 1]?.title}` : "Další krok"}
-                  >
-                    Další krok
-                    <ArrowRight aria-hidden="true" class="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </article>
-        ))
-      }
-    </div>
+              <span class="text-sm font-medium text-neutral-700">{bullet}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
   </div>
 </SectionWrapper>
-
-<script>
-  function initApproachSectionV2() {
-    const sections = document.querySelectorAll("[data-approach-section-v2]");
-    if (!sections.length) return;
-
-    sections.forEach((section) => {
-      const triggers = Array.from(
-        section.querySelectorAll<HTMLButtonElement>("[data-step-trigger]"),
-      );
-      const cards = Array.from(section.querySelectorAll<HTMLElement>("[data-step-card]"));
-      const nextButtons = Array.from(
-        section.querySelectorAll<HTMLButtonElement>("[data-step-next]"),
-      );
-      const prevButtons = Array.from(
-        section.querySelectorAll<HTMLButtonElement>("[data-step-prev]"),
-      );
-
-      if (!triggers.length || !cards.length) return;
-
-      let activeIndex = triggers.findIndex((button) => button.dataset.active === "true");
-      if (activeIndex < 0) activeIndex = 0;
-
-      const setActiveStep = (index: number) => {
-        const clampedIndex = Math.max(0, Math.min(index, cards.length - 1));
-        activeIndex = clampedIndex;
-
-        triggers.forEach((button, triggerIndex) => {
-          const isActive = triggerIndex === clampedIndex;
-          button.dataset.active = isActive ? "true" : "false";
-          button.setAttribute("aria-current", isActive ? "step" : "false");
-        });
-
-        cards.forEach((card, cardIndex) => {
-          card.classList.toggle("hidden", cardIndex !== clampedIndex);
-        });
-      };
-
-      triggers.forEach((button, index) => {
-        button.addEventListener("click", () => setActiveStep(index));
-      });
-
-      nextButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          if (button.disabled) return;
-          setActiveStep(activeIndex + 1);
-        });
-      });
-
-      prevButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          if (button.disabled) return;
-          setActiveStep(activeIndex - 1);
-        });
-      });
-
-      setActiveStep(activeIndex);
-    });
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initApproachSectionV2, { once: true });
-  } else {
-    initApproachSectionV2();
-  }
-</script>
