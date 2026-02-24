@@ -63,3 +63,37 @@ import Footer from "../components/layout/Footer.astro";
     autoRaf: true,
   });
 </script>
+
+<script is:inline>
+  {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reducedMotion) {
+      const sections = document.querySelectorAll('[data-animate-section]');
+
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top >= window.innerHeight - 60) {
+          const container = section.querySelector('.container');
+          if (!container) return;
+          const [sectionHeader, cardsGrid] = container.children;
+          if (sectionHeader) { sectionHeader.style.opacity = '0'; sectionHeader.style.transform = 'translateY(12px)'; }
+          if (cardsGrid) { cardsGrid.style.opacity = '0'; cardsGrid.style.transform = 'translateY(12px)'; }
+        }
+      });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const container = entry.target.querySelector('.container');
+          if (!container) return;
+          const [sectionHeader, cardsGrid] = container.children;
+          if (sectionHeader) sectionHeader.classList.add('is-visible');
+          if (cardsGrid) setTimeout(() => cardsGrid.classList.add('is-visible'), 150);
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+      sections.forEach(section => observer.observe(section));
+    }
+  }
+</script>

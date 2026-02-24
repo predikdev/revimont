@@ -54,98 +54,86 @@ const subLinks = [
   </div>
 
   <a
-    href="/o-nas"
-    aria-current={isActive("/o-nas") ? "page" : undefined}
-    class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/o-nas") ? "text-accent-primary" : "text-neutral-50/75"}`}
-  >
-    O nás
-  </a>
-
-  <a
     href="/reference"
     aria-current={isActive("/reference") ? "page" : undefined}
     class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/reference") ? "text-accent-primary" : "text-neutral-50/75"}`}
   >
     Reference
   </a>
+
+  <a
+    href="/kontakt"
+    aria-current={isActive("/kontakt") ? "page" : undefined}
+    class={`text-sm font-medium transition-colors hover:text-accent-primary ${isActive("/kontakt") ? "text-accent-primary" : "text-neutral-50/75"}`}
+  >
+    Kontakt
+  </a>
 </nav>
 
 <script>
-  window.addEventListener("DOMContentLoaded", () => {
+  (() => {
     const dropdown = document.querySelector("[data-dropdown]");
     if (!dropdown) return;
 
-    const trigger = dropdown.querySelector("[data-dropdown-trigger]");
-    const panel = dropdown.querySelector("[data-dropdown-panel]");
+    const trigger = dropdown.querySelector("[data-dropdown-trigger]") as HTMLButtonElement;
+    const panel = dropdown.querySelector("[data-dropdown-panel]") as HTMLElement;
     const chevron = trigger?.querySelector("svg");
 
     if (!trigger || !panel) return;
 
-    const openDropdown = () => {
+    const open = () => {
       trigger.setAttribute("aria-expanded", "true");
       panel.classList.remove("hidden");
       chevron?.classList.add("rotate-180");
     };
 
-    const closeDropdown = () => {
+    const close = () => {
       trigger.setAttribute("aria-expanded", "false");
       panel.classList.add("hidden");
       chevron?.classList.remove("rotate-180");
     };
 
     trigger.addEventListener("click", () => {
-      const isOpen = trigger.getAttribute("aria-expanded") === "true";
-      if (isOpen) {
-        closeDropdown();
-      } else {
-        openDropdown();
+      trigger.getAttribute("aria-expanded") === "true" ? close() : open();
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!dropdown.contains(event.target as Node)) close();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        close();
+        trigger.focus();
       }
     });
 
-    document.addEventListener("click", (e) => {
-      if (!dropdown.contains(e.target as Node)) {
-        closeDropdown();
+    const menuItems = Array.from(panel.querySelectorAll("a")) as HTMLAnchorElement[];
+
+    trigger.addEventListener("keydown", (event: KeyboardEvent) => {
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        open();
+        menuItems[0]?.focus();
       }
     });
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        closeDropdown();
-        (trigger as HTMLElement).focus();
-      }
-    });
-
-    // Keyboard arrow navigation within dropdown
-    const dropdownItems = Array.from(panel.querySelectorAll("a")) as HTMLAnchorElement[];
-
-    (trigger as HTMLElement).addEventListener("keydown", (e: KeyboardEvent) => {
-      if (e.key === "ArrowDown") {
-        e.preventDefault();
-        openDropdown();
-        dropdownItems[0]?.focus();
-      }
-    });
-
-    dropdownItems.forEach((item, index) => {
-      item.addEventListener("keydown", (e: KeyboardEvent) => {
-        if (e.key === "ArrowDown") {
-          e.preventDefault();
-          dropdownItems[index + 1]?.focus();
-        } else if (e.key === "ArrowUp") {
-          e.preventDefault();
-          if (index === 0) {
-            (trigger as HTMLElement).focus();
-          } else {
-            dropdownItems[index - 1]?.focus();
-          }
-        } else if (e.key === "Escape") {
-          e.preventDefault();
-          closeDropdown();
-          (trigger as HTMLElement).focus();
-        } else if (e.key === "Tab") {
-          closeDropdown();
+    menuItems.forEach((item, index) => {
+      item.addEventListener("keydown", (event: KeyboardEvent) => {
+        if (event.key === "ArrowDown") {
+          event.preventDefault();
+          menuItems[index + 1]?.focus();
+        } else if (event.key === "ArrowUp") {
+          event.preventDefault();
+          (index === 0 ? trigger : menuItems[index - 1]).focus();
+        } else if (event.key === "Escape") {
+          event.preventDefault();
+          close();
+          trigger.focus();
+        } else if (event.key === "Tab") {
+          close();
         }
       });
     });
-  });
+  })();
 </script>

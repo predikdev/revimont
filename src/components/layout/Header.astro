@@ -44,22 +44,19 @@ import Button from "../ui/Button.astro";
 
 <script is:inline>
   (function () {
-    function handleScroll() {
-      const header = document.getElementById("site-header");
-      const currentScroll = window.pageYOffset;
+    const header = document.getElementById("site-header");
+    if (!header) return;
 
-      if (currentScroll > 30) {
-        header?.classList.add("bg-neutral-800/95", "backdrop-blur-sm", "shadow-lg");
-        header?.classList.remove("py-2");
-        header?.setAttribute("data-scrolled", "true");
-      } else {
-        header?.classList.remove("bg-neutral-800/95", "backdrop-blur-sm", "shadow-lg");
-        header?.classList.add("py-2");
-        header?.setAttribute("data-scrolled", "false");
-      }
+    function updateHeader() {
+      const scrolled = window.scrollY > 30;
+      header.classList.toggle("bg-neutral-800/95", scrolled);
+      header.classList.toggle("backdrop-blur-sm", scrolled);
+      header.classList.toggle("shadow-lg", scrolled);
+      header.classList.toggle("py-2", !scrolled);
+      header.setAttribute("data-scrolled", String(scrolled));
     }
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
+    window.addEventListener("scroll", updateHeader);
+    updateHeader();
   })();
 </script>

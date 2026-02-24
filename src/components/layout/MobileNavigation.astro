@@ -18,7 +18,6 @@ const subLinks = [
 ];
 
 const links = [
-  { href: "/o-nas", label: "O nás" },
   { href: "/reference", label: "Reference" },
   { href: "/kontakt", label: "Kontakt" },
 ];
@@ -143,13 +142,13 @@ const links = [
 </div>
 
 <script>
-  window.addEventListener("DOMContentLoaded", () => {
+  (() => {
     const menu = document.querySelector("#mobile-menu-v2");
-    const openBtn = document.querySelector("[data-menu-open]");
-    const closeBtn = document.querySelector("[data-menu-close]");
+    const openButton = document.querySelector("[data-menu-open]");
+    const closeButton = document.querySelector("[data-menu-close]");
     const backdrop = document.querySelector("[data-menu-backdrop]");
 
-    if (!menu || !openBtn) return;
+    if (!menu || !openButton) return;
 
     const openMenu = () => {
       menu.setAttribute("data-open", "true");
@@ -163,20 +162,19 @@ const links = [
       document.body.classList.remove("no-scroll");
     };
 
-    openBtn.addEventListener("click", openMenu);
-    closeBtn?.addEventListener("click", closeMenu);
+    openButton.addEventListener("click", openMenu);
+    closeButton?.addEventListener("click", closeMenu);
     backdrop?.addEventListener("click", closeMenu);
 
-    // Accordion toggle
-    const accordionToggle = menu.querySelector("[data-accordion-toggle]");
-    const accordionPanel = menu.querySelector("[data-accordion-panel]");
-    const accordionChevron = accordionToggle?.querySelector("svg");
+    const servicesToggle = menu.querySelector("[data-accordion-toggle]");
+    const servicesPanel = menu.querySelector("[data-accordion-panel]");
+    const servicesChevron = servicesToggle?.querySelector("svg");
 
-    accordionToggle?.addEventListener("click", () => {
-      const isOpen = accordionToggle.getAttribute("aria-expanded") === "true";
-      accordionToggle.setAttribute("aria-expanded", String(!isOpen));
-      accordionPanel?.classList.toggle("hidden");
-      accordionChevron?.classList.toggle("rotate-180");
+    servicesToggle?.addEventListener("click", () => {
+      const isOpen = servicesToggle.getAttribute("aria-expanded") === "true";
+      servicesToggle.setAttribute("aria-expanded", String(!isOpen));
+      servicesPanel?.classList.toggle("hidden");
+      servicesChevron?.classList.toggle("rotate-180");
     });
 
     menu.addEventListener("click", (event) => {
@@ -188,5 +186,5 @@ const links = [
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") closeMenu();
     });
-  });
+  })();
 </script>

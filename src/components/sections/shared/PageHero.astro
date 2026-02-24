@@ -116,7 +116,7 @@ const [cardOne, cardTwo, cardThree] = [
       <div class="flex flex-col space-y-8">
         {
           eyebrow ? (
-            <p class="mb-10 w-fit rounded border border-accent-primary/70 px-3 py-2 text-xs font-bold uppercase tracking-widest text-accent-primary/70">
+            <p class="animate-fade-up mb-10 w-fit rounded border border-accent-primary/70 px-3 py-2 text-xs font-bold uppercase tracking-widest text-accent-primary/70">
               {eyebrow}
             </p>
           ) : null
@@ -125,11 +125,11 @@ const [cardOne, cardTwo, cardThree] = [
         {
           titleHtml ? (
             <h1
-              class="mt-4 font-sora text-4xl font-semibold text-neutral-50 sm:text-5xl xl:text-6xl"
+              class="animate-fade-up animate-delay-100 mt-4 font-sora text-4xl font-semibold text-neutral-50 sm:text-5xl xl:text-6xl"
               set:html={titleHtml}
             />
           ) : title ? (
-            <h1 class="mt-4 font-sora text-4xl font-semibold text-neutral-50 sm:text-5xl lg:text-6xl">
+            <h1 class="animate-fade-up animate-delay-100 mt-4 font-sora text-4xl font-semibold text-neutral-50 sm:text-5xl lg:text-6xl">
               {title}
             </h1>
           ) : null
@@ -137,13 +137,13 @@ const [cardOne, cardTwo, cardThree] = [
 
         {
           description ? (
-            <p class="mt-4 text-base leading-relaxed text-neutral-300 sm:text-lg">{description}</p>
+            <p class="animate-fade-up animate-delay-200 mt-4 text-base leading-relaxed text-neutral-300 sm:text-lg">{description}</p>
           ) : null
         }
 
         {
           primaryCta || secondaryCta ? (
-            <div class="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div class="animate-fade-up animate-delay-300 mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
               {primaryCta ? (
                 <Button variant="primaryDark" href={primaryCta.href} size="md">
                   {primaryCta.label}
@@ -174,10 +174,10 @@ const [cardOne, cardTwo, cardThree] = [
                 [cardOne, cardTwo, cardThree].map((card, index) => (
                   <article
                     class:list={[
-                      "rounded-lg border border-neutral-700/40 bg-neutral-800/95 p-4 sm:p-5 shadow-2xl",
-                      index === 0 ? "lg:col-start-2 lg:-col-end-1 lg:row-start-1" : "",
-                      index === 1 ? "lg:col-start-1 lg:col-end-4 lg:row-start-2" : "",
-                      index === 2 ? "lg:col-start-2 lg:-col-end-1 lg:row-start-3" : "",
+                      "animate-fade-up rounded-lg border border-neutral-700/40 bg-neutral-800/95 p-4 sm:p-5 shadow-2xl",
+                      index === 0 ? "animate-delay-200 lg:col-start-2 lg:-col-end-1 lg:row-start-1" : "",
+                      index === 1 ? "animate-delay-300 lg:col-start-1 lg:col-end-4 lg:row-start-2" : "",
+                      index === 2 ? "animate-delay-400 lg:col-start-2 lg:-col-end-1 lg:row-start-3" : "",
                     ]}
                   >
                     <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-accent-primary/80">
