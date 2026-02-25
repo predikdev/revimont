@@ -14,9 +14,10 @@ import Prace03 from "../../../assets/images/el_prace_3.jpeg";
 interface Props {
   title?: string;
   eyebrow?: string;
+  description?: string;
 }
 
-const { title = "Ukázky našich elektroinstalací", eyebrow = "Portfolio" } = Astro.props;
+const { title = "Ukázky našich elektroinstalací", eyebrow = "Portfolio", description } = Astro.props;
 
 const projects: { title: string; description: string; meta: string; image: ImageMetadata; href: string }[] = [
   {
@@ -25,7 +26,7 @@ const projects: { title: string; description: string; meta: string; image: Image
       "Realizace elektroinstalace v průmyslovém prostoru, kde se řeší hlavně rychlost, bezpečnost a přesnost provedení. Probíhala montáž vedení a příprava rozvodů ve výšce tak, aby navazující části instalace šly napojit bez zdržení. Důraz byl na čistou trasu, logické vedení a funkční předání bez improvizací.",
     meta: "Klatovy",
     image: Prace02,
-    href: "/reference/projekt-1",
+    href: "/realizace/projekt-1",
   },
   {
     title: "Revize a servis",
@@ -33,7 +34,7 @@ const projects: { title: string; description: string; meta: string; image: Image
       "U tohoto projektu šlo o kontrolu a úpravu rozvaděče, aby byl přehledný a hlavně bezpečný. Byly prověřené okruhy, jištění a funkce ochranných prvků, a doplněno vše, co bylo potřeba pro spolehlivý provoz. Výsledkem je čisté a srozumitelné řešení, které se dá bez problémů servisovat i do budoucna.",
     meta: "Sušice",
     image: Prace01,
-    href: "/reference/projekt-2",
+    href: "/realizace/projekt-2",
   },
   {
     title: "Příprava venkovního rozvaděče",
@@ -41,14 +42,14 @@ const projects: { title: string; description: string; meta: string; image: Image
       "Tady je vidět příprava venkovního rozvaděče před finálním dokončením. Osazení prvků, svorkování a hlavně pečlivé značení vodičů, aby bylo zapojení jasné a bez chyb i při dalších krocích na stavbě. Cíl je jednoduchý: aby připojení a následný servis byly rychlé, bezpečné a bez překvapení.",
     meta: "Železná Ruda",
     image: Prace03,
-    href: "/reference/projekt-3",
+    href: "/realizace/projekt-3",
   },
 ];
 ---
 
 <SectionWrapper background="light" withGrid>
   <div class="mb-12 lg:mb-14">
-    <SectionHeader eyebrow={eyebrow} title={title} class="mb-0" background="light" />
+    <SectionHeader eyebrow={eyebrow} title={title} description={description} class="mb-0" background="light" />
   </div>
 
   <div class="flex w-full flex-col gap-20 lg:gap-32">
@@ -66,7 +67,7 @@ const projects: { title: string; description: string; meta: string; image: Image
                   alt={project.title}
                   widths={[400, 800, 1200]}
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  class="h-full w-full object-cover"
+                  class="h-full w-full object-cover hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                   quality={80}
                 />
