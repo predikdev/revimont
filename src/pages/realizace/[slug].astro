@@ -1,0 +1,226 @@
+---
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionWrapper from "../../components/ui/SectionWrapper.astro";
+import SectionHeader from "../../components/ui/SectionHeader.astro";
+import { Phone, Mail } from "@lucide/astro";
+import { projects } from "../../data/projects";
+import type { Project } from "../../data/projects";
+
+export const getStaticPaths = () =>
+  projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+
+const lightboxImages = await Promise.all(
+  project.gallery.map((photo: ImageMetadata) => getImage({ src: photo, width: 1600, quality: 85 }))
+);
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>{project.title} — Revimont Klatovy</title>
+  </Fragment>
+
+  <!-- Hero: slot="hero" → v hero-wrapper, Tailwind padding funguje (není v main) -->
+  <section
+    slot="hero"
+    class="relative isolate overflow-hidden bg-neutral-800 pt-24 pb-20 lg:pt-32 lg:pb-24"
+  >
+    <div class="mask-image-gradient absolute inset-0 bg-grid-pattern-dark opacity-25"></div>
+    <div
+      class="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-neutral-800/65 to-transparent"
+      aria-hidden="true"
+    ></div>
+
+    <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid min-h-[400px] items-end gap-5 pb-2 sm:gap-8 lg:min-h-[470px] lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-20">
+        <div class="max-w-2xl">
+          <p class="animate-fade-up text-[11px] font-bold uppercase tracking-[0.38em] text-accent-primary/95 mb-5">
+            {project.location} &middot; {project.category}
+          </p>
+
+          <h1
+            class="animate-fade-up animate-delay-100 font-sora text-3xl font-semibold leading-none tracking-tight text-neutral-50 drop-shadow-lg sm:text-5xl lg:text-6xl"
+          >
+            {project.title}
+          </h1>
+        </div>
+
+        <div class="max-w-md lg:ml-auto lg:pb-5">
+          <p class="animate-fade-up animate-delay-200 text-base leading-relaxed text-neutral-300 drop-shadow sm:text-lg">
+            {project.description}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Challenge / Solution cards -->
+  <SectionWrapper background="light" withGrid>
+    <a
+      href="/realizace"
+      class="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-accent-primary transition-colors mb-8"
+    >
+      <span aria-hidden="true">←</span> Zpět na realizace
+    </a>
+
+    <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+      <div class="bg-white border border-neutral-200 rounded-xl p-6 lg:p-8">
+        <p class="uppercase text-accent-primary text-xs font-semibold tracking-widest mb-3">
+          Výzva
+        </p>
+        <h2 class="font-sora font-bold text-xl text-neutral-900 mb-4">
+          {project.challenge.title}
+        </h2>
+        <p class="text-neutral-600 leading-relaxed">
+          {project.challenge.text}
+        </p>
+      </div>
+
+      <div class="bg-white border border-neutral-200 rounded-xl p-6 lg:p-8">
+        <p class="uppercase text-accent-primary text-xs font-semibold tracking-widest mb-3">
+          Řešení
+        </p>
+        <h2 class="font-sora font-bold text-xl text-neutral-900 mb-4">
+          {project.solution.title}
+        </h2>
+        <p class="text-neutral-600 leading-relaxed">
+          {project.solution.text}
+        </p>
+      </div>
+    </div>
+  </SectionWrapper>
+
+  <!-- Section 2: Photo gallery -->
+  <SectionWrapper background="light" withGrid>
+    <SectionHeader
+      eyebrow="Fotogalerie"
+      title="Z průběhu realizace"
+      background="light"
+      align="center"
+    />
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {
+        project.gallery.map((photo, i) => (
+          <button
+            class="overflow-hidden rounded-xl aspect-[4/3] block w-full cursor-zoom-in"
+            data-lightbox-src={lightboxImages[i].src}
+            data-lightbox-alt={`${project.title} — foto ${i + 1}`}
+            aria-label={`Zobrazit foto ${i + 1} v plné velikosti`}
+          >
+            <Image
+              src={photo}
+              alt={`${project.title} — foto ${i + 1}`}
+              widths={[400, 800]}
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+              quality={80}
+            />
+          </button>
+        ))
+      }
+    </div>
+
+    <!-- Lightbox -->
+    <div
+      id="lightbox"
+      class="fixed inset-0 z-[200] bg-neutral-900/95 hidden items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Prohlížeč fotografií"
+    >
+      <button
+        id="lightbox-close"
+        class="absolute top-4 right-4 z-10 rounded-full bg-neutral-800/80 p-2 text-neutral-300 hover:text-white transition-colors"
+        aria-label="Zavřít"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+      <img
+        id="lightbox-img"
+        src=""
+        alt=""
+        class="max-h-[90vh] max-w-[90vw] object-contain rounded-lg shadow-2xl"
+      />
+    </div>
+
+    <script is:inline>
+      {
+        const lightbox = document.getElementById('lightbox');
+        const img = document.getElementById('lightbox-img');
+        const closeBtn = document.getElementById('lightbox-close');
+
+        const open = (src, alt) => {
+          img.src = src;
+          img.alt = alt;
+          lightbox.classList.remove('hidden');
+          lightbox.classList.add('flex');
+          document.body.classList.add('no-scroll');
+          closeBtn.focus();
+        };
+
+        const close = () => {
+          lightbox.classList.add('hidden');
+          lightbox.classList.remove('flex');
+          img.src = '';
+          document.body.classList.remove('no-scroll');
+        };
+
+        document.querySelectorAll('[data-lightbox-src]').forEach(btn => {
+          btn.addEventListener('click', () =>
+            open(btn.dataset.lightboxSrc, btn.dataset.lightboxAlt)
+          );
+        });
+
+        closeBtn.addEventListener('click', close);
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) close();
+        });
+      }
+    </script>
+  </SectionWrapper>
+
+  <!-- Section 3: CTA -->
+  <SectionWrapper background="light" withGrid>
+    <div class="text-center">
+      <p class="uppercase text-accent-primary text-xs font-semibold tracking-widest mb-4">
+        Kontakt
+      </p>
+      <h2 class="font-sora font-bold text-3xl md:text-4xl text-neutral-900 mb-3">
+        Zaujal vás projekt?
+      </h2>
+      <p class="text-neutral-600 leading-relaxed mb-8">
+        Rádi probereme vaši zakázku — zavolejte nebo napište.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a
+          href="tel:+420775736112"
+          class="bg-white border border-neutral-200 rounded-lg p-4 flex items-center gap-3 text-neutral-800 font-medium hover:border-accent-primary hover:text-accent-primary transition-colors"
+        >
+          <Phone class="w-5 h-5 text-accent-primary shrink-0" />
+          +420 775 736 112
+        </a>
+        <a
+          href="mailto:info@revimont.cz"
+          class="bg-white border border-neutral-200 rounded-lg p-4 flex items-center gap-3 text-neutral-800 font-medium hover:border-accent-primary hover:text-accent-primary transition-colors"
+        >
+          <Mail class="w-5 h-5 text-accent-primary shrink-0" />
+          info@revimont.cz
+        </a>
+      </div>
+    </div>
+  </SectionWrapper>
+</BaseLayout>

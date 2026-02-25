@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeroServicesNew from "../components/sections/shared/PageHeroServicesNew.astro";
+import PortfolioShowcaseAlternating from "../components/sections/shared/PortfolioShowcaseAlternating.astro";
+import ContactSection from "../components/sections/shared/ContactSection.astro";
+import heroImage from "../assets/images/el_prace_3.jpeg";
+---
+
+<BaseLayout>
+  <PageHeroServicesNew
+    slot="hero"
+    eyebrow="Reference Revimont"
+    titleHtml={`Ukázky naší<br /> práce`}
+    description="Každý projekt realizujeme s maximální pečlivostí. Prohlédněte si naše dokončené zakázky v Klatovech a okolí."
+    backgroundImage={heroImage}
+    backgroundImageAlt="Realizované projekty — elektroinstalace a revize Revimont Klatovy"
+  />
+  <PortfolioShowcaseAlternating
+    eyebrow="Reference"
+    title="Naše realizované projekty"
+    description="Podívejte se na ukázky naší práce. Každý projekt řešíme s důrazem na kvalitu, bezpečnost a spokojenost klienta."
+  />
+  <ContactSection />
+</BaseLayout>
