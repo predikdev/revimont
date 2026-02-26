@@ -1,5 +1,6 @@
 ---
-import { Phone, Mail, Building2 } from "@lucide/astro";
+import { Phone, Mail, Building2, Check } from "@lucide/astro";
+import { COMPANY } from "../../../data/company";
 
 interface Props {
   showCompanyIds?: boolean;
@@ -7,43 +8,68 @@ interface Props {
   dic?: string;
 }
 
-const {
-  showCompanyIds = false,
-  ico = "12345678",
-  dic = "CZ12345678",
-} = Astro.props;
+const { showCompanyIds = false } = Astro.props;
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 
-<section data-animate-section class="relative bg-background py-10 overflow-hidden">
-  <div class="absolute inset-0 bg-grid-pattern" aria-hidden="true"></div>
+<section
+  data-animate-section
+  class="bg-background relative overflow-hidden py-10"
+>
+  <div class="bg-grid-pattern absolute inset-0" aria-hidden="true"></div>
 
-  <div class="container relative z-10">
+  <div class="relative z-10 container">
     <!-- Section Header -->
     <div class="mb-14">
-      <div class="flex items-center gap-3 mb-4">
-        <span class="w-6 h-0.5 bg-accent-primary" aria-hidden="true"></span>
-        <span class="uppercase text-accent-primary text-sm font-semibold tracking-widest">Kontakt</span>
+      <div class="mb-4 flex items-center gap-3">
+        <span class="bg-accent-primary h-0.5 w-6" aria-hidden="true"></span>
+        <span
+          class="text-accent-primary text-sm font-semibold tracking-widest uppercase"
+          >Kontakt</span
+        >
       </div>
-      <h2 class="text-heading font-sora font-bold text-neutral-900 leading-heading mb-6">
+      <h2
+        class="text-heading font-sora leading-heading mb-6 font-bold text-neutral-900"
+      >
         Ozvěte se nám —<br />rádi pomůžeme
       </h2>
-      <p class="text-body text-neutral-600 leading-body max-w-lg">
-        Máte dotaz, potřebujete nacenit zakázku nebo si domluvit termín? Napište nám
-        nebo zavolejte — odpovídáme do 24 hodin.
+      <p class="text-body leading-body max-w-lg text-neutral-600">
+        Máte dotaz, potřebujete nacenit zakázku nebo si domluvit termín? Napište
+        nám nebo zavolejte — odpovídáme do 24 hodin.
       </p>
     </div>
 
     <!-- Two-column layout -->
-    <div class="grid lg:grid-cols-[3fr_2fr] gap-8 items-start">
+    <div class="grid items-start gap-8 lg:grid-cols-[3fr_2fr]">
       <!-- Left: Contact Form Card -->
-      <div class="bg-white rounded-lg border border-neutral-200 p-8 shadow-sm">
-        <h3 class="text-xl font-bold text-neutral-900 mb-6">Napište nám</h3>
+      <div
+        id="contact-form-card"
+        class="rounded-lg border border-neutral-200 bg-white p-8 shadow-sm"
+      >
+        <h3 class="mb-6 text-xl font-bold text-neutral-900">Napište nám</h3>
 
-        <form class="space-y-5" novalidate>
-          <div class="grid sm:grid-cols-2 gap-4">
+        <!-- Error banner -->
+        <div
+          id="form-error-banner"
+          role="alert"
+          class="mb-6 hidden rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800"
+        >
+          <p id="form-error-text"></p>
+        </div>
+
+        <form id="contact-form" class="space-y-5" novalidate>
+          <!-- Name -->
+          <div class="grid gap-4 sm:grid-cols-2">
             <div>
-              <label for="contact-name" class="block text-sm font-medium text-neutral-700 mb-1.5">
-                Jméno a příjmení <span class="text-accent-primary" aria-hidden="true">*</span>
+              <label
+                for="contact-name"
+                class="mb-1.5 block text-sm font-medium text-neutral-700"
+              >
+                Jméno a příjmení <span
+                  class="text-accent-primary"
+                  aria-hidden="true">*</span
+                >
               </label>
               <input
                 type="text"
@@ -53,13 +79,26 @@ const {
                 autocomplete="name"
                 required
                 aria-required="true"
-                class="w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-accent-primary/25 focus:border-accent-primary transition-all"
+                aria-describedby="error-name"
+                class="focus:ring-accent-primary focus:ring-offset-background focus:border-accent-primary w-full rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 transition-all duration-200 placeholder:text-neutral-400 focus:ring-2 focus:ring-offset-2 focus:outline-none"
               />
+              <p
+                id="error-name"
+                role="alert"
+                class="mt-1 hidden text-xs text-red-600"
+              >
+              </p>
             </div>
 
+            <!-- Phone (optional) -->
             <div>
-              <label for="contact-phone" class="block text-sm font-medium text-neutral-700 mb-1.5">
-                Telefon
+              <label
+                for="contact-phone"
+                class="mb-1.5 block text-sm font-medium text-neutral-700"
+              >
+                Telefon <span class="font-normal text-neutral-500"
+                  >(volitelně)</span
+                >
               </label>
               <input
                 type="tel"
@@ -67,30 +106,118 @@ const {
                 name="phone"
                 placeholder="+420 123 456 789"
                 autocomplete="tel"
-                class="w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-accent-primary/25 focus:border-accent-primary transition-all"
+                aria-describedby="error-phone"
+                class="focus:ring-accent-primary focus:ring-offset-background focus:border-accent-primary w-full rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 transition-all duration-200 placeholder:text-neutral-400 focus:ring-2 focus:ring-offset-2 focus:outline-none"
               />
+              <p
+                id="error-phone"
+                role="alert"
+                class="mt-1 hidden text-xs text-red-600"
+              >
+              </p>
             </div>
           </div>
 
+          <!-- Service dropdown -->
           <div>
-            <label for="contact-email" class="block text-sm font-medium text-neutral-700 mb-1.5">
-              E-mail <span class="text-accent-primary" aria-hidden="true">*</span>
+            <label
+              for="contact-service"
+              class="mb-1.5 block text-sm font-medium text-neutral-700"
+            >
+              Typ služby <span class="text-accent-primary" aria-hidden="true"
+                >*</span
+              >
             </label>
-            <input
-              type="email"
-              id="contact-email"
-              name="email"
-              placeholder="jan.novak@email.cz"
-              autocomplete="email"
+            <select
+              id="contact-service"
+              name="service"
               required
               aria-required="true"
-              class="w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-accent-primary/25 focus:border-accent-primary transition-all"
-            />
+              aria-describedby="error-service"
+              class="focus:ring-accent-primary focus:ring-offset-background focus:border-accent-primary w-full rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 transition-all duration-200 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+            >
+              <option value="">— Vyberte službu —</option>
+              <option value="Elektroinstalace">Elektroinstalace</option>
+              <option value="Revize">Revize</option>
+              <option value="Opravy a montáže">Opravy a montáže</option>
+              <option value="Jiné">Jiné</option>
+            </select>
+            <p
+              id="error-service"
+              role="alert"
+              class="mt-1 hidden text-xs text-red-600"
+            >
+            </p>
           </div>
 
+          <!-- Email & Location grid -->
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label
+                for="contact-email"
+                class="mb-1.5 block text-sm font-medium text-neutral-700"
+              >
+                E-mail <span class="text-accent-primary" aria-hidden="true"
+                  >*</span
+                >
+              </label>
+              <input
+                type="email"
+                id="contact-email"
+                name="email"
+                placeholder="jan.novak@email.cz"
+                autocomplete="email"
+                required
+                aria-required="true"
+                aria-describedby="error-email"
+                class="focus:ring-accent-primary focus:ring-offset-background focus:border-accent-primary w-full rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 transition-all duration-200 placeholder:text-neutral-400 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+              />
+              <p
+                id="error-email"
+                role="alert"
+                class="mt-1 hidden text-xs text-red-600"
+              >
+              </p>
+            </div>
+
+            <div>
+              <label
+                for="contact-location"
+                class="mb-1.5 block text-sm font-medium text-neutral-700"
+              >
+                Lokalita <span class="text-accent-primary" aria-hidden="true"
+                  >*</span
+                >
+              </label>
+              <input
+                type="text"
+                id="contact-location"
+                name="location"
+                placeholder="Klatovy, okres Domažlice"
+                autocomplete="address-level2"
+                required
+                aria-required="true"
+                aria-describedby="error-location"
+                class="focus:ring-accent-primary focus:ring-offset-background focus:border-accent-primary w-full rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 transition-all duration-200 placeholder:text-neutral-400 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+              />
+              <p
+                id="error-location"
+                role="alert"
+                class="mt-1 hidden text-xs text-red-600"
+              >
+              </p>
+            </div>
+          </div>
+
+          <!-- Message -->
           <div>
-            <label for="contact-message" class="block text-sm font-medium text-neutral-700 mb-1.5">
-              Zpráva <span class="text-accent-primary" aria-hidden="true">*</span>
+            <label
+              for="contact-message"
+              class="mb-1.5 block text-sm font-medium text-neutral-700"
+            >
+              Zpráva <span class="text-accent-primary" aria-hidden="true"
+                >*</span
+              >
             </label>
             <textarea
               id="contact-message"
@@ -99,82 +226,279 @@ const {
               placeholder="Popište váš požadavek nebo dotaz..."
               required
               aria-required="true"
-              class="w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-accent-primary/25 focus:border-accent-primary transition-all resize-none"
+              aria-describedby="error-message"
+              class="focus:ring-accent-primary focus:ring-offset-background focus:border-accent-primary w-full resize-none rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 transition-all duration-200 placeholder:text-neutral-400 focus:ring-2 focus:ring-offset-2 focus:outline-none"
             ></textarea>
+            <p
+              id="error-message"
+              role="alert"
+              class="mt-1 hidden text-xs text-red-600"
+            >
+            </p>
           </div>
 
+          <!-- Turnstile widget -->
+          <div
+            class="cf-turnstile"
+            data-sitekey={turnstileSiteKey}
+            data-language="cs"
+            data-theme="light"
+            aria-describedby="error-turnstile"
+          >
+          </div>
+          <p
+            id="error-turnstile"
+            role="alert"
+            class="mt-1 hidden text-xs text-red-600"
+          >
+          </p>
+
+          <!-- GDPR Checkbox -->
+          <div class="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="contact-privacy"
+              name="privacy"
+              value="on"
+              required
+              aria-required="true"
+              aria-describedby="error-privacy"
+              class="text-accent-primary focus:ring-accent-primary focus:ring-offset-background focus:border-accent-primary mt-1 h-4 w-4 cursor-pointer rounded border border-neutral-200 bg-white transition-all duration-200 focus:ring-2 focus:ring-offset-2"
+            />
+            <label
+              for="contact-privacy"
+              class="cursor-pointer text-sm leading-relaxed text-neutral-600"
+            >
+              Souhlasím se
+              <a
+                href="/ochrana-osobnich-udaju"
+                class="text-accent-primary hover:underline"
+                >zpracováním mých osobních údajů</a
+              >
+              dle GDPR
+              <span class="text-accent-primary" aria-hidden="true">*</span>
+            </label>
+          </div>
+          <p
+            id="error-privacy"
+            role="alert"
+            class="mt-1 hidden text-xs text-red-600"
+          >
+          </p>
+
+          <!-- Submit button -->
           <button
+            id="contact-submit"
             type="submit"
-            class="w-full py-4 px-6 bg-accent-primary text-white font-semibold text-sm rounded-lg flex items-center justify-center gap-2 hover:brightness-110 active:scale-[0.99] transition-all duration-200 cursor-pointer"
+            data-default-label="Odeslat zprávu →"
+            class="bg-accent-primary flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg px-6 py-4 text-sm font-semibold text-white transition-all duration-200 hover:brightness-110 active:scale-[0.99]"
           >
             Odeslat zprávu &nbsp;→
           </button>
         </form>
+
+        <!-- Success panel -->
+        <div
+          id="contact-success"
+          role="status"
+          aria-live="polite"
+          class="animate-fade-up hidden rounded-lg border border-green-200 bg-green-50 p-6 text-center"
+        >
+          <div class="mb-3 flex justify-center">
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100"
+            >
+              <Check class="h-6 w-6 text-green-600" />
+            </div>
+          </div>
+          <h4 class="mb-2 text-lg font-bold text-green-900">
+            Zpráva odeslána!
+          </h4>
+          <p class="text-sm text-green-700">
+            Děkujeme za váš dotaz. Odpovíme vám během 24 hodin.
+          </p>
+        </div>
       </div>
 
       <!-- Right: Contact Info Cards -->
       <div class="space-y-3">
         <a
-          href="tel:+420775736112"
-          aria-label="Zavolejte nám: +420 775 736 112"
-          class="group bg-white rounded-lg border border-neutral-200 p-5 flex items-center gap-4 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
+          href={`tel:${COMPANY.phoneHref}`}
+          aria-label={`Zavolejte nám: ${COMPANY.phoneDisplay}`}
+          class="group flex items-center gap-4 rounded-lg border border-neutral-200 bg-white p-5 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
         >
-          <div class="shrink-0 w-12 h-12 bg-accent-primary/10 rounded-full flex items-center justify-center transition-colors duration-300 group-hover:bg-accent-primary/[0.16]" aria-hidden="true">
-            <Phone class="w-5 h-5 text-accent-primary" />
+          <div
+            class="bg-accent-primary/10 group-hover:bg-accent-primary/[0.16] flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-colors duration-300"
+            aria-hidden="true"
+          >
+            <Phone class="text-accent-primary h-5 w-5" />
           </div>
           <div class="block">
-            <p class="text-xs uppercase font-semibold tracking-widest text-neutral-500 mb-0.5 transition-colors group-hover:text-accent-primary">
+            <p
+              class="group-hover:text-accent-primary mb-0.5 text-xs font-semibold tracking-widest text-neutral-500 uppercase transition-colors"
+            >
               Telefon
             </p>
-            <p class="text-neutral-900 font-bold transition-colors group-hover:text-accent-primary">
-              +420 775 736 112
+            <p
+              class="group-hover:text-accent-primary font-bold text-neutral-900 transition-colors"
+            >
+              {COMPANY.phoneDisplay}
             </p>
           </div>
         </a>
 
         <a
-          href="mailto:info@revimont.cz"
-          aria-label="Napište nám: info@revimont.cz"
-          class="group bg-white rounded-lg border border-neutral-200 p-5 flex items-center gap-4 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
+          href={`mailto:${COMPANY.email}`}
+          aria-label={`Napište nám: ${COMPANY.email}`}
+          class="group flex items-center gap-4 rounded-lg border border-neutral-200 bg-white p-5 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
         >
-          <div class="shrink-0 w-12 h-12 bg-accent-primary/10 rounded-full flex items-center justify-center transition-colors duration-300 group-hover:bg-accent-primary/[0.16]" aria-hidden="true">
-            <Mail class="w-5 h-5 text-accent-primary" />
+          <div
+            class="bg-accent-primary/10 group-hover:bg-accent-primary/[0.16] flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-colors duration-300"
+            aria-hidden="true"
+          >
+            <Mail class="text-accent-primary h-5 w-5" />
           </div>
           <div class="block">
-            <p class="text-xs uppercase font-semibold tracking-widest text-neutral-500 mb-0.5 transition-colors group-hover:text-accent-primary">
+            <p
+              class="group-hover:text-accent-primary mb-0.5 text-xs font-semibold tracking-widest text-neutral-500 uppercase transition-colors"
+            >
               E-mail
             </p>
-            <p class="text-neutral-900 font-bold transition-colors group-hover:text-accent-primary">
-              info@revimont.cz
+            <p
+              class="group-hover:text-accent-primary font-bold text-neutral-900 transition-colors"
+            >
+              {COMPANY.email}
             </p>
           </div>
         </a>
 
-        {showCompanyIds && (
-          <div class="group bg-white rounded-lg border border-neutral-200 p-5 flex items-start gap-4 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md">
-            <div
-              class="shrink-0 w-12 h-12 bg-accent-primary/10 rounded-full flex items-center justify-center transition-colors duration-300 group-hover:bg-accent-primary/[0.16]"
-              aria-hidden="true"
-            >
-              <Building2 class="w-5 h-5 text-accent-primary" />
-            </div>
-            <div>
-              <p class="text-xs uppercase font-semibold tracking-widest text-neutral-500 mb-1">
-                Fakturační údaje
-              </p>
-              <div class="space-y-1">
-                <p class="text-sm text-neutral-600">
-                  <span class="font-semibold text-neutral-900">IČO:</span> {ico}
+        {
+          showCompanyIds && (
+            <div class="group flex items-start gap-4 rounded-lg border border-neutral-200 bg-white p-5 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md">
+              <div
+                class="bg-accent-primary/10 group-hover:bg-accent-primary/[0.16] flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-colors duration-300"
+                aria-hidden="true"
+              >
+                <Building2 class="text-accent-primary h-5 w-5" />
+              </div>
+              <div>
+                <p class="mb-1 text-xs font-semibold tracking-widest text-neutral-500 uppercase">
+                  Fakturační údaje
                 </p>
-                <p class="text-sm text-neutral-600">
-                  <span class="font-semibold text-neutral-900">DIČ:</span> {dic}
-                </p>
+                <div class="space-y-1">
+                  <p class="text-sm text-neutral-600">
+                    <span class="font-semibold text-neutral-900">
+                      IČO: {COMPANY.ico}
+                    </span>
+                  </p>
+                  <p class="text-sm text-neutral-600">
+                    <span class="font-semibold text-neutral-900">
+                      DIČ: {COMPANY.dic}
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-
+          )
+        }
       </div>
     </div>
   </div>
 </section>
+
+<!-- Turnstile script -->
+<script
+  is:inline
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async
+  defer></script>
+
+<!-- Form handler script -->
+<script>
+  import { actions, isInputError } from "astro:actions";
+
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const submitBtn = document.getElementById(
+    "contact-submit",
+  ) as HTMLButtonElement;
+  const defaultLabel =
+    submitBtn.getAttribute("data-default-label") || "Odeslat zprávu →";
+  const formCard = document.getElementById(
+    "contact-form-card",
+  ) as HTMLDivElement;
+  const successPanel = document.getElementById(
+    "contact-success",
+  ) as HTMLDivElement;
+  const errorBanner = document.getElementById(
+    "form-error-banner",
+  ) as HTMLDivElement;
+  const errorText = document.getElementById(
+    "form-error-text",
+  ) as HTMLParagraphElement;
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  const scrollBehavior = prefersReducedMotion ? "auto" : "smooth";
+
+  form.addEventListener("submit", async (e: SubmitEvent) => {
+    e.preventDefault();
+
+    // Clear previous errors
+    document.querySelectorAll("[id^='error-']").forEach((el) => {
+      el.classList.add("hidden");
+    });
+    errorBanner.classList.add("hidden");
+
+    // Set loading state
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Odesílání…";
+
+    const formData = new FormData(form);
+    const result = await actions.poptavka(formData);
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = defaultLabel;
+
+    if (result.error) {
+      // Handle validation errors
+      if (isInputError(result.error)) {
+        let firstErrorField: HTMLElement | null = null;
+
+        for (const [field, messages] of Object.entries(result.error.fields)) {
+          const errorEl = document.getElementById(`error-${field}`);
+          if (errorEl && messages && messages.length > 0) {
+            errorEl.textContent = messages[0];
+            errorEl.classList.remove("hidden");
+
+            if (!firstErrorField) {
+              firstErrorField =
+                document.getElementById(`contact-${field}`) || errorEl;
+            }
+          }
+        }
+
+        // Focus first error field
+        if (firstErrorField) {
+          firstErrorField.focus();
+          firstErrorField.scrollIntoView({
+            behavior: scrollBehavior,
+            block: "center",
+          });
+        }
+      } else {
+        // General error
+        errorText.textContent =
+          "Chyba při odesílání formuláře. Prosím, zkuste znovu.";
+        errorBanner.classList.remove("hidden");
+      }
+    } else if (result.data?.success) {
+      // Hide form, show success
+      formCard.classList.add("hidden");
+      successPanel.classList.remove("hidden");
+      successPanel.scrollIntoView({
+        behavior: scrollBehavior,
+        block: "nearest",
+      });
+    }
+  });
+</script>

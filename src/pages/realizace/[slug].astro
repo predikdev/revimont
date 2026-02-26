@@ -8,6 +8,7 @@ import SectionHeader from "../../components/ui/SectionHeader.astro";
 import { Phone, Mail } from "@lucide/astro";
 import { projects } from "../../data/projects";
 import type { Project } from "../../data/projects";
+import { COMPANY } from "../../data/company";
 
 export const getStaticPaths = () =>
   projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
@@ -19,13 +20,21 @@ interface Props {
 const { project } = Astro.props;
 
 const lightboxImages = await Promise.all(
-  project.gallery.map((photo: ImageMetadata) => getImage({ src: photo, width: 1600, quality: 85 }))
+  project.gallery.map((photo: ImageMetadata) =>
+    getImage({ src: photo, width: 1600, quality: 85 }),
+  ),
 );
 ---
 
-<BaseLayout>
+<BaseLayout
+  pageTitle={project.title}
+  pageDescription={project.description}
+  ogImage={project.heroImage.src}
+  ogImageAlt={project.heroImageAlt}
+  ogType="article"
+>
   <Fragment slot="head">
-    <title>{project.title} — Revimont Klatovy</title>
+    <meta property="article:section" content={project.category} />
   </Fragment>
 
   <!-- Hero: slot="hero" → v hero-wrapper, Tailwind padding funguje (není v main) -->
@@ -33,28 +42,38 @@ const lightboxImages = await Promise.all(
     slot="hero"
     class="relative isolate overflow-hidden bg-neutral-800 pt-24 pb-20 lg:pt-32 lg:pb-24"
   >
-    <div class="mask-image-gradient absolute inset-0 bg-grid-pattern-dark opacity-25"></div>
+    <div
+      class="mask-image-gradient bg-grid-pattern-dark absolute inset-0 opacity-25"
+    >
+    </div>
     <div
       class="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-neutral-800/65 to-transparent"
       aria-hidden="true"
-    ></div>
+    >
+    </div>
 
     <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="grid items-end gap-5 pb-2 sm:gap-8 lg:min-h-[470px] lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-20">
+      <div
+        class="grid items-end gap-5 pb-2 sm:gap-8 lg:min-h-[470px] lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-20"
+      >
         <div>
-          <p class="animate-fade-up mb-10 text-[11px] font-bold uppercase tracking-[0.38em] text-accent-primary/95">
+          <p
+            class="animate-fade-up text-accent-primary/95 mb-10 text-[11px] font-bold tracking-[0.38em] uppercase"
+          >
             {project.location} &middot; {project.category}
           </p>
 
           <h1
-            class="animate-fade-up animate-delay-100 mt-8 font-sora text-4xl font-semibold leading-none tracking-tight text-neutral-50 drop-shadow-lg sm:text-5xl lg:text-6xl"
+            class="animate-fade-up animate-delay-100 font-sora mt-8 text-4xl leading-none font-semibold tracking-tight text-neutral-50 drop-shadow-lg sm:text-5xl lg:text-6xl"
           >
             {project.title}
           </h1>
         </div>
 
         <div class="lg:ml-auto lg:pb-5">
-          <p class="animate-fade-up animate-delay-200 text-base leading-relaxed text-neutral-300 drop-shadow sm:text-lg">
+          <p
+            class="animate-fade-up animate-delay-200 text-base leading-relaxed text-neutral-300 drop-shadow sm:text-lg"
+          >
             {project.description}
           </p>
         </div>
@@ -66,32 +85,36 @@ const lightboxImages = await Promise.all(
   <SectionWrapper background="light" withGrid>
     <a
       href="/realizace"
-      class="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-accent-primary transition-colors mb-8"
+      class="hover:text-accent-primary mb-8 inline-flex items-center gap-2 text-sm font-medium text-neutral-500 transition-colors"
     >
       <span aria-hidden="true">←</span> Zpět na realizace
     </a>
 
-    <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
-      <div class="bg-white border border-neutral-200 rounded-xl p-6 lg:p-8">
-        <p class="uppercase text-accent-primary text-xs font-semibold tracking-widest mb-3">
+    <div class="grid gap-6 md:grid-cols-2 lg:gap-8">
+      <div class="rounded-xl border border-neutral-200 bg-white p-6 lg:p-8">
+        <p
+          class="text-accent-primary mb-3 text-xs font-semibold tracking-widest uppercase"
+        >
           Výzva
         </p>
-        <h2 class="font-sora font-bold text-xl text-neutral-900 mb-4">
+        <h2 class="font-sora mb-4 text-xl font-bold text-neutral-900">
           {project.challenge.title}
         </h2>
-        <p class="text-neutral-600 leading-relaxed">
+        <p class="leading-relaxed text-neutral-600">
           {project.challenge.text}
         </p>
       </div>
 
-      <div class="bg-white border border-neutral-200 rounded-xl p-6 lg:p-8">
-        <p class="uppercase text-accent-primary text-xs font-semibold tracking-widest mb-3">
+      <div class="rounded-xl border border-neutral-200 bg-white p-6 lg:p-8">
+        <p
+          class="text-accent-primary mb-3 text-xs font-semibold tracking-widest uppercase"
+        >
           Řešení
         </p>
-        <h2 class="font-sora font-bold text-xl text-neutral-900 mb-4">
+        <h2 class="font-sora mb-4 text-xl font-bold text-neutral-900">
           {project.solution.title}
         </h2>
-        <p class="text-neutral-600 leading-relaxed">
+        <p class="leading-relaxed text-neutral-600">
           {project.solution.text}
         </p>
       </div>
@@ -107,11 +130,11 @@ const lightboxImages = await Promise.all(
       align="center"
     />
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {
         project.gallery.map((photo, i) => (
           <button
-            class="overflow-hidden rounded-xl aspect-[4/3] block w-full cursor-zoom-in"
+            class="block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-xl"
             data-lightbox-src={lightboxImages[i].src}
             data-lightbox-alt={`${project.title} — foto ${i + 1}`}
             aria-label={`Zobrazit foto ${i + 1} v plné velikosti`}
@@ -121,7 +144,7 @@ const lightboxImages = await Promise.all(
               alt={`${project.title} — foto ${i + 1}`}
               widths={[400, 800]}
               sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-              class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
               loading="lazy"
               quality={80}
             />
@@ -133,61 +156,108 @@ const lightboxImages = await Promise.all(
     <!-- Lightbox -->
     <div
       id="lightbox"
-      class="fixed inset-0 z-[200] bg-neutral-900/95 hidden items-center justify-center"
+      class="fixed inset-0 z-[200] hidden items-center justify-center bg-neutral-900/95"
       role="dialog"
       aria-modal="true"
-      aria-label="Prohlížeč fotografií"
+      aria-labelledby="lightbox-title"
+      tabindex="-1"
     >
+      <h2 id="lightbox-title" class="sr-only">
+        Prohlížeč fotografií realizace
+      </h2>
       <button
         id="lightbox-close"
-        class="absolute top-4 right-4 z-10 rounded-full bg-neutral-800/80 p-2 text-neutral-300 hover:text-white transition-colors"
+        class="absolute top-4 right-4 z-10 rounded-full bg-neutral-800/80 p-2 text-neutral-300 transition-colors hover:text-white"
         aria-label="Zavřít"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
       <img
         id="lightbox-img"
         src=""
         alt=""
-        class="max-h-[90vh] max-w-[90vw] object-contain rounded-lg shadow-2xl"
+        class="max-h-[90vh] max-w-[90vw] rounded-lg object-contain shadow-2xl"
       />
     </div>
 
     <script is:inline>
       {
-        const lightbox = document.getElementById('lightbox');
-        const img = document.getElementById('lightbox-img');
-        const closeBtn = document.getElementById('lightbox-close');
+        const lightbox = document.getElementById("lightbox");
+        const img = document.getElementById("lightbox-img");
+        const closeBtn = document.getElementById("lightbox-close");
+        let lastFocused = null;
+
+        const getFocusable = () =>
+          Array.from(
+            lightbox.querySelectorAll(
+              'button, [href], [tabindex]:not([tabindex="-1"])',
+            ),
+          );
 
         const open = (src, alt) => {
+          lastFocused = document.activeElement;
           img.src = src;
           img.alt = alt;
-          lightbox.classList.remove('hidden');
-          lightbox.classList.add('flex');
-          document.body.classList.add('no-scroll');
+          lightbox.classList.remove("hidden");
+          lightbox.classList.add("flex");
+          document.body.classList.add("no-scroll");
           closeBtn.focus();
         };
 
         const close = () => {
-          lightbox.classList.add('hidden');
-          lightbox.classList.remove('flex');
-          img.src = '';
-          document.body.classList.remove('no-scroll');
+          lightbox.classList.add("hidden");
+          lightbox.classList.remove("flex");
+          img.src = "";
+          document.body.classList.remove("no-scroll");
+          if (lastFocused instanceof HTMLElement) lastFocused.focus();
         };
 
-        document.querySelectorAll('[data-lightbox-src]').forEach(btn => {
-          btn.addEventListener('click', () =>
-            open(btn.dataset.lightboxSrc, btn.dataset.lightboxAlt)
+        document.querySelectorAll("[data-lightbox-src]").forEach((btn) => {
+          btn.addEventListener("click", () =>
+            open(btn.dataset.lightboxSrc, btn.dataset.lightboxAlt),
           );
         });
 
-        closeBtn.addEventListener('click', close);
-        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) close();
+        closeBtn.addEventListener("click", close);
+        lightbox.addEventListener("click", (e) => {
+          if (e.target === lightbox) close();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (lightbox.classList.contains("hidden")) return;
+
+          if (e.key === "Escape") {
+            close();
+            return;
+          }
+
+          if (e.key !== "Tab") return;
+
+          const focusable = getFocusable();
+          if (!focusable.length) return;
+
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
         });
       }
     </script>
@@ -196,29 +266,33 @@ const lightboxImages = await Promise.all(
   <!-- Section 3: CTA -->
   <SectionWrapper background="light" withGrid>
     <div class="text-center">
-      <p class="uppercase text-accent-primary text-xs font-semibold tracking-widest mb-4">
+      <p
+        class="text-accent-primary mb-4 text-xs font-semibold tracking-widest uppercase"
+      >
         Kontakt
       </p>
-      <h2 class="font-sora font-bold text-3xl md:text-4xl text-neutral-900 mb-3">
+      <h2
+        class="font-sora mb-3 text-3xl font-bold text-neutral-900 md:text-4xl"
+      >
         Zaujal vás projekt?
       </h2>
-      <p class="text-neutral-600 leading-relaxed mb-8">
+      <p class="mb-8 leading-relaxed text-neutral-600">
         Rádi probereme vaši zakázku — zavolejte nebo napište.
       </p>
-      <div class="flex flex-wrap gap-4 justify-center">
+      <div class="flex flex-wrap justify-center gap-4">
         <a
           href="tel:+420775736112"
-          class="bg-white border border-neutral-200 rounded-lg p-4 flex items-center gap-3 text-neutral-800 font-medium hover:border-accent-primary hover:text-accent-primary transition-colors"
+          class="hover:border-accent-primary hover:text-accent-primary flex items-center gap-3 rounded-lg border border-neutral-200 bg-white p-4 font-medium text-neutral-800 transition-colors"
         >
-          <Phone class="w-5 h-5 text-accent-primary shrink-0" />
+          <Phone class="text-accent-primary h-5 w-5 shrink-0" />
           +420 775 736 112
         </a>
         <a
-          href="mailto:info@revimont.cz"
-          class="bg-white border border-neutral-200 rounded-lg p-4 flex items-center gap-3 text-neutral-800 font-medium hover:border-accent-primary hover:text-accent-primary transition-colors"
+          href={`mailto:${COMPANY.email}`}
+          class="hover:border-accent-primary hover:text-accent-primary flex items-center gap-3 rounded-lg border border-neutral-200 bg-white p-4 font-medium text-neutral-800 transition-colors"
         >
-          <Mail class="w-5 h-5 text-accent-primary shrink-0" />
-          info@revimont.cz
+          <Mail class="text-accent-primary h-5 w-5 shrink-0" />
+          {COMPANY.email}
         </a>
       </div>
     </div>

@@ -8,7 +8,8 @@ import "vanilla-cookieconsent/dist/cookieconsent.css";
   import * as CookieConsent from "vanilla-cookieconsent";
 
   // Expose to window so other scripts can call showPreferences()
-  (window as unknown as { CookieConsent: typeof CookieConsent }).CookieConsent = CookieConsent;
+  (window as unknown as { CookieConsent: typeof CookieConsent }).CookieConsent =
+    CookieConsent;
 
   CookieConsent.run({
     guiOptions: {
@@ -97,8 +98,11 @@ import "vanilla-cookieconsent/dist/cookieconsent.css";
     }
   }
 
-  function updateGoogleConsent(preferences: ReturnType<typeof CookieConsent.getUserPreferences>) {
-    const analyticsGranted = preferences.acceptedCategories.includes("analytics");
+  function updateGoogleConsent(
+    preferences: ReturnType<typeof CookieConsent.getUserPreferences>,
+  ) {
+    const analyticsGranted =
+      preferences.acceptedCategories.includes("analytics");
 
     if (typeof window.gtag === "function") {
       window.gtag("consent", "update", {

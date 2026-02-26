@@ -4,8 +4,110 @@ import Header from "../components/layout/Header.astro";
 import MobileNavigation from "../components/layout/MobileNavigation.astro";
 import Footer from "../components/layout/Footer.astro";
 import CookieConsent from "../components/ui/CookieConsent.astro";
+import { COMPANY, MAPS_SEARCH_URL, SITE_URL } from "../data/company";
 
-const GA_ID = "G-XXXXXXXXXX";
+type OgImageLike = string | { src: string };
+
+type SchemaLike = Record<string, unknown>;
+
+interface Props {
+  pageTitle?: string;
+  pageDescription?: string;
+  ogImage?: OgImageLike;
+  ogImageAlt?: string;
+  canonicalPath?: string;
+  ogType?: "website" | "article";
+  noindex?: boolean;
+  structuredData?: SchemaLike | SchemaLike[];
+}
+
+const {
+  pageTitle,
+  pageDescription = COMPANY.description,
+  ogImage,
+  ogImageAlt = COMPANY.description,
+  canonicalPath,
+  ogType = "website",
+  noindex = true,
+  structuredData,
+} = Astro.props;
+
+const GA_ID = import.meta.env.PUBLIC_GA_ID ?? "";
+const siteUrl = Astro.site ?? new URL(SITE_URL);
+
+const pagePath = `${Astro.url.pathname}${Astro.url.search}`;
+const canonicalUrl = new URL(canonicalPath ?? pagePath, siteUrl).toString();
+
+const resolvedOgImage =
+  typeof ogImage === "string"
+    ? ogImage
+    : ogImage && typeof ogImage === "object"
+      ? ogImage.src
+      : "/hero-bg.jpg";
+const ogImageUrl = new URL(resolvedOgImage, siteUrl).toString();
+const metaTitle = pageTitle ? `${pageTitle} | ${COMPANY.name}` : COMPANY.name;
+const robotsContent = noindex
+  ? "noindex,nofollow,noarchive,nosnippet"
+  : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
+const gaBootstrapInlineScript = GA_ID
+  ? `window.dataLayer = window.dataLayer || [];
+function gtag(...args) {
+  dataLayer.push(args);
+}
+window.gtag = gtag;
+gtag("consent", "default", {
+  analytics_storage: "denied",
+  ad_storage: "denied",
+  ad_user_data: "denied",
+  ad_personalization: "denied",
+  wait_for_update: 500,
+});
+gtag("js", new Date());`
+  : "";
+const gaConfigInlineScript = GA_ID
+  ? `gtag("config", ${JSON.stringify(GA_ID)}, { anonymize_ip: true });`
+  : "";
+
+const globalSchemas: SchemaLike[] = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Electrician",
+    "@id": `${siteUrl.toString().replace(/\/$/, "")}/#company`,
+    name: COMPANY.name,
+    legalName: COMPANY.legalName,
+    url: siteUrl.toString(),
+    telephone: COMPANY.phoneDisplay,
+    email: COMPANY.email,
+    image: ogImageUrl,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: COMPANY.address.streetAddress,
+      postalCode: COMPANY.address.postalCode,
+      addressLocality: COMPANY.address.addressLocality,
+      addressCountry: COMPANY.address.addressCountry,
+    },
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: COMPANY.serviceArea,
+    },
+    sameAs: [MAPS_SEARCH_URL],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${siteUrl.toString().replace(/\/$/, "")}/#website`,
+    name: COMPANY.name,
+    url: siteUrl.toString(),
+    inLanguage: "cs-CZ",
+  },
+];
+
+const pageSchemas = Array.isArray(structuredData)
+  ? structuredData
+  : structuredData
+    ? [structuredData]
+    : [];
+const allSchemas = [...globalSchemas, ...pageSchemas];
 ---
 
 <html lang="cs">
@@ -15,37 +117,65 @@ const GA_ID = "G-XXXXXXXXXX";
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet" />
+    <meta name="theme-color" content="#d97706" />
+    <meta name="robots" content={robotsContent} />
+    <meta name="description" content={pageDescription} />
     <meta name="generator" content={Astro.generator} />
-    <title>Revimont Klatovy</title>
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:locale" content="cs_CZ" />
+    <meta property="og:site_name" content={COMPANY.name} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={metaTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={metaTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <title>{metaTitle}</title>
+
+    {
+      allSchemas.map((schema, index) => (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify(schema)}
+          data-schema-index={index}
+        />
+      ))
+    }
+
     <slot name="head" />
 
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("consent", "default", {
-        analytics_storage: "denied",
-        ad_storage: "denied",
-        ad_user_data: "denied",
-        ad_personalization: "denied",
-        wait_for_update: 500,
-      });
-      gtag("js", new Date());
-    </script>
+    {
+      GA_ID ? (
+        <>
+          <link rel="preconnect" href="https://www.googletagmanager.com" />
+          <link rel="preconnect" href="https://www.google-analytics.com" />
 
-    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX`}
-    ></script>
-    <script is:inline define:vars={{ GA_ID }}>
-      gtag("config", GA_ID, { anonymize_ip: true });
-    </script>
+          <script is:inline set:html={gaBootstrapInlineScript} />
+
+          <script
+            is:inline
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          />
+          <script is:inline set:html={gaConfigInlineScript} />
+        </>
+      ) : null
+    }
   </head>
   <body class="text-neutral-800">
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-neutral-900 focus:text-white focus:rounded"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded focus:bg-neutral-900 focus:px-4 focus:py-2 focus:text-white"
       >Přejít na hlavní obsah</a
     >
     <MobileNavigation />
@@ -71,7 +201,11 @@ const GA_ID = "G-XXXXXXXXXX";
     content: "";
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(to right, var(--color-neutral-800), var(--color-neutral-800));
+    background-image: linear-gradient(
+      to right,
+      var(--color-neutral-800),
+      var(--color-neutral-800)
+    );
     z-index: 1;
     pointer-events: none;
   }
@@ -83,55 +217,81 @@ const GA_ID = "G-XXXXXXXXXX";
 </style>
 
 <script>
-  import Lenis from "lenis";
+  const reducedMotionMedia = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  );
+  let lenis: { destroy: () => void } | undefined;
 
-  // Initialize Lenis
-  const lenis = new Lenis({
-    duration: 0.3,
-    smoothWheel: true,
-    autoRaf: true,
-  });
+  async function setupLenis() {
+    if (reducedMotionMedia.matches || lenis) return;
+
+    const { default: Lenis } = await import("lenis");
+    lenis = new Lenis({
+      duration: 0.3,
+      smoothWheel: true,
+      autoRaf: true,
+    });
+  }
+
+  void setupLenis();
+
+  reducedMotionMedia.addEventListener?.(
+    "change",
+    (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        lenis?.destroy();
+        lenis = undefined;
+      } else {
+        void setupLenis();
+      }
+    },
+  );
 </script>
 
 <script is:inline>
   {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (!reducedMotion) {
       const sections = document.querySelectorAll("[data-animate-section]");
 
-      sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top >= window.innerHeight - 60) {
-          const container = section.querySelector(".container");
-          if (!container) return;
-          const [sectionHeader, cardsGrid] = container.children;
-          if (sectionHeader) {
-            sectionHeader.style.opacity = "0";
-            sectionHeader.style.transform = "translateY(12px)";
-          }
-          if (cardsGrid) {
-            cardsGrid.style.opacity = "0";
-            cardsGrid.style.transform = "translateY(12px)";
-          }
-        }
-      });
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            const container = entry.target.querySelector(".container");
+      if (sections.length) {
+        sections.forEach((section) => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top >= window.innerHeight - 60) {
+            const container = section.querySelector(".container");
             if (!container) return;
             const [sectionHeader, cardsGrid] = container.children;
-            if (sectionHeader) sectionHeader.classList.add("is-visible");
-            if (cardsGrid) setTimeout(() => cardsGrid.classList.add("is-visible"), 150);
-            observer.unobserve(entry.target);
-          });
-        },
-        { threshold: 0.1, rootMargin: "0px 0px -60px 0px" },
-      );
+            if (sectionHeader) {
+              sectionHeader.style.opacity = "0";
+              sectionHeader.style.transform = "translateY(12px)";
+            }
+            if (cardsGrid) {
+              cardsGrid.style.opacity = "0";
+              cardsGrid.style.transform = "translateY(12px)";
+            }
+          }
+        });
 
-      sections.forEach((section) => observer.observe(section));
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              const container = entry.target.querySelector(".container");
+              if (!container) return;
+              const [sectionHeader, cardsGrid] = container.children;
+              if (sectionHeader) sectionHeader.classList.add("is-visible");
+              if (cardsGrid)
+                setTimeout(() => cardsGrid.classList.add("is-visible"), 150);
+              observer.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.1, rootMargin: "0px 0px -60px 0px" },
+        );
+
+        sections.forEach((section) => observer.observe(section));
+      }
     }
   }
 </script>

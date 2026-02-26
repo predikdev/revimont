@@ -1,5 +1,6 @@
 ---
 import { MapPin, Phone, Mail } from "@lucide/astro";
+import { COMPANY, MAPS_EMBED_URL, MAPS_SEARCH_URL } from "../../data/company";
 
 const year = new Date().getFullYear();
 
@@ -12,49 +13,58 @@ interface Props {
 const { eyebrow } = Astro.props;
 ---
 
-<footer class="relative overflow-hidden bg-neutral-800 border-tr border-tl rounded-lg">
+<footer
+  class="border-tr border-tl relative overflow-hidden rounded-lg bg-neutral-800"
+>
   <div
-    class="mask-image-gradient pointer-events-none absolute inset-0 bg-grid-pattern-dark opacity-20"
+    class="mask-image-gradient bg-grid-pattern-dark pointer-events-none absolute inset-0 opacity-20"
   >
   </div>
 
   <section class="relative z-10 py-20">
     <div class="container">
-      <div class="grid lg:grid-cols-[1fr_1fr] gap-12 items-center min-w-0">
+      <div class="grid min-w-0 items-center gap-12 lg:grid-cols-[1fr_1fr]">
         <div class="space-y-6">
           {
             eyebrow ? (
-              <p class="uppercase px-3 py-2 w-fit text-accent-primary/70 text-xs font-bold border-accent-primary/70 border rounded tracking-widest">
+              <p class="text-accent-primary/70 border-accent-primary/70 w-fit rounded border px-3 py-2 text-xs font-bold tracking-widest uppercase">
                 {eyebrow}
               </p>
             ) : null
           }
 
-          <h2 class="text-4xl md:text-5xl font-bold text-neutral-50 mb-6">Sídlíme v Klatovech</h2>
+          <h2 class="mb-6 text-4xl font-bold text-neutral-50 md:text-5xl">
+            Sídlíme v Klatovech
+          </h2>
 
-          <p class="text-neutral-300/80 text-lg leading-relaxed mb-12">
-            Zastavte se za námi probrat váš projekt. Naše kancelář je snadno dostupná a parkování je
-            možné v blízkém okolí.
+          <p class="mb-12 text-lg leading-relaxed text-neutral-300/80">
+            Zastavte se za námi probrat váš projekt. Naše kancelář je snadno
+            dostupná a parkování je možné v blízkém okolí.
           </p>
 
           <div class="space-y-6">
             <div class="flex items-start gap-4">
               <div
-                class="shrink-0 w-12 h-12 bg-background/10 rounded-lg flex items-center justify-center"
+                class="bg-background/10 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg"
               >
-                <MapPin class="w-5 h-5 text-accent-primary" />
+                <MapPin class="text-accent-primary h-5 w-5" />
               </div>
               <div>
                 <a
-                  href="https://maps.google.com/maps?q=K+Leti%C5%A1ti+487,+339+01+Klatovy"
+                  href={MAPS_SEARCH_URL}
                   class="group block"
-                  aria-label="Otevřít adresu K Letišti 487, 339 01 Klatovy v mapách"
+                  aria-label={`Otevřít adresu ${COMPANY.address.streetAddress}, ${COMPANY.address.postalCode} ${COMPANY.address.addressLocality} v mapách`}
                 >
-                  <h3 class="font-semibold text-neutral-50 mb-1 transition-colors group-hover:text-accent-primary">
-                    K Letišti 487
+                  <h3
+                    class="group-hover:text-accent-primary mb-1 font-semibold text-neutral-50 transition-colors"
+                  >
+                    {COMPANY.address.streetAddress}
                   </h3>
-                  <p class="text-neutral-300/80 transition-colors group-hover:text-accent-primary">
-                    339 01 Klatovy
+                  <p
+                    class="group-hover:text-accent-primary text-neutral-300/80 transition-colors"
+                  >
+                    {COMPANY.address.postalCode}
+                    {COMPANY.address.addressLocality}
                   </p>
                 </a>
               </div>
@@ -62,21 +72,25 @@ const { eyebrow } = Astro.props;
 
             <div class="flex items-start gap-4">
               <div
-                class="shrink-0 w-12 h-12 bg-background/10 rounded-lg flex items-center justify-center"
+                class="bg-background/10 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg"
               >
-                <Phone class="w-5 h-5 text-accent-primary" />
+                <Phone class="text-accent-primary h-5 w-5" />
               </div>
               <div>
                 <a
-                  href="tel:+420775736112"
+                  href={`tel:${COMPANY.phoneHref}`}
                   class="group block"
-                  aria-label="Zavolat na číslo +420 775 736 112"
+                  aria-label={`Zavolat na číslo ${COMPANY.phoneDisplay}`}
                 >
-                  <h3 class="font-semibold text-neutral-50 mb-1 transition-colors group-hover:text-accent-primary">
+                  <h3
+                    class="group-hover:text-accent-primary mb-1 font-semibold text-neutral-50 transition-colors"
+                  >
                     Telefon
                   </h3>
-                  <p class="text-neutral-300/80 transition-colors group-hover:text-accent-primary">
-                    +420 775 736 112
+                  <p
+                    class="group-hover:text-accent-primary text-neutral-300/80 transition-colors"
+                  >
+                    {COMPANY.phoneDisplay}
                   </p>
                 </a>
               </div>
@@ -84,21 +98,25 @@ const { eyebrow } = Astro.props;
 
             <div class="flex items-start gap-4">
               <div
-                class="shrink-0 w-12 h-12 bg-background/10 rounded-lg flex items-center justify-center"
+                class="bg-background/10 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg"
               >
-                <Mail class="w-5 h-5 text-accent-primary" />
+                <Mail class="text-accent-primary h-5 w-5" />
               </div>
               <div>
                 <a
-                  href="mailto:info@revimont.cz"
+                  href={`mailto:${COMPANY.email}`}
                   class="group block"
-                  aria-label="Napsat e-mail na info@revimont.cz"
+                  aria-label={`Napsat e-mail na ${COMPANY.email}`}
                 >
-                  <h3 class="font-semibold text-neutral-50 mb-1 transition-colors group-hover:text-accent-primary">
+                  <h3
+                    class="group-hover:text-accent-primary mb-1 font-semibold text-neutral-50 transition-colors"
+                  >
                     E-mail
                   </h3>
-                  <p class="text-neutral-300/80 transition-colors group-hover:text-accent-primary">
-                    info@revimont.cz
+                  <p
+                    class="group-hover:text-accent-primary text-neutral-300/80 transition-colors"
+                  >
+                    {COMPANY.email}
                   </p>
                 </a>
               </div>
@@ -106,16 +124,17 @@ const { eyebrow } = Astro.props;
           </div>
         </div>
 
-        <div class="relative aspect-4/3 w-full rounded-lg shadow-lg min-w-0">
+        <div class="relative aspect-4/3 w-full min-w-0 rounded-lg shadow-lg">
           <iframe
-            src="https://maps.google.com/maps?q=K+Letišti+487,+339+01+Klatovy&output=embed"
-            class="absolute inset-0 w-full h-full rounded-2xl"
+            src={MAPS_EMBED_URL}
+            class="absolute inset-0 h-full w-full rounded-2xl"
             style="border:0;"
             allowfullscreen
             allow="fullscreen"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            title="Mapa - K Letišti 487, Klatovy"></iframe>
+            title={`Mapa - ${COMPANY.address.streetAddress}, ${COMPANY.address.addressLocality}`}
+          ></iframe>
         </div>
       </div>
     </div>
@@ -124,16 +143,23 @@ const { eyebrow } = Astro.props;
   <div class="relative z-10 py-6">
     <div class="container">
       <div
-        class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-neutral-300 pt-8 border-t border-neutral-500"
+        class="flex flex-col items-center justify-between gap-4 border-t border-neutral-500 pt-8 text-sm text-neutral-300 md:flex-row"
       >
         <p>© {year} Revimont Klatovy. Všechna práva vyhrazena.</p>
         <div class="flex gap-6">
-          <a href="/ochrana-udaju" class="hover:text-accent-primary transition-colors">
+          <a
+            href="/ochrana-osobnich-udaju"
+            class="hover:text-accent-primary transition-colors"
+          >
             Ochrana osobních údajů
           </a>
-          <a href="/obchodni-podminky" class="hover:text-accent-primary transition-colors">
-            Obchodní podmínky
-          </a>
+          <button
+            type="button"
+            onclick="window.CookieConsent && window.CookieConsent.showPreferences()"
+            class="hover:text-accent-primary cursor-pointer transition-colors"
+          >
+            Nastavení cookies
+          </button>
         </div>
       </div>
     </div>

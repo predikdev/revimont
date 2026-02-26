@@ -3,28 +3,31 @@ import { Phone, Menu } from "@lucide/astro";
 
 import LogoInline from "./LogoInline.astro";
 import Navigation from "./Navigation.astro";
-import MobileNavigation from "./MobileNavigation.astro";
 import Button from "../ui/Button.astro";
+import { COMPANY } from "../../data/company";
 ---
 
 <header
   id="site-header"
-  class="group fixed inset-x-0 top-0 z-50 transition-all duration-300 py-2"
+  class="group fixed inset-x-0 top-0 z-50 py-2 transition-all duration-300"
   data-scrolled="false"
 >
-  <div id="content" class="container mx-auto flex items-center justify-between py-4">
+  <div
+    id="content"
+    class="container mx-auto flex items-center justify-between py-4"
+  >
     <div id="logo-light" class="transition-opacity duration-300">
       <LogoInline class="w-44 sm:w-48" />
     </div>
     <Navigation />
 
-    <div class="hidden lg:flex items-center gap-4">
+    <div class="hidden items-center gap-4 lg:flex">
       <a
-        href="tel:+420775736112"
-        class="flex items-center gap-2 text-neutral-50/75 hover:text-accent-primary transition-colors"
+        href={`tel:${COMPANY.phoneHref}`}
+        class="hover:text-accent-primary flex items-center gap-2 text-neutral-50/75 transition-colors"
       >
-        <Phone class="w-4 h-4 transition-all" aria-hidden="true" />
-        <span class="text-sm font-medium">+420 775 736 112</span>
+        <Phone class="h-4 w-4 transition-all" aria-hidden="true" />
+        <span class="text-sm font-medium">{COMPANY.phoneDisplay}</span>
       </a>
       <Button variant="primaryDark" href="/kontakt">Poptávka</Button>
     </div>
@@ -32,15 +35,16 @@ import Button from "../ui/Button.astro";
     <button
       type="button"
       aria-label="Otevřít menu"
+      aria-controls="mobile-menu-v2"
+      aria-expanded="false"
+      aria-haspopup="dialog"
       data-menu-open
-      class="lg:hidden text-neutral-50/90 group-data-[scrolled=true]:text-neutral-50 transition hover:text-neutral-50"
+      class="text-neutral-50/90 transition group-data-[scrolled=true]:text-neutral-50 hover:text-neutral-50 lg:hidden"
     >
       <Menu class="h-6 w-6" />
     </button>
   </div>
 </header>
-
-<MobileNavigation />
 
 <script is:inline>
   (function () {

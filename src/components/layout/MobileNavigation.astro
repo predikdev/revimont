@@ -3,6 +3,7 @@ import { X, Phone, ChevronDown } from "@lucide/astro";
 
 import LogoInline from "./LogoInline.astro";
 import Button from "../ui/Button.astro";
+import { COMPANY } from "../../data/company";
 
 const pathname = Astro.url.pathname;
 
@@ -24,28 +25,35 @@ const links = [
 ---
 
 <div
-  class="group fixed inset-0 z-[100] pointer-events-none lg:hidden"
+  class="group pointer-events-none fixed inset-0 z-[100] lg:hidden"
   id="mobile-menu-v2"
   data-open="false"
+  aria-hidden="true"
 >
   <div
-    class="absolute inset-0 bg-neutral-800/90 opacity-0 transition-opacity duration-300 group-data-[open=true]:opacity-100 group-data-[open=true]:pointer-events-auto backdrop-blur-sm"
+    class="absolute inset-0 bg-neutral-800/90 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-data-[open=true]:pointer-events-auto group-data-[open=true]:opacity-100"
     data-menu-backdrop
   >
   </div>
 
   <div
-    class="absolute inset-0 translate-y-full bg-background transition-transform duration-300 ease-out group-data-[open=true]:translate-y-0 group-data-[open=true]:pointer-events-auto overflow-y-auto"
+    class="bg-background absolute inset-0 translate-y-full overflow-y-auto transition-transform duration-300 ease-out group-data-[open=true]:pointer-events-auto group-data-[open=true]:translate-y-0"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="mobile-menu-title"
+    tabindex="-1"
+    data-menu-panel
   >
-    <div class="container min-h-full flex flex-col py-6">
+    <div class="container flex min-h-full flex-col py-6">
       <!-- Header -->
       <div class="flex items-center justify-between">
         <LogoInline class="w-40" dark={true} />
+        <h2 id="mobile-menu-title" class="sr-only">Hlavní navigace</h2>
         <button
           type="button"
           aria-label="Zavřít menu"
           data-menu-close
-          class="p-2 -m-2 text-neutral-800/95"
+          class="-m-2 p-2 text-neutral-800/95"
         >
           <X class="h-6 w-6" />
         </button>
@@ -75,6 +83,7 @@ const links = [
               type="button"
               data-accordion-toggle
               aria-expanded="false"
+              aria-controls="mobile-services-panel"
               class={`flex w-full items-center justify-between py-3.5 px-3 rounded-xl text-xl font-semibold transition-colors hover:text-accent-primary ${isActive("/sluzby") ? "bg-accent-primary/10 text-accent-primary" : "text-neutral-800"}`}
             >
               <span class="flex items-center gap-4">
@@ -86,14 +95,18 @@ const links = [
               </span>
               <ChevronDown class="h-6 w-6 transition-transform duration-200" />
             </button>
-            <ul data-accordion-panel class="hidden pb-2">
+            <ul
+              id="mobile-services-panel"
+              data-accordion-panel
+              class="hidden pb-2"
+            >
               {
                 subLinks.map((link) => (
                   <li>
                     <a
                       href={link.href}
                       aria-current={isActive(link.href) ? "page" : undefined}
-                      class={`block py-2.5 pl-10 text-base font-semibold transition-colors hover:text-accent-primary ${isActive(link.href) ? "text-accent-primary" : "text-neutral-800/80"}`}
+                      class={`hover:text-accent-primary block py-2.5 pl-10 text-base font-semibold transition-colors ${isActive(link.href) ? "text-accent-primary" : "text-neutral-800/80"}`}
                     >
                       {link.label}
                     </a>
@@ -109,10 +122,10 @@ const links = [
                 <a
                   href={link.href}
                   aria-current={isActive(link.href) ? "page" : undefined}
-                  class={`flex items-center gap-4 py-3.5 px-3 rounded-xl text-xl font-semibold transition-colors ${isActive(link.href) ? "bg-accent-primary/10 text-accent-primary" : "text-neutral-800"}`}
+                  class={`flex items-center gap-4 rounded-xl px-3 py-3.5 text-xl font-semibold transition-colors ${isActive(link.href) ? "bg-accent-primary/10 text-accent-primary" : "text-neutral-800"}`}
                 >
                   <span
-                    class={`text-sm font-sora w-6 shrink-0 ${isActive(link.href) ? "" : "text-neutral-400"}`}
+                    class={`font-sora w-6 shrink-0 text-sm ${isActive(link.href) ? "" : "text-neutral-400"}`}
                   >
                     {String(i + 3).padStart(2, "0")}
                   </span>
@@ -124,14 +137,16 @@ const links = [
         </ul>
       </nav>
 
-      <div class="mt-auto border-t border-neutral-200 pt-6 space-y-4">
+      <div class="mt-auto space-y-4 border-t border-neutral-200 pt-6">
         <a
-          href="tel:+420775736112"
-          aria-label="Zavolejte nám: +420 775 736 112"
+          href={`tel:${COMPANY.phoneHref}`}
+          aria-label={`Zavolejte nám: ${COMPANY.phoneDisplay}`}
           class="flex items-center justify-center gap-3 py-3 text-neutral-800"
         >
-          <Phone class="w-5 h-5" aria-hidden="true" />
-          <span class="text-lg font-semibold" aria-hidden="true">+420 775 736 112</span>
+          <Phone class="h-5 w-5" aria-hidden="true" />
+          <span class="text-lg font-semibold" aria-hidden="true"
+            >{COMPANY.phoneDisplay}</span
+          >
         </a>
         <Button variant="primaryDark" href="/kontakt" class="w-full" size="lg">
           Nezávazná poptávka
@@ -147,19 +162,47 @@ const links = [
     const openButton = document.querySelector("[data-menu-open]");
     const closeButton = document.querySelector("[data-menu-close]");
     const backdrop = document.querySelector("[data-menu-backdrop]");
+    const panel = document.querySelector(
+      "[data-menu-panel]",
+    ) as HTMLElement | null;
 
-    if (!menu || !openButton) return;
+    if (!menu || !openButton || !panel) return;
+
+    let lastFocusedElement: HTMLElement | null = null;
+
+    const getFocusableElements = () =>
+      Array.from(
+        panel.querySelectorAll(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter(
+        (el): el is HTMLElement =>
+          el instanceof HTMLElement && !el.hasAttribute("hidden"),
+      );
 
     const openMenu = () => {
       menu.setAttribute("data-open", "true");
+      menu.setAttribute("aria-hidden", "false");
+      openButton.setAttribute("aria-expanded", "true");
       document.documentElement.classList.add("no-scroll");
       document.body.classList.add("no-scroll");
+      lastFocusedElement =
+        document.activeElement instanceof HTMLElement
+          ? document.activeElement
+          : null;
+      setTimeout(() => {
+        const focusable = getFocusableElements();
+        (focusable[0] ?? panel).focus();
+      }, 0);
     };
 
     const closeMenu = () => {
       menu.setAttribute("data-open", "false");
+      menu.setAttribute("aria-hidden", "true");
+      openButton.setAttribute("aria-expanded", "false");
       document.documentElement.classList.remove("no-scroll");
       document.body.classList.remove("no-scroll");
+      if (lastFocusedElement instanceof HTMLElement) lastFocusedElement.focus();
     };
 
     openButton.addEventListener("click", openMenu);
@@ -179,12 +222,38 @@ const links = [
 
     menu.addEventListener("click", (event) => {
       if (!(event.target instanceof Element)) return;
-      if (event.target.closest("a[href],button:not([data-accordion-toggle]),[data-menu-close]"))
+      if (
+        event.target.closest(
+          "a[href],button:not([data-accordion-toggle]),[data-menu-close]",
+        )
+      )
         closeMenu();
     });
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeMenu();
+      if (menu.getAttribute("data-open") !== "true") return;
+
+      if (event.key === "Escape") {
+        closeMenu();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusable = getFocusableElements();
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
     });
   })();
 </script>
