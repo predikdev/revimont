@@ -22,17 +22,19 @@ const {
 } = Astro.props;
 ---
 
-<div class:list={[" mb-8", align === "center" && "mx-auto text-center", className]}>
+<div
+  class:list={["mb-8", align === "center" && "mx-auto text-center", className]}
+>
   {
     eyebrow && (
-      <p class="uppercase text-accent-primary text-sm font-semibold mb-3 tracking-wide">
+      <p class="text-accent-primary mb-3 text-sm font-semibold tracking-wide uppercase">
         {eyebrow}
       </p>
     )
   }
   <h2
     class:list={[
-      "text-4xl md:text-5xl leading-14 font-sora",
+      "font-sora text-4xl leading-14 md:text-5xl",
       titleWidth === "narrow" && "max-w-[15ch]",
       background === "dark" && "text-neutral-50",
       "font-bold text-neutral-800",
@@ -47,7 +49,7 @@ const {
           "mt-6",
           descWidth === "narrow" && "max-w-3xl",
           background === "dark" && "text-neutral-300/80",
-          "text-neutral-800/80 text-lg leading-relaxed",
+          "text-lg leading-relaxed text-neutral-800/80",
         ]}
       >
         {description}

@@ -12,10 +12,15 @@ import ContactSection from "../../components/sections/shared/ContactSection.astr
 import PageHeroServicesNew from "../../components/sections/shared/PageHeroServicesNew.astro";
 import RevizeServicesV2 from "../../components/sections/revize/RevizeServicesV2.astro";
 import RevizeWhyUs from "../../components/sections/revize/RevizeWhyUs.astro";
-import revizeImage from "../../assets/images/revize.png";
+import revizeImage from "../../assets/images/revize-pexels-28265032.jpg";
 ---
 
-<BaseLayout heroBackground="/hero-bg.jpg">
+<BaseLayout
+  pageTitle="Revize elektroinstalací a hromosvodů"
+  pageDescription={description}
+  ogImage={revizeImage.src}
+  ogImageAlt="Revize elektroinstalace a rozvaděče"
+>
   <PageHeroServicesNew
     id="hero"
     slot="hero"
@@ -23,7 +28,7 @@ import revizeImage from "../../assets/images/revize.png";
     titleHtml={titleHtml}
     description={description}
     backgroundImage={revizeImage}
-    backgroundImageAlt="Revize elektroinstalace — měření a kontrola"
+    backgroundImageAlt="Revize elektroinstalace — technický rozvaděč a elektrické rozvody bez osob"
   />
 
   <RevizeServicesV2 />

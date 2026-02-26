@@ -9,7 +9,6 @@ const description =
 import BaseLayout from "../layouts/BaseLayout.astro";
 import AboutUsSection from "../components/sections/shared/AboutUsSection.astro";
 import PortfolioShowcaseAlternating from "../components/sections/shared/PortfolioShowcaseAlternating.astro";
-// import ContactSection from "../components/sections/shared/ContactSection.astro";
 import ContactSection from "../components/sections/shared/ContactSection.astro";
 import PageHero from "../components/sections/shared/PageHero.astro";
 import HomeServicesCards from "../components/sections/home/HomeServicesCards.astro";
@@ -25,7 +24,12 @@ const [img640, img1024, img1280, img1920] = await Promise.all([
 const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 1280w, ${img1920.src} 1920w`;
 ---
 
-<BaseLayout>
+<BaseLayout
+  pageTitle="Elektroinstalace, revize a opravy v Klatovech"
+  pageDescription={description}
+  ogImage={heroImage.src}
+  ogImageAlt="Revimont Klatovy - elektroinstalace - revize - servis"
+>
   <link
     slot="head"
     rel="preload"
@@ -41,14 +45,13 @@ const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 
     eyebrow="SERVIS • MONTÁŽE • OPRAVY"
     titleHtml={titleHtml}
     description={description}
-    primaryCta={{ label: "Prohlédnout služby", href: "/kontakt" }}
-    secondaryCta={{ label: "+420 775 736 112", href: "/sluzby" }}
+    primaryCta={{ label: "Prohlédnout služby", href: "#sluzby" }}
+    secondaryCta={{ label: "+420 775 736 112", href: "tel:+420775736112" }}
   />
 
   <HomeServicesCards />
   <AboutUsSection />
   <StatsSection />
   <PortfolioShowcaseAlternating />
-  {/* <ContactSection /> */}
   <ContactSection />
 </BaseLayout>

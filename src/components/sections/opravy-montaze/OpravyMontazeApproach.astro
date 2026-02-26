@@ -8,22 +8,37 @@ const steps = [
     number: "01",
     icon: Phone,
     title: "Nahlášení a termín",
-    description: "Zavolejte nebo napište — stručně popište závadu. Domluvíme termín výjezdu, přijedeme vybaveni a připraveni.",
-    bullets: ["Rychlá odezva do 2 hodin", "Konzultace po telefonu zdarma", "Domluvení termínu výjezdu"],
+    description:
+      "Zavolejte nebo napište — stručně popište závadu. Domluvíme termín výjezdu, přijedeme vybaveni a připraveni.",
+    bullets: [
+      "Rychlá odezva do 2 hodin",
+      "Konzultace po telefonu zdarma",
+      "Domluvení termínu výjezdu",
+    ],
   },
   {
     number: "02",
     icon: Wrench,
     title: "Diagnostika a oprava",
-    description: "Na místě zjistíme příčinu, sdělíme jasnou cenu a opravíme závadu nebo provedeme montáž. Čistě a bez zbytečných průtahů.",
-    bullets: ["Transparentní cenová nabídka", "Odborné provedení opravy", "Kvalitní náhradní díly"],
+    description:
+      "Na místě zjistíme příčinu, sdělíme jasnou cenu a opravíme závadu nebo provedeme montáž. Čistě a bez zbytečných průtahů.",
+    bullets: [
+      "Transparentní cenová nabídka",
+      "Odborné provedení opravy",
+      "Kvalitní náhradní díly",
+    ],
   },
   {
     number: "03",
     icon: Handshake,
     title: "Předání a záruka",
-    description: "Celý systém otestujeme, předáme vám doklad o provedení práce a poskytneme záruční servis.",
-    bullets: ["Funkční test po dokončení", "Doklad o provedené práci", "Záruční podpora"],
+    description:
+      "Celý systém otestujeme, předáme vám doklad o provedení práce a poskytneme záruční servis.",
+    bullets: [
+      "Funkční test po dokončení",
+      "Doklad o provedené práci",
+      "Záruční podpora",
+    ],
   },
 ];
 ---
@@ -37,31 +52,48 @@ const steps = [
     descWidth="narrow"
   />
 
-  <div class="grid md:grid-cols-3 gap-6 mt-12">
-    {steps.map((step) => (
-      <div class="group relative bg-white rounded-xl border border-neutral-200 p-8 shadow-sm transition-shadow duration-200 hover:shadow-md">
-        <span class="absolute top-6 right-6 font-sora text-5xl font-bold text-neutral-100 leading-none select-none transition-colors duration-300 group-hover:text-accent-primary/40" aria-hidden="true">
-          {step.number}
-        </span>
+  <div class="mt-12 grid gap-6 md:grid-cols-3">
+    {
+      steps.map((step) => (
+        <div class="group relative rounded-xl border border-neutral-200 bg-white p-8 shadow-sm transition-shadow duration-200 hover:shadow-md">
+          <span
+            class="font-sora group-hover:text-accent-primary/40 absolute top-6 right-6 text-5xl leading-none font-bold text-neutral-100 transition-colors duration-300 select-none"
+            aria-hidden="true"
+          >
+            {step.number}
+          </span>
 
-        <div class="w-12 h-12 bg-accent-primary/10 rounded-full flex items-center justify-center mb-6 transition-colors duration-300 group-hover:bg-accent-primary/[0.18]" aria-hidden="true">
-          <step.icon class="w-5 h-5 text-accent-primary transition-transform duration-300 group-hover:scale-110" />
+          <div
+            class="bg-accent-primary/10 group-hover:bg-accent-primary/[0.18] mb-6 flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-300"
+            aria-hidden="true"
+          >
+            <step.icon class="text-accent-primary h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
+          </div>
+
+          <h3 class="font-sora mb-3 text-xl font-bold text-neutral-900">
+            {step.title}
+          </h3>
+          <p class="mb-6 text-sm leading-relaxed text-neutral-600">
+            {step.description}
+          </p>
+
+          <ul class="space-y-2">
+            {step.bullets.map((bullet) => (
+              <li class="flex items-center gap-3">
+                <span
+                  class="bg-accent-primary/10 border-accent-primary/30 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border"
+                  aria-hidden="true"
+                >
+                  <Check class="text-accent-primary h-3 w-3" />
+                </span>
+                <span class="text-sm font-medium text-neutral-700">
+                  {bullet}
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
-
-        <h3 class="font-sora text-xl font-bold text-neutral-900 mb-3">{step.title}</h3>
-        <p class="text-sm text-neutral-600 leading-relaxed mb-6">{step.description}</p>
-
-        <ul class="space-y-2">
-          {step.bullets.map((bullet) => (
-            <li class="flex items-center gap-3">
-              <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-primary/10 border border-accent-primary/30" aria-hidden="true">
-                <Check class="h-3 w-3 text-accent-primary" />
-              </span>
-              <span class="text-sm font-medium text-neutral-700">{bullet}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    ))}
+      ))
+    }
   </div>
 </SectionWrapper>

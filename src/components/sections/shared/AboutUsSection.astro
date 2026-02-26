@@ -33,7 +33,6 @@ const highlights = [
       "Na všechny naše práce poskytujeme záruku. Používáme pouze ověřené materiály od renomovaných výrobců.",
   },
 ];
-
 ---
 
 <SectionWrapper id={id} background="light" withGrid>
@@ -47,7 +46,7 @@ const highlights = [
       class="mb-16"
     />
 
-    <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-12 mb-16">
+    <div class="mb-16 grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
       <div class="overflow-hidden rounded-lg border border-neutral-300/70">
         <Image
           src={FirmaImage}
@@ -64,21 +63,25 @@ const highlights = [
         {
           highlights.map((item) => (
             <article class="flex items-start gap-4">
-              <div aria-hidden="true" class="mt-0.5 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-accent-primary/10 text-accent-primary">
+              <div
+                aria-hidden="true"
+                class="bg-accent-primary/10 text-accent-primary mt-0.5 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg"
+              >
                 <item.icon class="h-6 w-6" />
               </div>
 
               <div>
-                <h3 class="font-sora text-lg font-semibold leading-tight text-neutral-800">
+                <h3 class="font-sora text-lg leading-tight font-semibold text-neutral-800">
                   {item.title}
                 </h3>
-                <p class="mt-2 text-base leading-relaxed text-neutral-800/60">{item.description}</p>
+                <p class="mt-2 text-base leading-relaxed text-neutral-800/60">
+                  {item.description}
+                </p>
               </div>
             </article>
           ))
         }
       </div>
     </div>
-
   </div>
 </SectionWrapper>

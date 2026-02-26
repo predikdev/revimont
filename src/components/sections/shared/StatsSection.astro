@@ -9,18 +9,20 @@ const stats = [
 
 <section class="bg-accent-primary py-10">
   <div class="container">
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:divide-x lg:divide-white/20">
+    <div
+      class="grid grid-cols-2 gap-8 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-white/20"
+    >
       {
         stats.map((stat) => (
           <div class="flex flex-col items-center text-center lg:px-8">
             <span
-              class="font-sora text-4xl lg:text-5xl font-bold text-white leading-none mb-2"
+              class="font-sora mb-2 text-4xl leading-none font-bold text-white lg:text-5xl"
               data-count-to={stat.countTo !== null ? stat.countTo : undefined}
               data-count-suffix={stat.suffix || undefined}
             >
               {stat.value}
             </span>
-            <span class="text-sm font-bold text-white/90 uppercase tracking-wide mb-1">
+            <span class="mb-1 text-sm font-bold tracking-wide text-white/90 uppercase">
               {stat.label}
             </span>
           </div>
@@ -31,7 +33,9 @@ const stats = [
 </section>
 
 <script>
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
   const counters = document.querySelectorAll<HTMLElement>("[data-count-to]");
 
   function animateCounter(counter: HTMLElement) {
@@ -52,14 +56,17 @@ const stats = [
   }
 
   if (counters.length > 0 && !reducedMotion) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          animateCounter(entry.target as HTMLElement);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateCounter(entry.target as HTMLElement);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 },
+    );
 
     counters.forEach((counter) => observer.observe(counter));
   }

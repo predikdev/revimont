@@ -7,14 +7,19 @@ import ElektroWhyUs from "../../components/sections/elektroinstalace/ElektroWhyU
 import PortfolioShowcaseAlternating from "../../components/sections/shared/PortfolioShowcaseAlternating.astro";
 // import ContactSection from "../../components/sections/shared/ContactSection.astro";
 import ContactSection from "../../components/sections/shared/ContactSection.astro";
-import elektroImage from "../../assets/images/elektroinstalace.png";
+import elektroImage from "../../assets/images/electric.jpg";
 
 const title = `Elektroinstalace <br /> pro váš domov i firmu`;
 const description =
   "Zajistíme kompletní a bezpečné elektroinstalace pro váš rodinný dům, byt i firmu. Od prvotního návrhu až po konečnou revizi, vše s maximálním důrazem na kvalitu.";
 ---
 
-<BaseLayout>
+<BaseLayout
+  pageTitle="Elektroinstalace"
+  pageDescription={description}
+  ogImage={elektroImage.src}
+  ogImageAlt="Elektroinstalace v Klatovech a okolí"
+>
   <PageHeroServicesNew
     slot="hero"
     id="hero"
@@ -22,7 +27,7 @@ const description =
     titleHtml={title}
     description={description}
     backgroundImage={elektroImage}
-    backgroundImageAlt="Elektroinstalace — rozvaděč a elektrorozvody"
+    backgroundImageAlt="Elektroinstalace — zapojování rozvaděče a elektrických okruhů"
   />
   <ElektroServices />
   <ElektroApproach />

@@ -7,7 +7,8 @@ const services = [
     number: "01",
     icon: House,
     title: "Výchozí revize",
-    description: "Revize nových nebo rekonstruovaných instalací před uvedením do provozu.",
+    description:
+      "Revize nových nebo rekonstruovaných instalací před uvedením do provozu.",
     bullets: [
       "Nové instalace a rekonstrukce",
       "Kontrola prvků a zapojení",
@@ -19,7 +20,8 @@ const services = [
     number: "02",
     icon: Grid2X2,
     title: "Pravidelné revize",
-    description: "Periodické kontroly stávajících zařízení pro bezpečný a bezproblémový provoz.",
+    description:
+      "Periodické kontroly stávajících zařízení pro bezpečný a bezproblémový provoz.",
     bullets: [
       "Včasné odhalení závad",
       "Kontrola rozvaděčů a okruhů",
@@ -31,7 +33,8 @@ const services = [
     number: "03",
     icon: Zap,
     title: "Revize hromosvodů",
-    description: "Revize hromosvodových soustav včetně návazných částí ochrany před bleskem.",
+    description:
+      "Revize hromosvodových soustav včetně návazných částí ochrany před bleskem.",
     bullets: [
       "Kontrola jímací soustavy",
       "Měření hodnot uzemnění",
@@ -43,7 +46,8 @@ const services = [
     number: "04",
     icon: LayoutList,
     title: "Revizní zprávy a dokumentace",
-    description: "Kompletní zpracování a předání oficiální dokumentace o stavu elektroinstalace.",
+    description:
+      "Kompletní zpracování a předání oficiální dokumentace o stavu elektroinstalace.",
     bullets: [
       "Oficiální platný dokument",
       "Detailní přehled měření",
@@ -58,17 +62,22 @@ const services = [
   {/* Header */}
   <div class="mb-12">
     <div class="mb-4 flex items-center gap-3">
-      <span class="h-px w-8 bg-accent-primary" aria-hidden="true"></span>
-      <p class="text-sm font-semibold uppercase tracking-widest text-accent-primary">Naše služby</p>
+      <span class="bg-accent-primary h-px w-8" aria-hidden="true"></span>
+      <p
+        class="text-accent-primary text-sm font-semibold tracking-widest uppercase"
+      >
+        Naše služby
+      </p>
     </div>
     <h2
-      class="mb-5 font-sora text-4xl font-bold leading-tight text-neutral-800 sm:text-5xl lg:text-6xl"
+      class="font-sora mb-5 text-4xl leading-tight font-bold text-neutral-800 sm:text-5xl lg:text-6xl"
     >
       Revize
     </h2>
     <p class="max-w-xl text-base leading-relaxed text-neutral-800/70">
-      Komplexní služby v oblasti elektrorevizí pro domácnosti i firmy. Od kontroly rozvaděčů až po
-      měření hromosvodů a zpracování oficiální dokumentace – přesně podle aktuálních norem.
+      Komplexní služby v oblasti elektrorevizí pro domácnosti i firmy. Od
+      kontroly rozvaděčů až po měření hromosvodů a zpracování oficiální
+      dokumentace – přesně podle aktuálních norem.
     </p>
   </div>
 
@@ -82,22 +91,26 @@ const services = [
             {/* Hover accent line – slides in from left */}
             <span
               aria-hidden="true"
-              class="absolute left-1/2 top-0 h-[3px] w-4/5 -translate-x-1/2 bg-accent-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              class="bg-accent-primary absolute top-0 left-1/2 h-[3px] w-4/5 -translate-x-1/2 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
             />
 
             {/* Icon + Number */}
             <div class="mb-6 flex items-start justify-between">
-              <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-primary/10 transition-colors duration-300 group-hover:bg-accent-primary/[0.18]">
-                <ServiceIcon class="h-5 w-5 text-accent-primary transition-transform duration-300 group-hover:scale-110" />
+              <div class="bg-accent-primary/10 group-hover:bg-accent-primary/[0.18] flex h-11 w-11 items-center justify-center rounded-xl transition-colors duration-300">
+                <ServiceIcon class="text-accent-primary h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
               </div>
-              <span class="font-sora text-6xl font-bold leading-none text-accent-primary/20 transition-colors duration-300 group-hover:text-accent-primary/40">
+              <span class="font-sora text-accent-primary/20 group-hover:text-accent-primary/40 text-6xl leading-none font-bold transition-colors duration-300">
                 {service.number}
               </span>
             </div>
 
             {/* Title & Description */}
-            <h3 class="mb-3 text-xl font-bold text-neutral-800">{service.title}</h3>
-            <p class="mb-auto text-sm leading-relaxed text-neutral-500">{service.description}</p>
+            <h3 class="mb-3 text-xl font-bold text-neutral-800">
+              {service.title}
+            </h3>
+            <p class="mb-auto text-sm leading-relaxed text-neutral-500">
+              {service.description}
+            </p>
 
             {/* Divider */}
             <hr class="my-6 border-neutral-200" />
@@ -106,7 +119,7 @@ const services = [
             <ul class="grid grid-cols-2 gap-x-6 gap-y-3">
               {service.bullets.map((bullet) => (
                 <li class="flex items-center gap-2">
-                  <CircleCheck class="h-4 w-4 shrink-0 text-accent-primary" />
+                  <CircleCheck class="text-accent-primary h-4 w-4 shrink-0" />
                   <span class="text-sm text-neutral-700">{bullet}</span>
                 </li>
               ))}

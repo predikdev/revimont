@@ -6,7 +6,12 @@ import ContactSection from "../components/sections/shared/ContactSection.astro";
 import heroImage from "../assets/images/el_prace_3.jpeg";
 ---
 
-<BaseLayout>
+<BaseLayout
+  pageTitle="Realizace"
+  pageDescription="Ukázky realizací Revimont Klatovy - elektroinstalace, revize a montáže v Klatovech a okolí."
+  ogImage={heroImage.src}
+  ogImageAlt="Realizované projekty Revimont Klatovy"
+>
   <PageHeroServicesNew
     slot="hero"
     eyebrow="Reference Revimont"

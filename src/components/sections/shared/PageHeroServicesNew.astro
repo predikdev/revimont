@@ -59,7 +59,10 @@ const {
   >
   </div>
   <div class="absolute inset-0 bg-neutral-800/40"></div>
-  <div class="mask-image-gradient absolute inset-0 bg-grid-pattern-dark opacity-25"></div>
+  <div
+    class="mask-image-gradient bg-grid-pattern-dark absolute inset-0 opacity-25"
+  >
+  </div>
 
   <div
     class="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-neutral-800/65 to-transparent"
@@ -73,7 +76,7 @@ const {
     >
       <div>
         <p
-          class="animate-fade-up mb-10 text-[11px] font-bold uppercase tracking-[0.38em] text-accent-primary/95"
+          class="animate-fade-up text-accent-primary/95 mb-10 text-[11px] font-bold tracking-[0.38em] uppercase"
         >
           {eyebrow}
         </p>
@@ -81,11 +84,11 @@ const {
         {
           titleHtml ? (
             <h1
-              class="animate-fade-up animate-delay-100 mt-8 font-sora text-4xl leading-none font-semibold tracking-tight text-neutral-50 drop-shadow-lg sm:text-5xl lg:text-6xl"
+              class="animate-fade-up animate-delay-100 font-sora mt-8 text-4xl leading-none font-semibold tracking-tight text-neutral-50 drop-shadow-lg sm:text-5xl lg:text-6xl"
               set:html={titleHtml}
             />
           ) : (
-            <h1 class="animate-fade-up animate-delay-100 mt-8 font-sora text-4xl leading-none font-semibold tracking-tight text-neutral-50 drop-shadow-lg sm:text-5xl lg:text-6xl">
+            <h1 class="animate-fade-up animate-delay-100 font-sora mt-8 text-4xl leading-none font-semibold tracking-tight text-neutral-50 drop-shadow-lg sm:text-5xl lg:text-6xl">
               {title}
             </h1>
           )

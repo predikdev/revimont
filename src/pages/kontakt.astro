@@ -6,7 +6,12 @@ import ContactSection from "../components/sections/shared/ContactSection.astro";
 import firmaImage from "../assets/images/firma.jpeg";
 ---
 
-<BaseLayout>
+<BaseLayout
+  pageTitle="Kontakt"
+  pageDescription="Kontaktujte Revimont Klatovy. Elektroinstalace, opravy a revize po celém Klatovsku. Zavolejte nebo napište a domluvíme termín."
+  ogImage={firmaImage.src}
+  ogImageAlt="Kontakt na Revimont Klatovy"
+>
   <PageHeroServicesNew
     slot="hero"
     eyebrow="Revimont Klatovy"
@@ -16,5 +21,5 @@ import firmaImage from "../assets/images/firma.jpeg";
     backgroundImageAlt="Firemní vozový park Revimont Klatovy"
   />
   {/* <ContactSectionV2 /> */}
-  <ContactSection showCompanyIds ico="12345678" dic="CZ12345678" />
+  <ContactSection showCompanyIds />
 </BaseLayout>

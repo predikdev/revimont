@@ -54,6 +54,10 @@
   --font-sora: "Sora", system-ui, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   overflow-x: hidden;
@@ -139,6 +143,10 @@ main > section {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .animate-fade-up,
   .is-visible {
     animation: none;

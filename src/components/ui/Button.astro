@@ -2,7 +2,11 @@
 import { clsx } from "clsx";
 
 interface Props {
-  variant?: "primaryDark" | "primaryLight" | "secondaryLight" | "secondaryOutline";
+  variant?:
+    | "primaryDark"
+    | "primaryLight"
+    | "secondaryLight"
+    | "secondaryOutline";
   size?: "sm" | "md" | "lg";
   href?: string;
   class?: string;
@@ -52,7 +56,12 @@ const classes = clsx(
 
 {
   href ? (
-    <a href={href} class={classes} aria-disabled={disabled ? "true" : undefined} {...rest}>
+    <a
+      href={href}
+      class={classes}
+      aria-disabled={disabled ? "true" : undefined}
+      {...rest}
+    >
       <slot />
     </a>
   ) : (

@@ -7,14 +7,19 @@ import OpravyMontazeWhyUs from "../../components/sections/opravy-montaze/OpravyM
 import OpravyMontazeApproach from "../../components/sections/opravy-montaze/OpravyMontazeApproach.astro";
 // import ContactSection from "../../components/sections/shared/ContactSection.astro";
 import ContactSection from "../../components/sections/shared/ContactSection.astro";
-import rekonstrukceImage from "../../assets/images/rekonstrukce.png";
+import rekonstrukceImage from "../../assets/images/rekonstrukce.jpg";
 
 const title = "Montáže a opravy domácích systémů";
 const description =
   "Nabízíme odborné opravy a montáže domácích telefonů, zvonkových tabel i elektrických zařízení. Rychle a spolehlivě vyřešíme každou závadu v Klatovech i širokém okolí.";
 ---
 
-<BaseLayout heroBackground="/hero-bg.jpg">
+<BaseLayout
+  pageTitle="Opravy a montáže"
+  pageDescription={description}
+  ogImage={rekonstrukceImage.src}
+  ogImageAlt="Opravy a montáže domácích systémů"
+>
   <PageHeroServicesNew
     slot="hero"
     id="hero"
@@ -22,7 +27,7 @@ const description =
     titleHtml={title}
     description={description}
     backgroundImage={rekonstrukceImage}
-    backgroundImageAlt="Opravy a montáže elektrozařízení"
+    backgroundImageAlt="Montáže a opravy — detail zásahu do elektronického zařízení"
   />
   <OpravyMontazeServices />
   <OpravyMontazeApproach />
