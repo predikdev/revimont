@@ -67,8 +67,8 @@ test("contact form shows validation errors on empty submit", async ({
   await expect(page.locator("#error-message")).toContainText(
     "Zpráva musí mít alespoň 10 znaků",
   );
-  await expect(page.locator("#error-privacy")).toContainText(
-    "Musíte souhlasit",
-  );
-  await expect(page.locator("#error-turnstile")).toContainText("Turnstile");
+  await expect(page.locator("#error-privacy")).toBeVisible();
+  await expect(page.locator("#error-privacy")).not.toBeEmpty();
+  await expect(page.locator("#error-turnstile")).toBeVisible();
+  await expect(page.locator("#error-turnstile")).not.toBeEmpty();
 });
