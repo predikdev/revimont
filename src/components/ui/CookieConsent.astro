@@ -16,6 +16,7 @@ import "vanilla-cookieconsent/dist/cookieconsent.css";
         layout: "box",
         position: "bottom center",
         flipButtons: false,
+        equalWeightButtons: true,
       },
       preferencesModal: {
         layout: "box",
@@ -138,8 +139,18 @@ import "vanilla-cookieconsent/dist/cookieconsent.css";
   }
 
   #cc-main .cm__btns {
+    width: 100%;
     display: flex;
     flex-direction: row;
     gap: 0.75rem;
+
+    .cm__btn-group {
+      display: contents; /* Skupiny "zmizí", tlačítka se stanou přímými dětmi */
+    }
+
+    .cm__btn {
+      flex: 1;
+      margin-top: 0;
+    }
   }
 </style>
