@@ -1,0 +1,145 @@
+---
+// Cookie Consent component with Google Consent Mode v2 support
+// Uses vanilla-cookieconsent v3
+import "vanilla-cookieconsent/dist/cookieconsent.css";
+---
+
+<script>
+  import * as CookieConsent from "vanilla-cookieconsent";
+
+  // Expose to window so other scripts can call showPreferences()
+  (window as unknown as { CookieConsent: typeof CookieConsent }).CookieConsent = CookieConsent;
+
+  CookieConsent.run({
+    guiOptions: {
+      consentModal: {
+        layout: "box",
+        position: "bottom center",
+        flipButtons: false,
+      },
+      preferencesModal: {
+        layout: "box",
+      },
+    },
+
+    onFirstConsent: () => {
+      updateGoogleConsent(CookieConsent.getUserPreferences());
+    },
+
+    onConsent: () => {
+      updateGoogleConsent(CookieConsent.getUserPreferences());
+    },
+
+    onChange: () => {
+      updateGoogleConsent(CookieConsent.getUserPreferences());
+    },
+
+    categories: {
+      necessary: {
+        enabled: true,
+        readOnly: true,
+      },
+      analytics: {
+        enabled: false,
+        autoClear: {
+          cookies: [{ name: /^_ga/ }, { name: "_gid" }],
+        },
+      },
+    },
+
+    language: {
+      default: "cs",
+      translations: {
+        cs: {
+          consentModal: {
+            title: "Používáme cookies",
+            description:
+              "Aby náš web fungoval správně a my mohli zkvalitňovat naše služby, používáme soubory cookies. Analytické cookies nám pomáhají pochopit, jak web používáte – vždy ale jen s vaším souhlasem.",
+            acceptAllBtn: "Přijmout vše",
+            acceptNecessaryBtn: "Pouze nutné",
+            showPreferencesBtn: "Spravovat nastavení",
+          },
+          preferencesModal: {
+            title: "Nastavení cookies",
+            acceptAllBtn: "Přijmout vše",
+            acceptNecessaryBtn: "Pouze nutné",
+            savePreferencesBtn: "Uložit nastavení",
+            closeIconLabel: "Zavřít",
+            sections: [
+              {
+                title: "Nezbytné cookies",
+                description:
+                  "Tyto cookies jsou nutné pro správné fungování webu. Nelze je vypnout.",
+                linkedCategory: "necessary",
+              },
+              {
+                title: "Analytické cookies",
+                description:
+                  "Pomáhají nám zjistit, jak návštěvníci web používají (Google Analytics). Všechna data jsou anonymizována.",
+                linkedCategory: "analytics",
+              },
+              {
+                title: "Více informací",
+                description:
+                  'Máte dotazy nebo námitky? Přečtěte si naši <a href="/ochrana-osobnich-udaju" class="cc__link">Ochranu osobních údajů</a>.',
+              },
+            ],
+          },
+        },
+      },
+    },
+  });
+
+  declare global {
+    interface Window {
+      gtag: (...args: unknown[]) => void;
+    }
+  }
+
+  function updateGoogleConsent(preferences: ReturnType<typeof CookieConsent.getUserPreferences>) {
+    const analyticsGranted = preferences.acceptedCategories.includes("analytics");
+
+    if (typeof window.gtag === "function") {
+      window.gtag("consent", "update", {
+        analytics_storage: analyticsGranted ? "granted" : "denied",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+      });
+    }
+  }
+</script>
+
+<style is:global>
+  :root {
+    --cc-bg: #fff;
+    --cc-primary-color: oklch(67.66% 0.1838 40.03); /* orange-primary */
+    --cc-btn-primary-bg: oklch(67.66% 0.1838 40.03);
+    --cc-btn-primary-color: #fff;
+    --cc-btn-primary-hover-bg: oklch(60% 0.18 40.03);
+    --cc-btn-secondary-bg: #f3f4f6;
+    --cc-btn-secondary-color: #1f2937;
+    --cc-btn-secondary-hover-bg: #e5e7eb;
+    --cc-toggle-on-bg: oklch(67.66% 0.1838 40.03);
+    --cc-cookie-category-block-bg: #f9fafb;
+    --cc-cookie-category-block-border: #e5e7eb;
+    --cc-separator-border-color: #e5e7eb;
+    --cc-link-color: oklch(67.66% 0.1838 40.03);
+    --cc-overlay-bg: rgba(0, 0, 0, 0.5);
+    --cc-modal-border-radius: 0.75rem;
+    --cc-btn-border-radius: 0.375rem;
+    --cc-z-index: 9999;
+  }
+
+  #cc-main .cm {
+    max-width: 680px;
+    width: calc(100% - 2rem);
+    margin-bottom: 1.5rem;
+  }
+
+  #cc-main .cm__btns {
+    display: flex;
+    flex-direction: row;
+    gap: 0.75rem;
+  }
+</style>

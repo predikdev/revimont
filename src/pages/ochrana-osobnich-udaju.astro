@@ -1,0 +1,97 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/sections/shared/PageHero.astro";
+import SectionWrapper from "../components/ui/SectionWrapper.astro";
+
+const heroProps = {
+  eyebrow: "Právní informace",
+  title: "Ochrana osobních údajů",
+  description: "Informace o zpracování osobních údajů a používání souborů cookies na tomto webu.",
+};
+---
+
+<BaseLayout>
+  <PageHero slot="hero" {...heroProps} />
+
+  <SectionWrapper>
+    <div class="container">
+      <div class="max-w-3xl mx-auto prose prose-neutral prose-headings:font-sora prose-headings:text-neutral-900 prose-p:text-neutral-600 prose-a:text-accent-primary prose-strong:text-neutral-800">
+
+        <h2>1. Správce osobních údajů</h2>
+        <p>
+          Správcem osobních údajů je:<br />
+          <strong>Revimont Klatovy</strong><br />
+          <!-- Doplňte: IČO, sídlo, kontaktní e-mail -->
+          IČO: XXXXXXXX<br />
+          Sídlo: [Adresa], Klatovy<br />
+          E-mail: <a href="mailto:info@revimont.cz">info@revimont.cz</a>
+        </p>
+
+        <h2>2. Jaké údaje zpracováváme</h2>
+        <p>
+          Na tomto webu zpracováváme pouze údaje, které nám dobrovolně poskytnete prostřednictvím kontaktního formuláře:
+        </p>
+        <ul>
+          <li>Jméno a příjmení</li>
+          <li>E-mailová adresa</li>
+          <li>Telefonní číslo (nepovinné)</li>
+          <li>Obsah vaší zprávy</li>
+        </ul>
+
+        <h2>3. Účel zpracování</h2>
+        <p>
+          Vaše údaje zpracováváme výhradně za účelem odpovězení na váš dotaz nebo poptávku. Údaje nepředáváme třetím stranám k marketingovým účelům.
+        </p>
+
+        <h2>4. Délka uchovávání</h2>
+        <p>
+          Osobní údaje uchováváme po dobu nezbytně nutnou pro vyřízení vašeho dotazu, nejdéle však 1 rok od doručení zprávy.
+        </p>
+
+        <h2>5. Vaše práva</h2>
+        <p>Máte právo:</p>
+        <ul>
+          <li>požadovat přístup ke svým osobním údajům,</li>
+          <li>požadovat jejich opravu nebo výmaz,</li>
+          <li>vznést námitku proti zpracování,</li>
+          <li>podat stížnost u Úřadu pro ochranu osobních údajů (uoou.cz).</li>
+        </ul>
+
+        <h2>6. Cookies a analytika</h2>
+        <p>
+          Tento web používá soubory cookies. Rozlišujeme dva typy:
+        </p>
+        <ul>
+          <li>
+            <strong>Nezbytné cookies</strong> – zajišťují základní funkce webu (např. zapamatování vašich preferencí ohledně cookies). Tyto cookies nelze odmítnout.
+          </li>
+          <li>
+            <strong>Analytické cookies (Google Analytics 4)</strong> – anonymizovaně sledují, jak návštěvníci web používají, abychom mohli jeho obsah zlepšovat. Tyto cookies aktivujeme pouze s vaším souhlasem.
+          </li>
+        </ul>
+        <p>
+          Svůj souhlas s analytickými cookies můžete kdykoli změnit kliknutím na tlačítko níže nebo v patičce webu.
+        </p>
+
+        <p>
+          <button
+            type="button"
+            onclick="window.CookieConsent && window.CookieConsent.showPreferences()"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-accent-primary text-white text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer"
+          >
+            Spravovat nastavení cookies
+          </button>
+        </p>
+
+        <h2>7. Správce cookies třetí strany</h2>
+        <p>
+          Analytická data zpracovává společnost Google LLC (USA) v souladu s legislativou EU. Více informací naleznete na <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.
+        </p>
+
+        <p class="text-small text-neutral-400 mt-12">
+          Poslední aktualizace: únor 2026
+        </p>
+      </div>
+    </div>
+  </SectionWrapper>
+</BaseLayout>
