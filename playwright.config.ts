@@ -22,9 +22,7 @@ export default defineConfig({
     video: "retain-on-failure",
   },
   webServer: {
-    command: isCI
-      ? "pnpm run preview --host 127.0.0.1 --port 4321"
-      : "pnpm run dev -- --host 127.0.0.1 --port 4321",
+    command: "pnpm run dev -- --host 127.0.0.1 --port 4321",
     url: "http://127.0.0.1:4321",
     reuseExistingServer: !isCI,
     timeout: 120_000,
