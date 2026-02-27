@@ -38,9 +38,9 @@ for (const pageCase of pages) {
     await dismissCookieConsent(page);
 
     await expect(page).toHaveURL(pageCase.expectedUrl);
-    await expect(page.locator("header")).toBeVisible();
-    await expect(page.locator("main")).toBeVisible();
-    await expect(page.locator("footer")).toBeVisible();
+    await expect(page.locator("#site-header")).toBeVisible();
+    await expect(page.locator("#main-content")).toBeVisible();
+    await expect(page.locator("footer").first()).toBeVisible();
 
     if (pageCase.assertions) {
       await pageCase.assertions(page);
