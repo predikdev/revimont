@@ -22,10 +22,10 @@ export default defineConfig({
     video: "retain-on-failure",
   },
   webServer: {
-    command: "pnpm run dev -- --host 127.0.0.1 --port 4321",
+    command: "pnpm exec astro dev --host 0.0.0.0 --port 4321 --strictPort",
     url: "http://127.0.0.1:4321",
     reuseExistingServer: !isCI,
-    timeout: 120_000,
+    timeout: 240_000,
   },
   projects: [
     {
