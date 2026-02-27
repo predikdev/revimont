@@ -3,7 +3,19 @@ import { z } from "astro:schema";
 import { Resend } from "resend";
 import { COMPANY } from "../data/company";
 
-const resend = new Resend(import.meta.env.RESEND_API_KEY);
+let resendClient: Resend | null = null;
+
+function getResendClient(): Resend {
+  if (resendClient) return resendClient;
+
+  const apiKey = import.meta.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is not configured");
+  }
+
+  resendClient = new Resend(apiKey);
+  return resendClient;
+}
 
 // Formát: +420 123 456 789, +420123456789, 00420123456789, atd.
 const czechPhoneRegex =
@@ -33,6 +45,8 @@ export const server = {
     accept: "form",
     input: schema,
     handler: async (input) => {
+      const resend = getResendClient();
+
       // Ověření Turnstile tokenu
       const turnstileResponse = await fetch(
         "https://challenges.cloudflare.com/turnstile/v0/siteverify",
