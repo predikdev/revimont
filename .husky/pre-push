@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+if [ "${SKIP_PRE_PUSH:-0}" = "1" ]; then
+  echo "SKIP_PRE_PUSH=1 -> preskakuji pre-push kontroly"
+  exit 0
+fi
+
+echo "Spoustim pre-push kontroly: pnpm run ci"
+pnpm run ci

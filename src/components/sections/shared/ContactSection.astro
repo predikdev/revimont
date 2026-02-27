@@ -239,6 +239,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 
           <!-- Turnstile widget -->
           <div
+            id="contact-turnstile"
             class="cf-turnstile"
             data-sitekey={turnstileSiteKey}
             data-language="cs"
@@ -465,14 +466,22 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         let firstErrorField: HTMLElement | null = null;
 
         for (const [field, messages] of Object.entries(result.error.fields)) {
-          const errorEl = document.getElementById(`error-${field}`);
+          const errorElementId =
+            field === "cf-turnstile-response"
+              ? "error-turnstile"
+              : `error-${field}`;
+          const inputElementId =
+            field === "cf-turnstile-response"
+              ? "contact-turnstile"
+              : `contact-${field}`;
+          const errorEl = document.getElementById(errorElementId);
           if (errorEl && messages && messages.length > 0) {
             errorEl.textContent = messages[0];
             errorEl.classList.remove("hidden");
 
             if (!firstErrorField) {
               firstErrorField =
-                document.getElementById(`contact-${field}`) || errorEl;
+                document.getElementById(inputElementId) || errorEl;
             }
           }
         }

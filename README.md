@@ -62,12 +62,18 @@ Projekt má nastavené:
 - `ESLint` pro JS/TS/Astro
 - `Prettier` (+ Astro + Tailwind plugin)
 - `Husky` + `lint-staged` (`pre-commit` hook)
+- `Husky pre-push` hook (`pnpm run ci`)
 - GitHub Actions CI (`.github/workflows/ci.yml`)
 
 Co to znamená v praxi:
 
 - při commitu se na změněných souborech spustí lint/format (`pre-commit`)
+- při pushi se lokálně spustí statické kontroly (`pre-push` -> `pnpm run ci`)
 - v CI se pouští statické kontroly a E2E smoke testy
+
+Volitelné:
+
+- dočasné přeskočení `pre-push` kontrol: `SKIP_PRE_PUSH=1 git push`
 
 ## E2E a a11y testy (Playwright)
 

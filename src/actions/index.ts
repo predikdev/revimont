@@ -21,23 +21,47 @@ function getResendClient(): Resend {
 const czechPhoneRegex =
   /^(\+420|\+421|00420|00421)?[\s.-]?[0-9]{3}[\s.-]?[0-9]{3}[\s.-]?[0-9]{3}$/;
 
+const nullToEmptyString = (value: unknown): unknown =>
+  value == null ? "" : value;
+
 const schema = z.object({
-  name: z.string().min(2, "Jméno musí mít alespoň 2 znaky"),
-  phone: z.string().refine((val) => !val || czechPhoneRegex.test(val), {
-    message: "Neplatné telefonní číslo. Použijte formát +420 XXX XXX XXX",
-  }),
-  email: z.string().email("Neplatná e-mailová adresa"),
+  name: z.preprocess(
+    nullToEmptyString,
+    z.string().trim().min(2, "Jméno musí mít alespoň 2 znaky"),
+  ),
+  phone: z.preprocess(
+    nullToEmptyString,
+    z
+      .string()
+      .trim()
+      .refine((val) => !val || czechPhoneRegex.test(val), {
+        message: "Neplatné telefonní číslo. Použijte formát +420 XXX XXX XXX",
+      }),
+  ),
+  email: z.preprocess(
+    nullToEmptyString,
+    z.string().trim().email("Neplatná e-mailová adresa"),
+  ),
   service: z.enum(["Elektroinstalace", "Revize", "Opravy a montáže", "Jiné"], {
     errorMap: () => ({ message: "Vyberte prosím typ služby" }),
   }),
-  location: z.string().min(2, "Lokalita musí mít alespoň 2 znaky"),
-  message: z.string().min(10, "Zpráva musí mít alespoň 10 znaků"),
+  location: z.preprocess(
+    nullToEmptyString,
+    z.string().trim().min(2, "Lokalita musí mít alespoň 2 znaky"),
+  ),
+  message: z.preprocess(
+    nullToEmptyString,
+    z.string().trim().min(10, "Zpráva musí mít alespoň 10 znaků"),
+  ),
   privacy: z.literal("on", {
     errorMap: () => ({
       message: "Musíte souhlasit se zpracováním osobních údajů",
     }),
   }),
-  "cf-turnstile-response": z.string().min(1, "Ověření Turnstile selhalo"),
+  "cf-turnstile-response": z.preprocess(
+    nullToEmptyString,
+    z.string().trim().min(1, "Ověření Turnstile selhalo"),
+  ),
 });
 
 export const server = {
