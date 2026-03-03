@@ -7,6 +7,9 @@ let resendClient: Resend | null = null;
 
 type TurnstileVerificationResult = {
   success: boolean;
+  "error-codes"?: string[];
+  hostname?: string;
+  challenge_ts?: string;
 };
 
 function getResendClient(): Resend {
@@ -104,7 +107,15 @@ export const server = {
         (await turnstileResponse.json()) as TurnstileVerificationResult;
 
       if (!verification.success) {
-        throw new Error("Turnstile verification failed");
+        const errorCodes = verification["error-codes"]?.join(", ") || "unknown";
+
+        console.error("Turnstile verification failed", {
+          errorCodes: verification["error-codes"],
+          hostname: verification.hostname,
+          challengeTs: verification.challenge_ts,
+        });
+
+        throw new Error(`Turnstile verification failed (${errorCodes})`);
       }
 
       // Formátování času v CZ
