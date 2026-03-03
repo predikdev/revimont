@@ -406,13 +406,6 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   </div>
 </section>
 
-<!-- Turnstile script -->
-<script
-  is:inline
-  src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
-  async
-  defer></script>
-
 <!-- Form handler script -->
 <script>
   import { actions, isInputError } from "astro:actions";
@@ -472,6 +465,24 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   let turnstileInitPromise: Promise<void> | null = null;
   let turnstileTokenResolver: ((token: string) => void) | null = null;
   let turnstileTokenRejecter: ((reason?: unknown) => void) | null = null;
+  let turnstileScriptPromise: Promise<void> | null = null;
+
+  const loadTurnstileScript = (): Promise<void> => {
+    if (turnstileScriptPromise) return turnstileScriptPromise;
+    if (window.turnstile) return Promise.resolve();
+
+    turnstileScriptPromise = new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src =
+        "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      script.async = true;
+      script.defer = true;
+      script.onload = () => resolve();
+      document.head.appendChild(script);
+    });
+
+    return turnstileScriptPromise;
+  };
 
   const scrollToElement = (element: HTMLElement) => {
     element.focus();
@@ -596,6 +607,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 
     if (!turnstileInitPromise) {
       turnstileInitPromise = (async () => {
+        await loadTurnstileScript();
         const turnstile = await waitForTurnstileApi();
         const sitekey = turnstileContainer.dataset.sitekey;
 
@@ -667,9 +679,14 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     });
   };
 
-  void ensureTurnstileWidget().catch(() => {
-    // Widget can still be initialized later on submit.
-  });
+  // Lazy-load Turnstile on first user interaction with the form.
+  form.addEventListener(
+    "focusin",
+    () => {
+      void ensureTurnstileWidget().catch(() => {});
+    },
+    { once: true },
+  );
 
   form.addEventListener("submit", async (e: SubmitEvent) => {
     e.preventDefault();
