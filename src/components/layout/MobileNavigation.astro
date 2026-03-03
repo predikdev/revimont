@@ -4,6 +4,7 @@ import { X, Phone, ChevronDown } from "@lucide/astro";
 import LogoInline from "./LogoInline.astro";
 import Button from "../ui/Button.astro";
 import { COMPANY } from "../../data/company";
+import { SERVICE_LINKS, MAIN_LINKS } from "../../data/navigation";
 
 const pathname = Astro.url.pathname;
 
@@ -11,17 +12,6 @@ const isActive = (href: string) => {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(href + "/");
 };
-
-const subLinks = [
-  { href: "/sluzby/elektroinstalace", label: "Elektroinstalace" },
-  { href: "/sluzby/revize", label: "Revize" },
-  { href: "/sluzby/opravy-montaze", label: "Opravy a montáže" },
-];
-
-const links = [
-  { href: "/realizace", label: "Realizace" },
-  { href: "/kontakt", label: "Kontakt" },
-];
 ---
 
 <div
@@ -101,7 +91,7 @@ const links = [
               class="hidden pb-2"
             >
               {
-                subLinks.map((link) => (
+                SERVICE_LINKS.map((link) => (
                   <li>
                     <a
                       href={link.href}
@@ -117,7 +107,7 @@ const links = [
           </li>
 
           {
-            links.map((link, i) => (
+            MAIN_LINKS.map((link, i) => (
               <li>
                 <a
                   href={link.href}

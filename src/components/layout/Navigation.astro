@@ -1,5 +1,6 @@
 ---
 import { ChevronDown } from "@lucide/astro";
+import { SERVICE_LINKS } from "../../data/navigation";
 
 const pathname = Astro.url.pathname;
 
@@ -7,12 +8,6 @@ const isActive = (href: string) => {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(href + "/");
 };
-
-const subLinks = [
-  { href: "/sluzby/elektroinstalace", label: "Elektroinstalace" },
-  { href: "/sluzby/revize", label: "Revize" },
-  { href: "/sluzby/opravy-montaze", label: "Opravy a montáže" },
-];
 ---
 
 <nav class="hidden items-center gap-8 lg:flex">
@@ -40,7 +35,7 @@ const subLinks = [
       class="absolute top-full left-0 mt-2 hidden w-48 rounded-lg border border-neutral-700/40 bg-neutral-800 py-2 shadow-lg shadow-neutral-900/30"
     >
       {
-        subLinks.map((link) => (
+        SERVICE_LINKS.map((link) => (
           <a
             href={link.href}
             aria-current={isActive(link.href) ? "page" : undefined}

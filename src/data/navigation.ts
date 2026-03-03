@@ -1,0 +1,17 @@
+export interface NavLink {
+  href: string;
+  label: string;
+}
+
+/** Service sub-menu links — used in both desktop and mobile navigation. */
+export const SERVICE_LINKS: NavLink[] = [
+  { href: "/sluzby/elektroinstalace", label: "Elektroinstalace" },
+  { href: "/sluzby/revize", label: "Revize" },
+  { href: "/sluzby/opravy-montaze", label: "Opravy a montáže" },
+];
+
+/** Top-level navigation links (excluding Domů and Služby dropdown). */
+export const MAIN_LINKS: NavLink[] = [
+  { href: "/realizace", label: "Realizace" },
+  { href: "/kontakt", label: "Kontakt" },
+];
