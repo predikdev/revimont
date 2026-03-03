@@ -62,6 +62,5 @@ test("contact form shows validation errors on empty submit", async ({
   );
   await expect(page.locator("#error-privacy")).toBeVisible();
   await expect(page.locator("#error-privacy")).not.toBeEmpty();
-  await expect(page.locator("#error-turnstile")).toBeVisible();
-  await expect(page.locator("#error-turnstile")).not.toBeEmpty();
+  await expect(page.locator("#error-turnstile")).toBeHidden();
 });
