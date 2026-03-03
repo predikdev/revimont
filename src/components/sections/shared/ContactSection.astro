@@ -4,8 +4,6 @@ import { COMPANY } from "../../../data/company";
 
 interface Props {
   showCompanyIds?: boolean;
-  ico?: string;
-  dic?: string;
 }
 
 const { showCompanyIds = false } = Astro.props;
@@ -244,6 +242,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
             data-sitekey={turnstileSiteKey}
             data-language="cs"
             data-theme="light"
+            data-size="invisible"
             aria-describedby="error-turnstile"
           >
           </div>
@@ -410,7 +409,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 <!-- Turnstile script -->
 <script
   is:inline
-  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
   async
   defer></script>
 
@@ -418,15 +417,41 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 <script>
   import { actions, isInputError } from "astro:actions";
 
+  type TurnstileRenderOptions = {
+    sitekey: string;
+    theme?: string;
+    language?: string;
+    size?: "normal" | "compact" | "invisible";
+    callback?: (token: string) => void;
+    "error-callback"?: () => void;
+    "expired-callback"?: () => void;
+  };
+
+  interface TurnstileApi {
+    render(
+      container: string | HTMLElement,
+      options: TurnstileRenderOptions,
+    ): string;
+    execute(widgetId: string): void;
+    reset(widgetId: string): void;
+    getResponse(widgetId: string): string;
+  }
+
+  declare global {
+    interface Window {
+      turnstile?: TurnstileApi;
+    }
+  }
+
   const form = document.getElementById("contact-form") as HTMLFormElement;
   const submitBtn = document.getElementById(
     "contact-submit",
   ) as HTMLButtonElement;
+  const turnstileContainer = document.getElementById(
+    "contact-turnstile",
+  ) as HTMLDivElement;
   const defaultLabel =
     submitBtn.getAttribute("data-default-label") || "Odeslat zprávu →";
-  const formCard = document.getElementById(
-    "contact-form-card",
-  ) as HTMLDivElement;
   const successPanel = document.getElementById(
     "contact-success",
   ) as HTMLDivElement;
@@ -440,74 +465,295 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     "(prefers-reduced-motion: reduce)",
   ).matches;
   const scrollBehavior = prefersReducedMotion ? "auto" : "smooth";
+  const czechPhoneRegex =
+    /^(\+420|\+421|00420|00421)?[\s.-]?[0-9]{3}[\s.-]?[0-9]{3}[\s.-]?[0-9]{3}$/;
+
+  let turnstileWidgetId: string | null = null;
+  let turnstileInitPromise: Promise<void> | null = null;
+  let turnstileTokenResolver: ((token: string) => void) | null = null;
+  let turnstileTokenRejecter: ((reason?: unknown) => void) | null = null;
+
+  const scrollToElement = (element: HTMLElement) => {
+    element.focus();
+    element.scrollIntoView({
+      behavior: scrollBehavior,
+      block: "center",
+    });
+  };
+
+  const showFieldError = (
+    field: string,
+    message: string,
+    firstErrorRef: { element: HTMLElement | null },
+  ) => {
+    const errorElementId =
+      field === "cf-turnstile-response" ? "error-turnstile" : `error-${field}`;
+    const inputElementId =
+      field === "cf-turnstile-response"
+        ? "contact-turnstile"
+        : `contact-${field}`;
+    const errorEl = document.getElementById(errorElementId);
+
+    if (!errorEl) return;
+
+    errorEl.textContent = message;
+    errorEl.classList.remove("hidden");
+
+    if (!firstErrorRef.element) {
+      firstErrorRef.element =
+        document.getElementById(inputElementId) || errorEl;
+    }
+  };
+
+  const clearErrors = () => {
+    document.querySelectorAll("[id^='error-']").forEach((el) => {
+      el.classList.add("hidden");
+      el.textContent = "";
+    });
+    errorBanner.classList.add("hidden");
+  };
+
+  const readStringField = (formData: FormData, name: string) => {
+    const value = formData.get(name);
+    return typeof value === "string" ? value.trim() : "";
+  };
+
+  const validateFormLocally = (formData: FormData) => {
+    const errors: Array<{ field: string; message: string }> = [];
+
+    const name = readStringField(formData, "name");
+    const phone = readStringField(formData, "phone");
+    const service = readStringField(formData, "service");
+    const email = readStringField(formData, "email");
+    const location = readStringField(formData, "location");
+    const message = readStringField(formData, "message");
+    const privacy = readStringField(formData, "privacy");
+
+    if (name.length < 2) {
+      errors.push({ field: "name", message: "Jméno musí mít alespoň 2 znaky" });
+    }
+
+    if (phone && !czechPhoneRegex.test(phone)) {
+      errors.push({
+        field: "phone",
+        message: "Neplatné telefonní číslo. Použijte formát +420 XXX XXX XXX",
+      });
+    }
+
+    if (
+      !["Elektroinstalace", "Revize", "Opravy a montáže", "Jiné"].includes(
+        service,
+      )
+    ) {
+      errors.push({ field: "service", message: "Vyberte prosím typ služby" });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      errors.push({ field: "email", message: "Neplatná e-mailová adresa" });
+    }
+
+    if (location.length < 2) {
+      errors.push({
+        field: "location",
+        message: "Lokalita musí mít alespoň 2 znaky",
+      });
+    }
+
+    if (message.length < 10) {
+      errors.push({
+        field: "message",
+        message: "Zpráva musí mít alespoň 10 znaků",
+      });
+    }
+
+    if (privacy !== "on") {
+      errors.push({
+        field: "privacy",
+        message: "Musíte souhlasit se zpracováním osobních údajů",
+      });
+    }
+
+    return errors;
+  };
+
+  const waitForTurnstileApi = async (): Promise<TurnstileApi> => {
+    const timeoutAt = Date.now() + 10_000;
+
+    while (!window.turnstile) {
+      if (Date.now() > timeoutAt) {
+        throw new Error("Turnstile API unavailable");
+      }
+
+      await new Promise((resolve) => window.setTimeout(resolve, 50));
+    }
+
+    return window.turnstile;
+  };
+
+  const ensureTurnstileWidget = async (): Promise<void> => {
+    if (turnstileWidgetId) return;
+
+    if (!turnstileInitPromise) {
+      turnstileInitPromise = (async () => {
+        const turnstile = await waitForTurnstileApi();
+        const sitekey = turnstileContainer.dataset.sitekey;
+
+        if (!sitekey) {
+          throw new Error("Missing Turnstile site key");
+        }
+
+        turnstileWidgetId = turnstile.render(turnstileContainer, {
+          sitekey,
+          language: turnstileContainer.dataset.language || "cs",
+          theme: turnstileContainer.dataset.theme || "light",
+          size: "invisible",
+          callback: (token: string) => {
+            if (turnstileTokenResolver) {
+              turnstileTokenResolver(token);
+              turnstileTokenResolver = null;
+              turnstileTokenRejecter = null;
+            }
+          },
+          "error-callback": () => {
+            if (turnstileTokenRejecter) {
+              turnstileTokenRejecter(new Error("Turnstile execution failed"));
+              turnstileTokenResolver = null;
+              turnstileTokenRejecter = null;
+            }
+          },
+          "expired-callback": () => {},
+        });
+      })();
+    }
+
+    await turnstileInitPromise;
+  };
+
+  const requestTurnstileToken = async (): Promise<string> => {
+    await ensureTurnstileWidget();
+    const turnstile = window.turnstile;
+
+    if (!turnstileWidgetId || !turnstile) {
+      throw new Error("Turnstile widget not ready");
+    }
+
+    const widgetId = turnstileWidgetId;
+    const existingToken = turnstile.getResponse(widgetId);
+    if (existingToken) {
+      return existingToken;
+    }
+
+    return await new Promise<string>((resolve, reject) => {
+      const timeoutId = window.setTimeout(() => {
+        turnstileTokenResolver = null;
+        turnstileTokenRejecter = null;
+        reject(new Error("Turnstile token timeout"));
+      }, 10_000);
+
+      turnstileTokenResolver = (token: string) => {
+        window.clearTimeout(timeoutId);
+        resolve(token);
+      };
+
+      turnstileTokenRejecter = (reason?: unknown) => {
+        window.clearTimeout(timeoutId);
+        reject(
+          reason instanceof Error ? reason : new Error("Turnstile failed"),
+        );
+      };
+
+      turnstile.execute(widgetId);
+    });
+  };
+
+  void ensureTurnstileWidget().catch(() => {
+    // Widget can still be initialized later on submit.
+  });
 
   form.addEventListener("submit", async (e: SubmitEvent) => {
     e.preventDefault();
+    clearErrors();
 
-    // Clear previous errors
-    document.querySelectorAll("[id^='error-']").forEach((el) => {
-      el.classList.add("hidden");
-    });
-    errorBanner.classList.add("hidden");
+    const localErrors = validateFormLocally(new FormData(form));
+    if (localErrors.length > 0) {
+      const firstErrorRef = { element: null as HTMLElement | null };
+      for (const error of localErrors) {
+        showFieldError(error.field, error.message, firstErrorRef);
+      }
 
-    // Set loading state
+      if (firstErrorRef.element) {
+        scrollToElement(firstErrorRef.element);
+      }
+      return;
+    }
+
     submitBtn.disabled = true;
     submitBtn.textContent = "Odesílání…";
 
-    const formData = new FormData(form);
-    const result = await actions.poptavka(formData);
+    try {
+      const token = await requestTurnstileToken();
+      const formData = new FormData(form);
+      formData.set("cf-turnstile-response", token);
 
-    submitBtn.disabled = false;
-    submitBtn.textContent = defaultLabel;
+      const result = await actions.poptavka(formData);
 
-    if (result.error) {
-      // Handle validation errors
-      if (isInputError(result.error)) {
-        let firstErrorField: HTMLElement | null = null;
+      if (result.error) {
+        if (isInputError(result.error)) {
+          const firstErrorRef = { element: null as HTMLElement | null };
 
-        for (const [field, messages] of Object.entries(result.error.fields)) {
-          const errorElementId =
-            field === "cf-turnstile-response"
-              ? "error-turnstile"
-              : `error-${field}`;
-          const inputElementId =
-            field === "cf-turnstile-response"
-              ? "contact-turnstile"
-              : `contact-${field}`;
-          const errorEl = document.getElementById(errorElementId);
-          if (errorEl && messages && messages.length > 0) {
-            errorEl.textContent = messages[0];
-            errorEl.classList.remove("hidden");
+          for (const [field, messages] of Object.entries(result.error.fields)) {
+            if (!messages || messages.length === 0) continue;
 
-            if (!firstErrorField) {
-              firstErrorField =
-                document.getElementById(inputElementId) || errorEl;
-            }
+            showFieldError(field, messages[0], firstErrorRef);
           }
-        }
 
-        // Focus first error field
-        if (firstErrorField) {
-          firstErrorField.focus();
-          firstErrorField.scrollIntoView({
-            behavior: scrollBehavior,
-            block: "center",
-          });
+          if (firstErrorRef.element) {
+            scrollToElement(firstErrorRef.element);
+          }
+        } else {
+          errorText.textContent =
+            "Chyba při odesílání formuláře. Prosím, zkuste znovu.";
+          errorBanner.classList.remove("hidden");
+        }
+      } else if (result.data?.success) {
+        form.classList.add("hidden");
+        successPanel.classList.remove("hidden");
+        successPanel.scrollIntoView({
+          behavior: scrollBehavior,
+          block: "nearest",
+        });
+      }
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "";
+      const isTurnstileError = errorMessage.toLowerCase().includes("turnstile");
+
+      if (isTurnstileError) {
+        const firstErrorRef = { element: null as HTMLElement | null };
+        showFieldError(
+          "cf-turnstile-response",
+          "Ověření Turnstile selhalo",
+          firstErrorRef,
+        );
+
+        if (firstErrorRef.element) {
+          scrollToElement(firstErrorRef.element);
+        } else {
+          errorText.textContent =
+            "Chyba při ověření formuláře. Prosím, zkuste to znovu.";
+          errorBanner.classList.remove("hidden");
         }
       } else {
-        // General error
         errorText.textContent =
-          "Chyba při odesílání formuláře. Prosím, zkuste znovu.";
+          "Chyba při odesílání formuláře. Prosím, zkuste to znovu.";
         errorBanner.classList.remove("hidden");
       }
-    } else if (result.data?.success) {
-      // Hide form, show success
-      formCard.classList.add("hidden");
-      successPanel.classList.remove("hidden");
-      successPanel.scrollIntoView({
-        behavior: scrollBehavior,
-        block: "nearest",
-      });
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = defaultLabel;
+      if (turnstileWidgetId && window.turnstile) {
+        window.turnstile.reset(turnstileWidgetId);
+      }
     }
   });
 </script>

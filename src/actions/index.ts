@@ -5,6 +5,10 @@ import { COMPANY } from "../data/company";
 
 let resendClient: Resend | null = null;
 
+type TurnstileVerificationResult = {
+  success: boolean;
+};
+
 function getResendClient(): Resend {
   if (resendClient) return resendClient;
 
@@ -70,21 +74,34 @@ export const server = {
     input: schema,
     handler: async (input) => {
       const resend = getResendClient();
+      const turnstileSecret = import.meta.env.TURNSTILE_SECRET_KEY;
+      const resendFromEmail =
+        import.meta.env.RESEND_FROM_EMAIL?.trim() ||
+        "Revimont Web <poptavka@kontakt.revimont-klatovy.cz>";
+      const contactFormToEmail =
+        import.meta.env.CONTACT_FORM_TO_EMAIL?.trim() || COMPANY.email;
+
+      if (!turnstileSecret) {
+        throw new Error("TURNSTILE_SECRET_KEY is not configured");
+      }
 
       // Ověření Turnstile tokenu
       const turnstileResponse = await fetch(
         "https://challenges.cloudflare.com/turnstile/v0/siteverify",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            secret: import.meta.env.TURNSTILE_SECRET_KEY,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            secret: turnstileSecret,
             response: input["cf-turnstile-response"],
           }),
         },
       );
 
-      const verification = await turnstileResponse.json();
+      const verification =
+        (await turnstileResponse.json()) as TurnstileVerificationResult;
 
       if (!verification.success) {
         throw new Error("Turnstile verification failed");
@@ -153,8 +170,8 @@ export const server = {
 
       // Odeslání emailu
       const emailResult = await resend.emails.send({
-        from: "Revimont Web <poptavka@revimont-klatovy.cz>",
-        to: COMPANY.email,
+        from: resendFromEmail,
+        to: contactFormToEmail,
         replyTo: input.email,
         subject: `Nová poptávka od ${input.name} — ${input.service}`,
         html: htmlContent,
