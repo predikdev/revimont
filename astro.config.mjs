@@ -7,9 +7,6 @@ import vercel from "@astrojs/vercel";
 export default defineConfig({
   adapter: vercel(),
   site: "https://revimont-klatovy.cz",
-  server: {
-    allowedHosts: true,
-  },
   vite: {
     plugins: [tailwindcss()],
   },
