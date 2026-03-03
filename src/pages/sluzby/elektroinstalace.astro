@@ -1,17 +1,24 @@
 ---
+import { getImage } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHeroServicesNew from "../../components/sections/shared/PageHeroServicesNew.astro";
 import ElektroServices from "../../components/sections/elektroinstalace/ElektroServices.astro";
 import ElektroApproach from "../../components/sections/elektroinstalace/ElektroApproach.astro";
 import ElektroWhyUs from "../../components/sections/elektroinstalace/ElektroWhyUs.astro";
 import PortfolioShowcaseAlternating from "../../components/sections/shared/PortfolioShowcaseAlternating.astro";
-// import ContactSection from "../../components/sections/shared/ContactSection.astro";
 import ContactSection from "../../components/sections/shared/ContactSection.astro";
-import elektroImage from "../../assets/images/electric.jpg";
+import elektroImage from "../../assets/images/elektroinstalace-demo.jpg";
 
 const title = `Elektroinstalace <br /> pro váš domov i firmu`;
 const description =
   "Zajistíme kompletní a bezpečné elektroinstalace pro váš rodinný dům, byt i firmu. Od prvotního návrhu až po konečnou revizi, vše s maximálním důrazem na kvalitu.";
+
+const [img640, img1024, img1280] = await Promise.all([
+  getImage({ src: elektroImage, width: 640, format: "webp", quality: 80 }),
+  getImage({ src: elektroImage, width: 1024, format: "webp", quality: 80 }),
+  getImage({ src: elektroImage, width: 1280, format: "webp", quality: 80 }),
+]);
+const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 1280w`;
 ---
 
 <BaseLayout
@@ -20,6 +27,14 @@ const description =
   ogImage={elektroImage.src}
   ogImageAlt="Elektroinstalace v Klatovech a okolí"
 >
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    imagesrcset={preloadSrcset}
+    imagesizes="100vw"
+    fetchpriority="high"
+  />
   <PageHeroServicesNew
     slot="hero"
     id="hero"
@@ -33,6 +48,5 @@ const description =
   <ElektroApproach />
   <ElektroWhyUs />
   <PortfolioShowcaseAlternating />
-  {/* <ContactSection /> */}
   <ContactSection />
 </BaseLayout>

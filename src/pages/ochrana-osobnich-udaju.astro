@@ -1,19 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PageHero from "../components/sections/shared/PageHero.astro";
 import SectionWrapper from "../components/ui/SectionWrapper.astro";
 import Button from "../components/ui/Button.astro";
 import { COMPANY } from "../data/company";
 
 const pageDescription =
   "Informace o zpracování osobních údajů, cookies a analytice na webu Revimont Klatovy. Přehledně a srozumitelně na jednom místě.";
-
-const heroProps = {
-  eyebrow: "Právní informace",
-  title: "Ochrana osobních údajů",
-  description:
-    "Transparentně vysvětlujeme, jak pracujeme s osobními údaji a cookies na našem webu.",
-};
 
 const sections = [
   { id: "spravce", label: "Správce údajů" },
@@ -28,8 +20,46 @@ const sections = [
 <BaseLayout
   pageTitle="Ochrana osobních údajů"
   pageDescription={pageDescription}
+  noindex={true}
 >
-  <PageHero slot="hero" {...heroProps} />
+  <section
+    slot="hero"
+    class="border-b border-neutral-700/40 bg-neutral-800 pt-24 pb-12 lg:pt-28 lg:pb-14"
+  >
+    <div
+      class="mask-image-gradient bg-grid-pattern-dark absolute inset-0 opacity-20"
+    >
+    </div>
+    <div class="relative z-10 container">
+      <p
+        class="text-accent-primary/95 text-xs font-semibold tracking-[0.26em] uppercase"
+      >
+        Právní informace
+      </p>
+      <h1
+        class="font-sora mt-4 text-3xl font-semibold text-neutral-50 md:text-4xl"
+      >
+        Ochrana osobních údajů
+      </h1>
+      <p class="mt-4 max-w-3xl leading-relaxed text-neutral-300">
+        Transparentně vysvětlujeme, jak pracujeme s osobními údaji, cookies a
+        analytikou na webu Revimont Klatovy.
+      </p>
+      <div
+        class="mt-6 flex flex-wrap items-center gap-3 text-xs font-medium tracking-[0.12em] text-neutral-400 uppercase"
+      >
+        <span class="rounded-full border border-neutral-600 px-3 py-1">
+          Poslední aktualizace: únor 2026
+        </span>
+        <a
+          href="#spravce"
+          class="text-accent-primary hover:text-accent-primary/80 transition-colors"
+        >
+          Přejít na obsah
+        </a>
+      </div>
+    </div>
+  </section>
 
   <SectionWrapper background="light" withGrid>
     <div class="container">

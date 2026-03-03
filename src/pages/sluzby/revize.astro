@@ -1,18 +1,23 @@
 ---
-const titleHtml = `Revizní činnost a kontroly`;
-// const description =
-//   "Zajistíme revizi elektroinstalací a plynových zařízení v souladu s platnými normami. Součástí je přehledná zpráva a doporučení k odstranění zjistěných závad.";
-const description =
-  "Provádíme pečlivé výchozí i pravidelné revize elektroinstalací a hromosvodů v souladu s platnými normami. Odhalíme skrytá rizika a dodáme vám právně platný revizní protokol.";
-
+import { getImage } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import RevizeApproach from "../../components/sections/revize/RevizeApproach.astro";
-// import ContactSection from "../../components/sections/shared/ContactSection.astro";
 import ContactSection from "../../components/sections/shared/ContactSection.astro";
 import PageHeroServicesNew from "../../components/sections/shared/PageHeroServicesNew.astro";
 import RevizeServicesV2 from "../../components/sections/revize/RevizeServicesV2.astro";
 import RevizeWhyUs from "../../components/sections/revize/RevizeWhyUs.astro";
-import revizeImage from "../../assets/images/revize-pexels-28265032.jpg";
+import revizeImage from "../../assets/images/revize-demo-1.jpg";
+
+const titleHtml = `Revizní činnost a kontroly`;
+const description =
+  "Provádíme pečlivé výchozí i pravidelné revize elektroinstalací a hromosvodů v souladu s platnými normami. Odhalíme skrytá rizika a dodáme vám právně platný revizní protokol.";
+
+const [img640, img1024, img1280] = await Promise.all([
+  getImage({ src: revizeImage, width: 640, format: "webp", quality: 80 }),
+  getImage({ src: revizeImage, width: 1024, format: "webp", quality: 80 }),
+  getImage({ src: revizeImage, width: 1280, format: "webp", quality: 80 }),
+]);
+const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 1280w`;
 ---
 
 <BaseLayout
@@ -21,6 +26,14 @@ import revizeImage from "../../assets/images/revize-pexels-28265032.jpg";
   ogImage={revizeImage.src}
   ogImageAlt="Revize elektroinstalace a rozvaděče"
 >
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    imagesrcset={preloadSrcset}
+    imagesizes="100vw"
+    fetchpriority="high"
+  />
   <PageHeroServicesNew
     id="hero"
     slot="hero"
@@ -34,6 +47,5 @@ import revizeImage from "../../assets/images/revize-pexels-28265032.jpg";
   <RevizeServicesV2 />
   <RevizeApproach />
   <RevizeWhyUs />
-  {/* <ContactSection /> */}
   <ContactSection />
 </BaseLayout>

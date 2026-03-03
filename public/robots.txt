@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
 
-# Dev build: block indexing
+Sitemap: https://revimont-klatovy.cz/sitemap.xml
