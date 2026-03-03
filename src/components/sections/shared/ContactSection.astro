@@ -733,6 +733,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
             "Chyba při odesílání formuláře. Prosím, zkuste znovu.";
           errorBanner.classList.remove("hidden");
         }
+      } else if (result.data?.success === false) {
+        errorText.textContent = result.data.message;
+        errorBanner.classList.remove("hidden");
       } else if (result.data?.success) {
         form.classList.add("hidden");
         successPanel.classList.remove("hidden");

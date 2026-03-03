@@ -12,6 +12,10 @@ type TurnstileVerificationResult = {
   challenge_ts?: string;
 };
 
+type ContactActionResult =
+  | { success: true }
+  | { success: false; code: string; message: string };
+
 function getResendClient(): Resend {
   if (resendClient) return resendClient;
 
@@ -75,62 +79,72 @@ export const server = {
   poptavka: defineAction({
     accept: "form",
     input: schema,
-    handler: async (input) => {
-      const resend = getResendClient();
-      const turnstileSecret = import.meta.env.TURNSTILE_SECRET_KEY;
-      const resendFromEmail =
-        import.meta.env.RESEND_FROM_EMAIL?.trim() ||
-        "Revimont Web <poptavka@kontakt.revimont-klatovy.cz>";
-      const contactFormToEmail =
-        import.meta.env.CONTACT_FORM_TO_EMAIL?.trim() || COMPANY.email;
+    handler: async (input): Promise<ContactActionResult> => {
+      try {
+        const resend = getResendClient();
+        const turnstileSecret = import.meta.env.TURNSTILE_SECRET_KEY;
+        const resendFromEmail =
+          import.meta.env.RESEND_FROM_EMAIL?.trim() ||
+          "Revimont Web <poptavka@kontakt.revimont-klatovy.cz>";
+        const contactFormToEmail =
+          import.meta.env.CONTACT_FORM_TO_EMAIL?.trim() || COMPANY.email;
 
-      if (!turnstileSecret) {
-        throw new Error("TURNSTILE_SECRET_KEY is not configured");
-      }
+        if (!turnstileSecret) {
+          return {
+            success: false,
+            code: "turnstile_secret_missing",
+            message: "Chybí TURNSTILE_SECRET_KEY na serveru.",
+          };
+        }
 
-      // Ověření Turnstile tokenu
-      const turnstileResponse = await fetch(
-        "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+        // Ověření Turnstile tokenu
+        const turnstileResponse = await fetch(
+          "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
+              secret: turnstileSecret,
+              response: input["cf-turnstile-response"],
+            }),
           },
-          body: new URLSearchParams({
-            secret: turnstileSecret,
-            response: input["cf-turnstile-response"],
-          }),
-        },
-      );
+        );
 
-      const verification =
-        (await turnstileResponse.json()) as TurnstileVerificationResult;
+        const verification =
+          (await turnstileResponse.json()) as TurnstileVerificationResult;
 
-      if (!verification.success) {
-        const errorCodes = verification["error-codes"]?.join(", ") || "unknown";
+        if (!verification.success) {
+          const errorCodes =
+            verification["error-codes"]?.join(", ") || "unknown";
 
-        console.error("Turnstile verification failed", {
-          errorCodes: verification["error-codes"],
-          hostname: verification.hostname,
-          challengeTs: verification.challenge_ts,
+          console.error("Turnstile verification failed", {
+            errorCodes: verification["error-codes"],
+            hostname: verification.hostname,
+            challengeTs: verification.challenge_ts,
+          });
+
+          return {
+            success: false,
+            code: `turnstile_${errorCodes}`,
+            message: `Ověření Turnstile selhalo (${errorCodes}).`,
+          };
+        }
+
+        // Formátování času v CZ
+        const now = new Date().toLocaleString("cs-CZ", {
+          timeZone: "Europe/Prague",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
         });
 
-        throw new Error(`Turnstile verification failed (${errorCodes})`);
-      }
-
-      // Formátování času v CZ
-      const now = new Date().toLocaleString("cs-CZ", {
-        timeZone: "Europe/Prague",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      });
-
-      // HTML email s tabulkou
-      const htmlContent = `
+        // HTML email s tabulkou
+        const htmlContent = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -179,20 +193,38 @@ export const server = {
 </html>
       `;
 
-      // Odeslání emailu
-      const emailResult = await resend.emails.send({
-        from: resendFromEmail,
-        to: contactFormToEmail,
-        replyTo: input.email,
-        subject: `Nová poptávka od ${input.name} — ${input.service}`,
-        html: htmlContent,
-      });
+        // Odeslání emailu
+        const emailResult = await resend.emails.send({
+          from: resendFromEmail,
+          to: contactFormToEmail,
+          replyTo: input.email,
+          subject: `Nová poptávka od ${input.name} — ${input.service}`,
+          html: htmlContent,
+        });
 
-      if (emailResult.error) {
-        throw new Error(`Email sending failed: ${emailResult.error.message}`);
+        if (emailResult.error) {
+          console.error("Resend email send failed", {
+            message: emailResult.error.message,
+            name: emailResult.error.name,
+          });
+
+          return {
+            success: false,
+            code: "resend_send_failed",
+            message: `Odeslání e-mailu selhalo (${emailResult.error.message}).`,
+          };
+        }
+
+        return { success: true };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "unknown";
+        console.error("Contact form action failed", { message });
+        return {
+          success: false,
+          code: "server_unexpected_error",
+          message: `Serverová chyba (${message}).`,
+        };
       }
-
-      return { success: true };
     },
   }),
 };
