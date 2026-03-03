@@ -1,10 +1,9 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { dismissCookieConsent } from "./helpers";
+import { e2eRoutes } from "./routes";
 
-const routes = ["/", "/sluzby", "/kontakt"];
-
-for (const route of routes) {
+for (const route of e2eRoutes) {
   test(`a11y smoke: ${route}`, async ({ page }) => {
     await page.goto(route);
     await dismissCookieConsent(page);

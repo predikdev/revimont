@@ -1,32 +1,25 @@
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
 import { dismissCookieConsent } from "./helpers";
+import { e2eRoutes } from "./routes";
 
-const pages = [
-  {
-    path: "/",
-    expectedUrl: /\/$/,
-  },
-  {
-    path: "/sluzby",
-    expectedUrl: /\/sluzby\/?$/,
-    assertions: async (page: Page) => {
-      await expect(
-        page.getByRole("heading", {
-          name: /potřebujete revizi, novou instalaci nebo opravu/i,
-        }),
-      ).toBeVisible();
-    },
-  },
-  {
-    path: "/kontakt",
-    expectedUrl: /\/kontakt\/?$/,
-    assertions: async (page: Page) => {
-      await expect(page.locator("#contact-form")).toBeVisible();
-      await expect(page.locator("#contact-submit")).toBeVisible();
-    },
-  },
-] satisfies ReadonlyArray<{
+const escapeRegExp = (value: string): string =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const toExpectedUrl = (path: string): RegExp =>
+  path === "/" ? /\/$/ : new RegExp(`${escapeRegExp(path)}\\/?$`);
+
+const pages = e2eRoutes.map((path) => ({
+  path,
+  expectedUrl: toExpectedUrl(path),
+  assertions:
+    path === "/kontakt"
+      ? async (page: Page) => {
+          await expect(page.locator("#contact-form")).toBeVisible();
+          await expect(page.locator("#contact-submit")).toBeVisible();
+        }
+      : undefined,
+})) satisfies ReadonlyArray<{
   path: string;
   expectedUrl: RegExp;
   assertions?: (page: Page) => Promise<void>;
