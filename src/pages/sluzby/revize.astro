@@ -13,9 +13,9 @@ const description =
   "Provádíme pečlivé výchozí i pravidelné revize elektroinstalací a hromosvodů v souladu s platnými normami. Odhalíme skrytá rizika a dodáme vám právně platný revizní protokol.";
 
 const [img640, img1024, img1280] = await Promise.all([
-  getImage({ src: revizeImage, width: 640, format: "webp", quality: 80 }),
-  getImage({ src: revizeImage, width: 1024, format: "webp", quality: 80 }),
-  getImage({ src: revizeImage, width: 1280, format: "webp", quality: 80 }),
+  getImage({ src: revizeImage, width: 640, format: "avif", quality: 75 }),
+  getImage({ src: revizeImage, width: 1024, format: "avif", quality: 75 }),
+  getImage({ src: revizeImage, width: 1280, format: "avif", quality: 75 }),
 ]);
 const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 1280w`;
 ---

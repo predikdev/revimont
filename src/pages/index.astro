@@ -15,10 +15,10 @@ import HomeServicesCards from "../components/sections/home/HomeServicesCards.ast
 import StatsSection from "../components/sections/shared/StatsSection.astro";
 
 const [img640, img1024, img1280, img1920] = await Promise.all([
-  getImage({ src: heroImage, width: 640, format: "webp", quality: 80 }),
-  getImage({ src: heroImage, width: 1024, format: "webp", quality: 80 }),
-  getImage({ src: heroImage, width: 1280, format: "webp", quality: 80 }),
-  getImage({ src: heroImage, width: 1920, format: "webp", quality: 80 }),
+  getImage({ src: heroImage, width: 640, format: "avif", quality: 75 }),
+  getImage({ src: heroImage, width: 1024, format: "avif", quality: 75 }),
+  getImage({ src: heroImage, width: 1280, format: "avif", quality: 75 }),
+  getImage({ src: heroImage, width: 1920, format: "avif", quality: 75 }),
 ]);
 
 const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 1280w, ${img1920.src} 1920w`;

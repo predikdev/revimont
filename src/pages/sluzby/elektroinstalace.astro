@@ -14,9 +14,9 @@ const description =
   "Zajistíme kompletní a bezpečné elektroinstalace pro váš rodinný dům, byt i firmu. Od prvotního návrhu až po konečnou revizi, vše s maximálním důrazem na kvalitu.";
 
 const [img640, img1024, img1280] = await Promise.all([
-  getImage({ src: elektroImage, width: 640, format: "webp", quality: 80 }),
-  getImage({ src: elektroImage, width: 1024, format: "webp", quality: 80 }),
-  getImage({ src: elektroImage, width: 1280, format: "webp", quality: 80 }),
+  getImage({ src: elektroImage, width: 640, format: "avif", quality: 75 }),
+  getImage({ src: elektroImage, width: 1024, format: "avif", quality: 75 }),
+  getImage({ src: elektroImage, width: 1280, format: "avif", quality: 75 }),
 ]);
 const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 1280w`;
 ---

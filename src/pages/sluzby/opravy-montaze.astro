@@ -14,18 +14,18 @@ const description =
   "Nabízíme odborné opravy a montáže domácích telefonů, zvonkových tabel i elektrických zařízení. Rychle a spolehlivě vyřešíme každou závadu v Klatovech i širokém okolí.";
 
 const [img640, img1024, img1280] = await Promise.all([
-  getImage({ src: rekonstrukceImage, width: 640, format: "webp", quality: 80 }),
+  getImage({ src: rekonstrukceImage, width: 640, format: "avif", quality: 75 }),
   getImage({
     src: rekonstrukceImage,
     width: 1024,
-    format: "webp",
-    quality: 80,
+    format: "avif",
+    quality: 75,
   }),
   getImage({
     src: rekonstrukceImage,
     width: 1280,
-    format: "webp",
-    quality: 80,
+    format: "avif",
+    quality: 75,
   }),
 ]);
 const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 1280w`;
