@@ -17,6 +17,11 @@ export const COMPANY = {
     addressCountry: "CZ",
   },
   serviceArea: "Klatovy a okolí",
+  openingHours: ["Mo-Fr 07:00-16:00"],
+  geo: {
+    latitude: 49.4073,
+    longitude: 13.2958,
+  },
 } as const;
 
 export const MAPS_QUERY = `${COMPANY.address.streetAddress}, ${COMPANY.address.postalCode} ${COMPANY.address.addressLocality}`;
