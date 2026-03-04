@@ -21,5 +21,5 @@ export const COMPANY = {
 
 export const MAPS_QUERY = `${COMPANY.address.streetAddress}, ${COMPANY.address.postalCode} ${COMPANY.address.addressLocality}`;
 
-export const MAPS_SEARCH_URL = `https://maps.google.com/maps?q=${encodeURIComponent(MAPS_QUERY)}`;
-export const MAPS_EMBED_URL = `${MAPS_SEARCH_URL}&output=embed`;
+export const MAPS_SEARCH_URL = `https://www.google.com/maps?q=${encodeURIComponent(MAPS_QUERY)}`;
+export const MAPS_EMBED_URL = `https://www.google.com/maps?q=${encodeURIComponent(MAPS_QUERY)}&output=embed`;

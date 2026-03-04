@@ -4,13 +4,31 @@ import PageHeroServicesNew from "../components/sections/shared/PageHeroServicesN
 import PortfolioShowcaseAlternating from "../components/sections/shared/PortfolioShowcaseAlternating.astro";
 import ContactSection from "../components/sections/shared/ContactSection.astro";
 import heroImage from "../assets/images/el_prace_3.jpeg";
+import { SITE_URL } from "../data/company";
+
+const siteUrl = (Astro.site ?? new URL(SITE_URL)).toString().replace(/\/$/, "");
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Domů", item: `${siteUrl}/` },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Realizace",
+      item: `${siteUrl}/realizace`,
+    },
+  ],
+};
 ---
 
 <BaseLayout
-  pageTitle="Realizace"
-  pageDescription="Ukázky realizací Revimont Klatovy - elektroinstalace, revize a montáže v Klatovech a okolí."
+  pageTitle="Naše realizace v praxi"
+  pageDescription="Ukázky realizací Revimont Klatovy — elektroinstalace, revize a montáže v Klatovech a okolí. Přesvědčte se o kvalitě naší práce."
   ogImage={heroImage.src}
   ogImageAlt="Realizované projekty Revimont Klatovy"
+  structuredData={structuredData}
 >
   <PageHeroServicesNew
     slot="hero"

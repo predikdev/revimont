@@ -3,13 +3,31 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHeroServicesNew from "../components/sections/shared/PageHeroServicesNew.astro";
 import ContactSection from "../components/sections/shared/ContactSection.astro";
 import firmaImage from "../assets/images/firma.jpeg";
+import { SITE_URL } from "../data/company";
+
+const siteUrl = (Astro.site ?? new URL(SITE_URL)).toString().replace(/\/$/, "");
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Domů", item: `${siteUrl}/` },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Kontakt",
+      item: `${siteUrl}/kontakt`,
+    },
+  ],
+};
 ---
 
 <BaseLayout
-  pageTitle="Kontakt"
+  pageTitle="Kontakt – Revimont Klatovy"
   pageDescription="Kontaktujte Revimont Klatovy. Elektroinstalace, opravy a revize po celém Klatovsku. Zavolejte nebo napište a domluvíme termín."
   ogImage={firmaImage.src}
   ogImageAlt="Kontakt na Revimont Klatovy"
+  structuredData={structuredData}
 >
   <PageHeroServicesNew
     slot="hero"

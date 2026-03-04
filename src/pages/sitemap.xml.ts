@@ -4,32 +4,46 @@ import { SITE_URL } from "../data/company";
 
 export const prerender = true;
 
-const staticPaths = [
-  "/",
-  "/kontakt",
-  "/sluzby",
-  "/sluzby/elektroinstalace",
-  "/sluzby/revize",
-  "/sluzby/opravy-montaze",
-  "/realizace",
-  "/ochrana-osobnich-udaju",
-];
+const buildDate = new Date().toISOString().split("T")[0];
 
 const xmlEscape = (value: string) =>
   value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+interface UrlEntry {
+  path: string;
+  priority: string;
+  changefreq: string;
+}
+
+const staticEntries: UrlEntry[] = [
+  { path: "/", priority: "1.0", changefreq: "weekly" },
+  { path: "/sluzby/elektroinstalace", priority: "0.9", changefreq: "monthly" },
+  { path: "/sluzby/revize", priority: "0.9", changefreq: "monthly" },
+  { path: "/sluzby/opravy-montaze", priority: "0.9", changefreq: "monthly" },
+  { path: "/realizace", priority: "0.8", changefreq: "monthly" },
+  { path: "/kontakt", priority: "0.6", changefreq: "yearly" },
+];
+
 export const GET: APIRoute = ({ site }) => {
   const base = site ?? new URL(SITE_URL);
-  const urls = [
-    ...staticPaths.map((path) => new URL(path, base).toString()),
-    ...projects.map((project) =>
-      new URL(`/realizace/${project.slug}`, base).toString(),
-    ),
+
+  const allEntries: UrlEntry[] = [
+    ...staticEntries,
+    ...projects.map((project) => ({
+      path: `/realizace/${project.slug}`,
+      priority: "0.7",
+      changefreq: "monthly",
+    })),
   ];
 
-  const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
-    .map((url) => `  <url><loc>${xmlEscape(url)}</loc></url>`)
-    .join("\n")}\n</urlset>`;
+  const urlTags = allEntries
+    .map(({ path, priority, changefreq }) => {
+      const loc = xmlEscape(new URL(path, base).toString());
+      return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${buildDate}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+    })
+    .join("\n");
+
+  const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urlTags}\n</urlset>`;
 
   return new Response(body, {
     headers: {

@@ -8,7 +8,7 @@ import SectionHeader from "../../components/ui/SectionHeader.astro";
 import { Phone, Mail } from "@lucide/astro";
 import { projects } from "../../data/projects";
 import type { Project } from "../../data/projects";
-import { COMPANY } from "../../data/company";
+import { COMPANY, SITE_URL } from "../../data/company";
 
 export const getStaticPaths = () =>
   projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
@@ -24,6 +24,40 @@ const lightboxImages = await Promise.all(
     getImage({ src: photo, width: 1600, quality: 85 }),
   ),
 );
+
+const siteUrl = (Astro.site ?? new URL(SITE_URL)).toString().replace(/\/$/, "");
+const pageUrl = `${siteUrl}/realizace/${project.slug}`;
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: project.title,
+    description: project.description,
+    image: new URL(
+      project.heroImage.src,
+      Astro.site ?? new URL(SITE_URL),
+    ).toString(),
+    url: pageUrl,
+    inLanguage: "cs-CZ",
+    publisher: { "@id": `${siteUrl}/#company` },
+    author: { "@id": `${siteUrl}/#company` },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Domů", item: `${siteUrl}/` },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Realizace",
+        item: `${siteUrl}/realizace`,
+      },
+      { "@type": "ListItem", position: 3, name: project.title, item: pageUrl },
+    ],
+  },
+];
 ---
 
 <BaseLayout
@@ -32,6 +66,7 @@ const lightboxImages = await Promise.all(
   ogImage={project.heroImage.src}
   ogImageAlt={project.heroImageAlt}
   ogType="article"
+  structuredData={structuredData}
 >
   <Fragment slot="head">
     <meta property="article:section" content={project.category} />
