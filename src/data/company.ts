@@ -7,7 +7,7 @@ export const COMPANY = {
     "Elektroinstalace, revize, montáže a opravy elektrozařízení v Klatovech a okolí. Důraz na bezpečnost, kvalitu a poctivě odvedenou práci.",
   phoneDisplay: "+420 775 736 112",
   phoneHref: "+420775736112",
-  email: "social.predik@gmail.com",
+  email: "revimontklatovy@seznam.cz",
   ico: "22089497",
   dic: "CZ22089497",
   address: {

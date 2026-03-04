@@ -1,7 +1,6 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { Resend } from "resend";
-import { COMPANY } from "../data/company";
 
 let resendClient: Resend | null = null;
 
@@ -87,13 +86,21 @@ export const server = {
           import.meta.env.RESEND_FROM_EMAIL?.trim() ||
           "Revimont Web <poptavka@kontakt.revimont-klatovy.cz>";
         const contactFormToEmail =
-          import.meta.env.CONTACT_FORM_TO_EMAIL?.trim() || COMPANY.email;
+          import.meta.env.CONTACT_FORM_TO_EMAIL?.trim();
 
         if (!turnstileSecret) {
           return {
             success: false,
             code: "turnstile_secret_missing",
             message: "Chybí TURNSTILE_SECRET_KEY na serveru.",
+          };
+        }
+
+        if (!contactFormToEmail) {
+          return {
+            success: false,
+            code: "contact_form_to_email_missing",
+            message: "Chybí CONTACT_FORM_TO_EMAIL na serveru.",
           };
         }
 

@@ -32,13 +32,14 @@ Projekt používá proměnné z `.env` (viz `.env.example`):
 
 - `RESEND_API_KEY` - API klíč pro odesílání e-mailů přes Resend
 - `RESEND_FROM_EMAIL` - odesílatel (From), musí být z ověřené domény v Resend
-- `CONTACT_FORM_TO_EMAIL` - cílový e-mail, kam se odesílají poptávky z formuláře
+- `CONTACT_FORM_TO_EMAIL` - interní cílový e-mail, kam se odesílají poptávky z formuláře (povinný)
 - `PUBLIC_TURNSTILE_SITE_KEY` - veřejný klíč Cloudflare Turnstile (bezpečný pro klient)
 - `TURNSTILE_SECRET_KEY` - privátní klíč Cloudflare Turnstile (server-only)
 
 Poznámka:
 
 - Proměnné s prefixem `PUBLIC_` jsou dostupné i v browseru.
+- Veřejně zobrazovaný kontaktní e-mail webu je v `src/data/company.ts` (`COMPANY.email`) a je nezávislý na `CONTACT_FORM_TO_EMAIL`.
 
 ## Skripty
 
