@@ -243,7 +243,9 @@ const allSchemas = [...globalSchemas, ...pageSchemas];
   const reducedMotionMedia = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   );
-  let lenis: { destroy: () => void } | undefined;
+  let lenis:
+    | { stop: () => void; start: () => void; destroy: () => void }
+    | undefined;
 
   async function setupLenis() {
     if (reducedMotionMedia.matches || lenis) return;
@@ -257,6 +259,9 @@ const allSchemas = [...globalSchemas, ...pageSchemas];
   }
 
   void setupLenis();
+
+  document.addEventListener("modal:open", () => lenis?.stop());
+  document.addEventListener("modal:close", () => lenis?.start());
 
   reducedMotionMedia.addEventListener?.(
     "change",
