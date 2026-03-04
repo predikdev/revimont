@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import Button from "../../ui/Button.astro";
 import electricImage from "../../../assets/images/electric.jpg";
 
 interface HeroLink {
@@ -15,6 +16,8 @@ interface Props {
   title?: string;
   titleHtml?: string;
   description?: string;
+  primaryCta?: HeroLink;
+  secondaryCta?: HeroLink;
   link?: HeroLink;
   backgroundImage?: ImageMetadata;
   backgroundImageAlt?: string;
@@ -27,6 +30,8 @@ const {
   title = "Elektroinstalace",
   titleHtml,
   description = "",
+  primaryCta,
+  secondaryCta,
   backgroundImage = electricImage,
   backgroundImageAlt = "Moderní elektroinstalace s přehledem naměřených hodnot",
 } = Astro.props;
@@ -101,6 +106,26 @@ const {
         >
           {description}
         </p>
+        {
+          (primaryCta || secondaryCta) && (
+            <div class="animate-fade-up animate-delay-300 mt-8 flex flex-wrap gap-3">
+              {primaryCta && (
+                <Button href={primaryCta.href} variant="primaryDark" size="md">
+                  {primaryCta.label}
+                </Button>
+              )}
+              {secondaryCta && (
+                <Button
+                  href={secondaryCta.href}
+                  variant="secondaryOutline"
+                  size="md"
+                >
+                  {secondaryCta.label}
+                </Button>
+              )}
+            </div>
+          )
+        }
       </div>
     </div>
   </div>
