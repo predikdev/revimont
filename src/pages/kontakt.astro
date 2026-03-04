@@ -1,4 +1,5 @@
 ---
+import { getImage } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHeroServicesNew from "../components/sections/shared/PageHeroServicesNew.astro";
 import ContactSection from "../components/sections/shared/ContactSection.astro";
@@ -6,6 +7,13 @@ import firmaImage from "../assets/images/firma.jpeg";
 import { SITE_URL } from "../data/company";
 
 const siteUrl = (Astro.site ?? new URL(SITE_URL)).toString().replace(/\/$/, "");
+
+const [img640, img1024, img1280] = await Promise.all([
+  getImage({ src: firmaImage, width: 640, format: "avif", quality: 75 }),
+  getImage({ src: firmaImage, width: 1024, format: "avif", quality: 75 }),
+  getImage({ src: firmaImage, width: 1280, format: "avif", quality: 75 }),
+]);
+const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 1280w`;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -23,12 +31,20 @@ const structuredData = {
 ---
 
 <BaseLayout
-  pageTitle="Kontakt – Revimont Klatovy"
+  pageTitle="Kontakt"
   pageDescription="Kontaktujte Revimont Klatovy. Elektroinstalace, opravy a revize po celém Klatovsku. Zavolejte nebo napište a domluvíme termín."
   ogImage={firmaImage.src}
   ogImageAlt="Kontakt na Revimont Klatovy"
   structuredData={structuredData}
 >
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    imagesrcset={preloadSrcset}
+    imagesizes="100vw"
+    fetchpriority="high"
+  />
   <PageHeroServicesNew
     slot="hero"
     eyebrow="Revimont Klatovy"
