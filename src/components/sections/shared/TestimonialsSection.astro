@@ -1,0 +1,74 @@
+---
+import SectionWrapper from "../../ui/SectionWrapper.astro";
+import SectionHeader from "../../ui/SectionHeader.astro";
+import { Star } from "@lucide/astro";
+
+interface Testimonial {
+  quote: string;
+  name: string;
+  role: string;
+  rating: number;
+}
+
+const testimonials: Testimonial[] = [
+  {
+    quote:
+      "Rekonstrukce elektroinstalace v rodinném domě proběhla přesně dle dohodnutého termínu. Pánové přišli včas, pracovali čistě a revizní zprávu jsme dostali hned při předání. Práci doporučujeme bez výhrad.",
+    name: "Pavel K.",
+    role: "Klatovy",
+    rating: 5,
+  },
+  {
+    quote:
+      "Pro náš bytový dům zajišťujeme pravidelné revize a opravy výhradně přes Revimont. Vždy přijdou v dohodnutý termín, dokumentace je vždy v pořádku a ceny jsou férové. Bezproblémová spolupráce již několik let.",
+    name: "Jana M.",
+    role: "Předsedkyně SVJ, Sušice",
+    rating: 5,
+  },
+  {
+    quote:
+      "Potřebovali jsme urgentně vyřešit závadu v rozvaděči naší provozovny. Revimont přijel do hodiny a problém vyřešil ještě ten den. Oceňujeme rychlost, profesionalitu a férové jednání.",
+    name: "Michal V.",
+    role: "OSVČ, Klatovy",
+    rating: 5,
+  },
+];
+---
+
+<SectionWrapper background="light" withGrid>
+  <SectionHeader
+    eyebrow="Reference zákazníků"
+    title="Co říkají naši klienti"
+    background="light"
+    align="center"
+  />
+
+  <div class="grid gap-6 md:grid-cols-3">
+    {
+      testimonials.map((t) => (
+        <figure class="flex flex-col rounded-xl border border-neutral-200 bg-white p-7 shadow-sm">
+          <div
+            class="mb-4 flex gap-0.5"
+            aria-label={`Hodnocení ${t.rating} z 5 hvězd`}
+          >
+            {Array.from({ length: t.rating }).map(() => (
+              <Star
+                class="text-accent-primary h-4 w-4 fill-current"
+                aria-hidden="true"
+              />
+            ))}
+          </div>
+
+          <blockquote class="mb-6 flex-1 text-sm leading-relaxed text-neutral-600">
+            <p>„{t.quote}"</p>
+          </blockquote>
+
+          <figcaption class="border-t border-neutral-100 pt-4">
+            <p class="font-semibold text-neutral-800">{t.name}</p>
+            <p class="mt-0.5 text-xs text-neutral-500">{t.role}</p>
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</SectionWrapper>

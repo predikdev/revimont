@@ -106,7 +106,7 @@ const globalSchemas: SchemaLike[] = [
     "@id": `${siteUrl.toString().replace(/\/$/, "")}/#website`,
     name: COMPANY.name,
     url: siteUrl.toString(),
-    inLanguage: "cs-CZ",
+    inLanguage: "cs",
   },
 ];
 
@@ -132,6 +132,7 @@ const allSchemas = [...globalSchemas, ...pageSchemas];
     <meta name="description" content={pageDescription} />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
     <meta property="og:locale" content="cs_CZ" />
     <meta property="og:site_name" content={COMPANY.name} />
@@ -162,16 +163,16 @@ const allSchemas = [...globalSchemas, ...pageSchemas];
 
     <link
       rel="preload"
-      href="/fonts/Inter.ttf"
+      href="/fonts/Inter.woff2"
       as="font"
-      type="font/ttf"
+      type="font/woff2"
       crossorigin="anonymous"
     />
     <link
       rel="preload"
-      href="/fonts/Sora.ttf"
+      href="/fonts/Sora.woff2"
       as="font"
-      type="font/ttf"
+      type="font/woff2"
       crossorigin="anonymous"
     />
 

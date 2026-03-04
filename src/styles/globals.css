@@ -2,14 +2,18 @@
 
 @font-face {
   font-family: "Inter";
-  src: url("/fonts/Inter.ttf") format("truetype");
+  src:
+    url("/fonts/Inter.woff2") format("woff2"),
+    url("/fonts/Inter.ttf") format("truetype");
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: "Sora";
-  src: url("/fonts/Sora.ttf") format("truetype");
+  src:
+    url("/fonts/Sora.woff2") format("woff2"),
+    url("/fonts/Sora.ttf") format("truetype");
   font-style: normal;
   font-display: swap;
 }

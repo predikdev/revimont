@@ -13,6 +13,7 @@ import ContactSection from "../components/sections/shared/ContactSection.astro";
 import PageHero from "../components/sections/shared/PageHero.astro";
 import HomeServicesCards from "../components/sections/home/HomeServicesCards.astro";
 import StatsSection from "../components/sections/shared/StatsSection.astro";
+import TestimonialsSection from "../components/sections/shared/TestimonialsSection.astro";
 
 const [img640, img1024, img1280, img1920] = await Promise.all([
   getImage({ src: heroImage, width: 640, format: "avif", quality: 75 }),
@@ -53,5 +54,6 @@ const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 
   <AboutUsSection />
   <StatsSection />
   <PortfolioShowcaseAlternating />
+  <TestimonialsSection />
   <ContactSection />
 </BaseLayout>

@@ -1,11 +1,57 @@
 ---
 import SectionWrapper from "../../ui/SectionWrapper.astro";
 import ServiceCard from "../../ui/ServiceCard.astro";
-import { Phone, Bell, Network, RefreshCw } from "@lucide/astro";
+import {
+  Phone,
+  Bell,
+  RefreshCw,
+  Wrench,
+  Lightbulb,
+  ToggleLeft,
+} from "@lucide/astro";
 
 const services = [
   {
     number: "01",
+    title: "Havarijní opravy elektroinstalace",
+    description:
+      "Rychlý zásah při výpadku elektřiny, zkratu nebo jiné elektrické poruše. Diagnostikujeme závadu a provedeme opravu tak, aby byl provoz co nejdříve obnoven.",
+    icon: Wrench,
+    bullets: [
+      "Rychlý výjezd",
+      "Diagnostika závad",
+      "Opravy zkratů",
+      "Poruchy jisticích prvků",
+    ],
+  },
+  {
+    number: "02",
+    title: "Výměna zásuvek, spínačů a ovládání",
+    description:
+      "Výměna opotřebených nebo poškozených zásuvek, spínačů, dimmerů a dalších ovládacích prvků. Pracujeme s produkty předních výrobců a vždy dbáme na bezpečné zapojení.",
+    icon: ToggleLeft,
+    bullets: [
+      "Zásuvky a spínače",
+      "Dimmery a stmívače",
+      "IP44 pro koupelny",
+      "Moderní designové řady",
+    ],
+  },
+  {
+    number: "03",
+    title: "Světelné instalace a osvětlení",
+    description:
+      "Montáž a rekonstrukce vnitřního i venkovního osvětlení. Od jednoduchých svítidel po komplexní LED systémy s řízením jasu a scén.",
+    icon: Lightbulb,
+    bullets: [
+      "LED systémy",
+      "Venkovní osvětlení",
+      "Schodišťové automaty",
+      "Nouzové osvětlení",
+    ],
+  },
+  {
+    number: "04",
     title: "Domácí telefony",
     description:
       "Kompletní instalace, servis a opravy domovních telefonů. Od klasických analogových sluchátek až po moderní digitální videotelefony s připojením na mobil.",
@@ -18,7 +64,7 @@ const services = [
     ],
   },
   {
-    number: "02",
+    number: "05",
     title: "Zvonková tabla",
     description:
       "Montáž odolných zvonkových tabel s moderním designem. Zabezpečíme vstup do vašeho objektu pomocí čteček čipů, karet nebo kódových klávesnic.",
@@ -31,20 +77,7 @@ const services = [
     ],
   },
   {
-    number: "03",
-    title: "Rozvody domácích telefonů",
-    description:
-      "Realizace a rekonstrukce kabelových rozvodů v bytových i rodinných domech. Zajišťujeme stoupací vedení i koncové přípojky k jednotlivým telefonům.",
-    icon: Network,
-    bullets: [
-      "Stoupací vedení",
-      "Opravy rozvodů",
-      "Nové kabeláže",
-      "Diagnostika závad",
-    ],
-  },
-  {
-    number: "04",
+    number: "06",
     title: "Náhrady starších systémů",
     description:
       "Modernizace dosluhujících analogových systémů za nové digitální technologie. V mnoha případech realizujeme výměnu bez nutnosti stavebních úprav.",
@@ -73,17 +106,17 @@ const services = [
     <h2
       class="font-sora mb-5 text-4xl leading-tight font-bold text-neutral-800 sm:text-5xl lg:text-6xl"
     >
-      Montáže a opravy domácích systémů
+      Opravy, montáže a vstupní systémy
     </h2>
     <p class="max-w-xl text-base leading-relaxed text-neutral-800/70">
-      Navrhujeme, montujeme a servisujeme domovní telefony, zvonková tabla a
-      vstupní systémy. Dodáváme funkční řešení pro rodinné domy, bytové domy i
-      firemní objekty.
+      Od havarijních oprav a výměny zásuvek až po montáž osvětlení a vstupních
+      systémů. Řešíme vše, co se týká elektra — pro domácnosti i firmy v
+      Klatovech a okolí.
     </p>
   </div>
 
-  {/* 2×2 grid */}
-  <div class="grid gap-4 sm:grid-cols-2">
+  {/* 2×3 grid */}
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {
       services.map((service) => {
         const ServiceIcon = service.icon;
