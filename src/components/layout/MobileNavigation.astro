@@ -4,14 +4,15 @@ import { X, Phone, ChevronDown } from "@lucide/astro";
 import LogoInline from "./LogoInline.astro";
 import Button from "../ui/Button.astro";
 import { COMPANY } from "../../data/company";
-import { SERVICE_LINKS, MAIN_LINKS } from "../../data/navigation";
+import {
+  SERVICE_LINKS,
+  MAIN_LINKS,
+  isActive as checkActive,
+} from "../../data/navigation";
 
 const pathname = Astro.url.pathname;
 
-const isActive = (href: string) => {
-  if (href === "/") return pathname === "/";
-  return pathname === href || pathname.startsWith(href + "/");
-};
+const isActive = (href: string) => checkActive(pathname, href);
 ---
 
 <div

@@ -6,6 +6,7 @@ import Prace03 from "../assets/images/el_prace_3.jpeg";
 
 export interface Project {
   slug: string;
+  lastmod?: string; // ISO date YYYY-MM-DD
   title: string;
   location: string;
   category: string;
@@ -26,6 +27,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     slug: "projekt-1",
+    lastmod: "2025-12-01",
     title: "Elektroinstalace haly",
     location: "Klatovy",
     category: "Elektroinstalace",
@@ -45,6 +47,7 @@ export const projects: Project[] = [
   },
   {
     slug: "projekt-2",
+    lastmod: "2025-12-01",
     title: "Revize a servis rozvaděče",
     location: "Sušice",
     category: "Revize",
@@ -64,6 +67,7 @@ export const projects: Project[] = [
   },
   {
     slug: "projekt-3",
+    lastmod: "2026-01-15",
     title: "Venkovní rozvaděč — příprava",
     location: "Železná Ruda",
     category: "Elektroinstalace",

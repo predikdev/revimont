@@ -13,15 +13,47 @@ interface UrlEntry {
   path: string;
   priority: string;
   changefreq: string;
+  lastmod: string; // ISO date YYYY-MM-DD
 }
 
 const staticEntries: UrlEntry[] = [
-  { path: "/", priority: "1.0", changefreq: "weekly" },
-  { path: "/sluzby/elektroinstalace", priority: "0.9", changefreq: "monthly" },
-  { path: "/sluzby/revize", priority: "0.9", changefreq: "monthly" },
-  { path: "/sluzby/opravy-montaze", priority: "0.9", changefreq: "monthly" },
-  { path: "/realizace", priority: "0.8", changefreq: "monthly" },
-  { path: "/kontakt", priority: "0.6", changefreq: "yearly" },
+  { path: "/", lastmod: "2026-03-04", priority: "1.0", changefreq: "weekly" },
+  {
+    path: "/sluzby/elektroinstalace",
+    lastmod: "2026-03-04",
+    priority: "0.9",
+    changefreq: "monthly",
+  },
+  {
+    path: "/sluzby/revize",
+    lastmod: "2026-03-04",
+    priority: "0.9",
+    changefreq: "monthly",
+  },
+  {
+    path: "/sluzby/opravy-montaze",
+    lastmod: "2026-03-04",
+    priority: "0.9",
+    changefreq: "monthly",
+  },
+  {
+    path: "/realizace",
+    lastmod: "2026-03-04",
+    priority: "0.8",
+    changefreq: "monthly",
+  },
+  {
+    path: "/kontakt",
+    lastmod: "2025-10-01",
+    priority: "0.6",
+    changefreq: "yearly",
+  },
+  {
+    path: "/ochrana-osobnich-udaju",
+    lastmod: "2025-10-01",
+    priority: "0.3",
+    changefreq: "yearly",
+  },
 ];
 
 export const GET: APIRoute = ({ site }) => {
@@ -31,15 +63,16 @@ export const GET: APIRoute = ({ site }) => {
     ...staticEntries,
     ...projects.map((project) => ({
       path: `/realizace/${project.slug}`,
+      lastmod: project.lastmod ?? buildDate,
       priority: "0.7",
       changefreq: "monthly",
     })),
   ];
 
   const urlTags = allEntries
-    .map(({ path, priority, changefreq }) => {
+    .map(({ path, priority, changefreq, lastmod }) => {
       const loc = xmlEscape(new URL(path, base).toString());
-      return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${buildDate}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+      return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
     })
     .join("\n");
 

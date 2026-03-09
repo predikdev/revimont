@@ -6,8 +6,6 @@ const year = new Date().getFullYear();
 
 interface Props {
   eyebrow?: string;
-  title?: string;
-  description?: string;
 }
 
 const { eyebrow } = Astro.props;
@@ -129,7 +127,6 @@ const { eyebrow } = Astro.props;
             src={MAPS_EMBED_URL}
             class="absolute inset-0 h-full w-full rounded-2xl"
             style="border:0;"
-            allowfullscreen
             allow="fullscreen"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
@@ -155,7 +152,7 @@ const { eyebrow } = Astro.props;
           </a>
           <button
             type="button"
-            onclick="window.CookieConsent && window.CookieConsent.showPreferences()"
+            data-cookie-preferences
             class="hover:text-accent-primary cursor-pointer transition-colors"
           >
             Nastavení cookies
@@ -165,3 +162,11 @@ const { eyebrow } = Astro.props;
     </div>
   </div>
 </footer>
+
+<script>
+  document
+    .querySelector("[data-cookie-preferences]")
+    ?.addEventListener("click", () => {
+      window.CookieConsent?.showPreferences();
+    });
+</script>
