@@ -18,6 +18,15 @@ interface Props {
 }
 
 const { project } = Astro.props;
+const galleryCount = project.gallery.length;
+const hasSingleImage = galleryCount === 1;
+const hasTwoImages = galleryCount === 2;
+const gallerySectionTitle = hasSingleImage
+  ? "Fotografie realizace"
+  : "Z průběhu realizace";
+const galleryGridClass = hasTwoImages
+  ? "grid gap-4 sm:grid-cols-2"
+  : "grid gap-4 sm:grid-cols-2 lg:grid-cols-3";
 
 const lightboxImages = await Promise.all(
   project.gallery.map((photo: ImageMetadata) =>
@@ -27,13 +36,14 @@ const lightboxImages = await Promise.all(
 
 const siteUrl = (Astro.site ?? new URL(SITE_URL)).toString().replace(/\/$/, "");
 const pageUrl = `${siteUrl}/realizace/${project.slug}`;
+const seoDescription = project.seoDescription ?? project.description;
 
 const structuredData = [
   {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: project.title,
-    description: project.description,
+    description: seoDescription,
     image: new URL(
       project.heroImage.src,
       Astro.site ?? new URL(SITE_URL),
@@ -62,7 +72,7 @@ const structuredData = [
 
 <BaseLayout
   pageTitle={project.title}
-  pageDescription={project.description}
+  pageDescription={seoDescription}
   ogImage={project.heroImage.src}
   ogImageAlt={project.heroImageAlt}
   ogType="article"
@@ -72,7 +82,6 @@ const structuredData = [
     <meta property="article:section" content={project.category} />
   </Fragment>
 
-  <!-- Hero: slot="hero" → v hero-wrapper, Tailwind padding funguje (není v main) -->
   <section
     slot="hero"
     class="relative isolate overflow-hidden bg-neutral-800 pt-24 pb-20 lg:pt-32 lg:pb-24"
@@ -116,7 +125,6 @@ const structuredData = [
     </div>
   </section>
 
-  <!-- Section 1: Challenge / Solution cards -->
   <SectionWrapper background="light" withGrid>
     <a
       href="/realizace"
@@ -156,38 +164,60 @@ const structuredData = [
     </div>
   </SectionWrapper>
 
-  <!-- Section 2: Photo gallery -->
-  <SectionWrapper background="light" withGrid>
-    <SectionHeader
-      eyebrow="Fotogalerie"
-      title="Z průběhu realizace"
-      background="light"
-      align="center"
-    />
+  {
+    galleryCount > 0 && (
+      <SectionWrapper background="light" withGrid>
+        <SectionHeader
+          eyebrow="Fotografie"
+          title={gallerySectionTitle}
+          background="light"
+          align="center"
+        />
 
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        project.gallery.map((photo, i) => (
-          <button
-            class="block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-xl"
-            data-lightbox-src={lightboxImages[i].src}
-            data-lightbox-alt={`${project.title} — foto ${i + 1}`}
-            aria-label={`Zobrazit foto ${i + 1} v plné velikosti`}
-          >
-            <Image
-              src={photo}
-              alt={`${project.title} — foto ${i + 1}`}
-              widths={[400, 800]}
-              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-              class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-              loading="lazy"
-              quality={80}
-            />
-          </button>
-        ))
-      }
-    </div>
-  </SectionWrapper>
+        {hasSingleImage ? (
+          <div class="mx-auto max-w-4xl">
+            <button
+              class="block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-xl sm:aspect-[16/10]"
+              data-lightbox-src={lightboxImages[0].src}
+              data-lightbox-alt={`${project.title} — fotografie realizace`}
+              aria-label="Zobrazit fotografii v plné velikosti"
+            >
+              <Image
+                src={project.gallery[0]}
+                alt={`${project.title} — fotografie realizace`}
+                widths={[800, 1200, 1600]}
+                sizes="(min-width: 1280px) 896px, (min-width: 1024px) 80vw, 100vw"
+                class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                loading="lazy"
+                quality={80}
+              />
+            </button>
+          </div>
+        ) : (
+          <div class={galleryGridClass}>
+            {project.gallery.map((photo, i) => (
+              <button
+                class="block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-xl"
+                data-lightbox-src={lightboxImages[i].src}
+                data-lightbox-alt={`${project.title} — foto ${i + 1}`}
+                aria-label={`Zobrazit foto ${i + 1} v plné velikosti`}
+              >
+                <Image
+                  src={photo}
+                  alt={`${project.title} — foto ${i + 1}`}
+                  widths={[400, 800]}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                  loading="lazy"
+                  quality={80}
+                />
+              </button>
+            ))}
+          </div>
+        )}
+      </SectionWrapper>
+    )
+  }
 
   <!-- Lightbox — mimo SectionWrapper, aby nebyl uvězněn v jeho stacking contextu (z-10) -->
   <div

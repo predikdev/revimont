@@ -1,10 +1,11 @@
 import type { APIRoute } from "astro";
-import { projects } from "../data/projects";
 import { SITE_URL } from "../data/company";
+import { projects } from "../data/projects";
 
 export const prerender = true;
 
 const buildDate = new Date().toISOString().split("T")[0];
+const astroPageFiles = Object.keys(import.meta.glob("./**/*.astro"));
 
 const xmlEscape = (value: string) =>
   value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -16,58 +17,111 @@ interface UrlEntry {
   lastmod: string; // ISO date YYYY-MM-DD
 }
 
-const staticEntries: UrlEntry[] = [
-  { path: "/", lastmod: "2026-03-04", priority: "1.0", changefreq: "weekly" },
-  {
-    path: "/sluzby/elektroinstalace",
+interface RouteOverride extends Partial<Omit<UrlEntry, "path">> {
+  include?: boolean;
+}
+
+const routeOverrides: Record<string, RouteOverride> = {
+  "/": { lastmod: "2026-03-04", priority: "1.0", changefreq: "weekly" },
+  "/sluzby/elektroinstalace": {
     lastmod: "2026-03-04",
     priority: "0.9",
     changefreq: "monthly",
   },
-  {
-    path: "/sluzby/revize",
+  "/sluzby/revize": {
     lastmod: "2026-03-04",
     priority: "0.9",
     changefreq: "monthly",
   },
-  {
-    path: "/sluzby/opravy-montaze",
+  "/sluzby/opravy-montaze": {
     lastmod: "2026-03-04",
     priority: "0.9",
     changefreq: "monthly",
   },
-  {
-    path: "/realizace",
+  "/realizace": {
     lastmod: "2026-03-04",
     priority: "0.8",
     changefreq: "monthly",
   },
-  {
-    path: "/kontakt",
+  "/kontakt": {
     lastmod: "2025-10-01",
     priority: "0.6",
     changefreq: "yearly",
   },
-  {
-    path: "/ochrana-osobnich-udaju",
-    lastmod: "2025-10-01",
-    priority: "0.3",
-    changefreq: "yearly",
-  },
-];
+  "/ochrana-osobnich-udaju": { include: false },
+};
+
+const pageFileToRoutePath = (filePath: string): string | null => {
+  if (!filePath.endsWith(".astro")) return null;
+
+  const relativePath = filePath.replace(/^\.\//, "").replace(/\.astro$/, "");
+  if (
+    !relativePath ||
+    relativePath.includes("[") ||
+    relativePath.includes("]")
+  ) {
+    return null;
+  }
+
+  if (relativePath === "index") return "/";
+
+  const normalizedPath = relativePath.replace(/\/index$/, "");
+  if (normalizedPath === "404" || normalizedPath === "500") return null;
+
+  return `/${normalizedPath}`;
+};
+
+const buildStaticEntry = (path: string): UrlEntry => {
+  const defaults =
+    path === "/"
+      ? { priority: "1.0", changefreq: "weekly" }
+      : { priority: "0.7", changefreq: "monthly" };
+  const overrides = routeOverrides[path] ?? {};
+
+  return {
+    path,
+    priority: overrides.priority ?? defaults.priority,
+    changefreq: overrides.changefreq ?? defaults.changefreq,
+    lastmod: overrides.lastmod ?? buildDate,
+  };
+};
+
+const getStaticEntries = (): UrlEntry[] =>
+  astroPageFiles
+    .map(pageFileToRoutePath)
+    .filter((path): path is string => path !== null)
+    .filter((path) => routeOverrides[path]?.include !== false)
+    .sort((a, b) => a.localeCompare(b))
+    .map(buildStaticEntry);
+
+const getProjectEntries = (): UrlEntry[] =>
+  projects.map((project) => ({
+    path: `/realizace/${project.slug}`,
+    lastmod: project.lastmod ?? buildDate,
+    priority: "0.7",
+    changefreq: "monthly",
+  }));
+
+const dedupeEntries = (entries: UrlEntry[]): UrlEntry[] => {
+  const uniqueEntries = new Map<string, UrlEntry>();
+
+  for (const entry of entries) {
+    if (!uniqueEntries.has(entry.path)) {
+      uniqueEntries.set(entry.path, entry);
+    }
+  }
+
+  return Array.from(uniqueEntries.values()).sort((a, b) =>
+    a.path.localeCompare(b.path),
+  );
+};
 
 export const GET: APIRoute = ({ site }) => {
   const base = site ?? new URL(SITE_URL);
-
-  const allEntries: UrlEntry[] = [
-    ...staticEntries,
-    ...projects.map((project) => ({
-      path: `/realizace/${project.slug}`,
-      lastmod: project.lastmod ?? buildDate,
-      priority: "0.7",
-      changefreq: "monthly",
-    })),
-  ];
+  const allEntries = dedupeEntries([
+    ...getStaticEntries(),
+    ...getProjectEntries(),
+  ]);
 
   const urlTags = allEntries
     .map(({ path, priority, changefreq, lastmod }) => {

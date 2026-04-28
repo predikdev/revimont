@@ -11,6 +11,7 @@ export interface Project {
   location: string;
   category: string;
   description: string;
+  seoDescription?: string;
   heroImage: ImageMetadata;
   heroImageAlt: string;
   challenge: {
@@ -26,13 +27,15 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "projekt-1",
+    slug: "elektroinstalace-haly-klatovy",
     lastmod: "2025-12-01",
     title: "Elektroinstalace haly",
     location: "Klatovy",
     category: "Elektroinstalace",
     description:
       "Realizace elektroinstalace v průmyslovém prostoru, kde se řeší hlavně rychlost, bezpečnost a přesnost provedení. Probíhala montáž vedení a příprava rozvodů ve výšce tak, aby navazující části instalace šly napojit bez zdržení.",
+    seoDescription:
+      "Elektroinstalace průmyslové haly v Klatovech. Montáž vedení, příprava rozvodů a bezpečné předání s dokumentací.",
     heroImage: Prace02,
     heroImageAlt: "Elektroinstalace průmyslové haly — Revimont Klatovy",
     challenge: {
@@ -43,16 +46,18 @@ export const projects: Project[] = [
       title: "Náš přístup",
       text: "Práce jsme koordinovali s dalšími řemesly na stavbě a zvolili logické vedení tras s jasným značením. Veškeré spoje a rozvaděče byly provedeny podle projektové dokumentace a předány zákazníkovi s revizní zprávou a kompletní dokumentací skutečného provedení.",
     },
-    gallery: [Prace01, Prace02, Prace03],
+    gallery: [Prace02],
   },
   {
-    slug: "projekt-2",
+    slug: "revize-rozvadece-susice",
     lastmod: "2025-12-01",
     title: "Revize a servis rozvaděče",
     location: "Sušice",
     category: "Revize",
     description:
       "U tohoto projektu šlo o kontrolu a úpravu rozvaděče, aby byl přehledný a hlavně bezpečný. Byly prověřené okruhy, jištění a funkce ochranných prvků a doplněno vše, co bylo potřeba pro spolehlivý provoz.",
+    seoDescription:
+      "Revize a servis elektrického rozvaděče v Sušici. Kontrola jištění, ochranných prvků, oprava závad a přehledné značení.",
     heroImage: Prace01,
     heroImageAlt: "Revize a servis elektrického rozvaděče — Revimont Klatovy",
     challenge: {
@@ -63,16 +68,18 @@ export const projects: Project[] = [
       title: "Náš přístup",
       text: "Provedli jsme důkladnou prohlídku všech obvodů, měření a zkoušení ochranných prvků. Závady byly ihned opraveny, rozvaděč doplněn a přehledně popsán. Výsledkem je bezpečné a srozumitelné řešení, které se snadno servisuje i do budoucna.",
     },
-    gallery: [Prace01, Prace02, Prace03],
+    gallery: [Prace01],
   },
   {
-    slug: "projekt-3",
+    slug: "venkovni-rozvadec-zelezna-ruda",
     lastmod: "2026-01-15",
     title: "Venkovní rozvaděč — příprava",
     location: "Železná Ruda",
     category: "Elektroinstalace",
     description:
       "Příprava venkovního rozvaděče před finálním dokončením. Osazení prvků, svorkování a pečlivé značení vodičů, aby bylo zapojení jasné a bez chyb i při dalších krocích na stavbě.",
+    seoDescription:
+      "Příprava venkovního rozvaděče v Železné Rudě. Osazení prvků, svorkování a značení vodičů pro bezpečné napojení.",
     heroImage: Prace03,
     heroImageAlt: "Příprava venkovního rozvaděče — Revimont Klatovy",
     challenge: {
@@ -83,6 +90,6 @@ export const projects: Project[] = [
       title: "Náš přístup",
       text: "Rozvaděč byl osazen kvalitními prvky vhodných pro venkovní použití, všechny vodiče pečlivě označeny a zapojení provedeno podle schématu. Výsledkem je přehledné a bezpečné řešení, které umožňuje rychlé a bezchybné připojení navazujících zařízení.",
     },
-    gallery: [Prace01, Prace02, Prace03],
+    gallery: [Prace03],
   },
 ];
