@@ -18,12 +18,16 @@ const {
   id={id}
   data-animate-section
   class:list={[
-    "relative overflow-hidden py-10",
+    "relative overflow-hidden py-20 lg:py-24",
     background === "dark" ? "bg-neutral-800" : "bg-background",
     className,
   ]}
 >
-  {withGrid && <div class="bg-grid-pattern absolute inset-0" />}
+  {
+    withGrid && (
+      <div class="bg-grid-pattern absolute inset-0" aria-hidden="true" />
+    )
+  }
 
   <div class="relative z-10 container">
     <slot />

@@ -284,29 +284,13 @@ const allSchemas = [...globalSchemas, ...pageSchemas];
 
 <script is:inline>
   {
-    const SCROLL_OFFSET_PX = 60; // threshold below which sections start hidden
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    if (!reducedMotion) {
+    if (!reducedMotion && "IntersectionObserver" in window) {
       const sections = document.querySelectorAll("[data-animate-section]");
 
       if (sections.length) {
-        sections.forEach((section) => {
-          const rect = section.getBoundingClientRect();
-          if (rect.top >= window.innerHeight - SCROLL_OFFSET_PX) {
-            const container = section.querySelector(".container");
-            if (!container) return;
-            const [sectionHeader, cardsGrid] = container.children;
-            if (sectionHeader) {
-              sectionHeader.classList.add("animate-section-hidden");
-            }
-            if (cardsGrid) {
-              cardsGrid.classList.add("animate-section-hidden");
-            }
-          }
-        });
-
         const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
@@ -315,18 +299,16 @@ const allSchemas = [...globalSchemas, ...pageSchemas];
               if (!container) return;
               const [sectionHeader, cardsGrid] = container.children;
               if (sectionHeader) {
-                sectionHeader.classList.remove("animate-section-hidden");
                 sectionHeader.classList.add("is-visible");
               }
               if (cardsGrid)
                 setTimeout(() => {
-                  cardsGrid.classList.remove("animate-section-hidden");
                   cardsGrid.classList.add("is-visible");
                 }, 150);
               observer.unobserve(entry.target);
             });
           },
-          { threshold: 0.1, rootMargin: `0px 0px -${SCROLL_OFFSET_PX}px 0px` },
+          { threshold: 0.1, rootMargin: "0px 0px -60px 0px" },
         );
 
         sections.forEach((section) => observer.observe(section));

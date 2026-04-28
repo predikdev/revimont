@@ -11,9 +11,7 @@ interface Props {
 const { eyebrow } = Astro.props;
 ---
 
-<footer
-  class="border-tr border-tl relative overflow-hidden rounded-lg bg-neutral-800"
->
+<footer class="relative overflow-hidden rounded-t-2xl bg-neutral-800">
   <div
     class="mask-image-gradient bg-grid-pattern-dark pointer-events-none absolute inset-0 opacity-20"
   >
@@ -122,10 +120,22 @@ const { eyebrow } = Astro.props;
           </div>
         </div>
 
-        <div class="relative aspect-4/3 w-full min-w-0 rounded-lg shadow-lg">
+        <div
+          class="relative aspect-4/3 w-full min-w-0 overflow-hidden rounded-2xl border border-neutral-700/50 bg-neutral-900/45 shadow-lg"
+        >
+          <div
+            class="absolute inset-0 flex items-center justify-center p-8 text-center"
+          >
+            <a
+              href={MAPS_SEARCH_URL}
+              class="text-accent-primary hover:text-accent-primary/80 text-sm font-semibold tracking-wide uppercase"
+            >
+              Otevřít adresu v mapách
+            </a>
+          </div>
           <iframe
             src={MAPS_EMBED_URL}
-            class="absolute inset-0 h-full w-full rounded-2xl"
+            class="absolute inset-0 h-full w-full"
             style="border:0;"
             allow="fullscreen"
             loading="lazy"

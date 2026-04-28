@@ -36,8 +36,8 @@ const {
     class:list={[
       "font-sora text-4xl leading-14 md:text-5xl",
       titleWidth === "narrow" && "max-w-[15ch]",
-      background === "dark" && "text-neutral-50",
-      "font-bold text-neutral-800",
+      background === "dark" ? "text-neutral-50" : "text-neutral-800",
+      "font-bold",
     ]}
   >
     {title}
@@ -48,8 +48,8 @@ const {
         class:list={[
           "mt-6",
           descWidth === "narrow" && "max-w-3xl",
-          background === "dark" && "text-neutral-300/80",
-          "text-lg leading-relaxed text-neutral-800/80",
+          background === "dark" ? "text-neutral-300/80" : "text-neutral-800/80",
+          "text-lg leading-relaxed",
         ]}
       >
         {description}
