@@ -1,0 +1,92 @@
+---
+import { Phone, Mail, Building2 } from "@lucide/astro";
+import { COMPANY } from "../../../data/company";
+
+interface Props {
+  showCompanyIds?: boolean;
+}
+
+const { showCompanyIds = false } = Astro.props;
+---
+
+<div class="space-y-3">
+  <a
+    href={`tel:${COMPANY.phoneHref}`}
+    aria-label={`Zavolejte nám: ${COMPANY.phoneDisplay}`}
+    class="group flex items-center gap-4 rounded-lg border border-neutral-200 bg-white p-5 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
+  >
+    <div
+      class="bg-accent-primary/10 group-hover:bg-accent-primary/[0.16] flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-colors duration-300"
+      aria-hidden="true"
+    >
+      <Phone class="text-accent-primary h-5 w-5" />
+    </div>
+    <div class="block">
+      <p
+        class="group-hover:text-accent-primary mb-0.5 text-xs font-semibold tracking-widest text-neutral-500 uppercase transition-colors"
+      >
+        Telefon
+      </p>
+      <p
+        class="group-hover:text-accent-primary font-bold text-neutral-900 transition-colors"
+      >
+        {COMPANY.phoneDisplay}
+      </p>
+    </div>
+  </a>
+
+  <a
+    href={`mailto:${COMPANY.email}`}
+    aria-label={`Napište nám: ${COMPANY.email}`}
+    class="group flex items-center gap-4 rounded-lg border border-neutral-200 bg-white p-5 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
+  >
+    <div
+      class="bg-accent-primary/10 group-hover:bg-accent-primary/[0.16] flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-colors duration-300"
+      aria-hidden="true"
+    >
+      <Mail class="text-accent-primary h-5 w-5" />
+    </div>
+    <div class="block">
+      <p
+        class="group-hover:text-accent-primary mb-0.5 text-xs font-semibold tracking-widest text-neutral-500 uppercase transition-colors"
+      >
+        E-mail
+      </p>
+      <p
+        class="group-hover:text-accent-primary font-bold text-neutral-900 transition-colors"
+      >
+        {COMPANY.email}
+      </p>
+    </div>
+  </a>
+
+  {
+    showCompanyIds && (
+      <div class="group flex items-start gap-4 rounded-lg border border-neutral-200 bg-white p-5 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md">
+        <div
+          class="bg-accent-primary/10 group-hover:bg-accent-primary/[0.16] flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-colors duration-300"
+          aria-hidden="true"
+        >
+          <Building2 class="text-accent-primary h-5 w-5" />
+        </div>
+        <div>
+          <p class="mb-1 text-xs font-semibold tracking-widest text-neutral-500 uppercase">
+            Fakturační údaje
+          </p>
+          <div class="space-y-1">
+            <p class="text-sm text-neutral-600">
+              <span class="font-semibold text-neutral-900">
+                IČO: {COMPANY.ico}
+              </span>
+            </p>
+            <p class="text-sm text-neutral-600">
+              <span class="font-semibold text-neutral-900">
+                DIČ: {COMPANY.dic}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+</div>

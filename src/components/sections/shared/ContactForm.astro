@@ -1,0 +1,263 @@
+---
+import { Check } from "@lucide/astro";
+import { CONTACT_SERVICE_OPTIONS } from "../../../data/contact-form";
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+
+<div
+  id="contact-form-card"
+  class="rounded-lg border border-neutral-200 bg-white p-8 shadow-sm"
+>
+  <h3 class="mb-6 text-xl font-bold text-neutral-900">Napište nám</h3>
+
+  <div
+    id="form-error-banner"
+    role="alert"
+    class="mb-6 hidden rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800"
+  >
+    <p id="form-error-text"></p>
+  </div>
+
+  <form id="contact-form" class="space-y-5" novalidate>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <label
+          for="contact-name"
+          class="mb-1.5 block text-sm font-medium text-neutral-700"
+        >
+          Jméno a příjmení <span class="text-accent-primary" aria-hidden="true"
+            >*</span
+          >
+        </label>
+        <input
+          type="text"
+          id="contact-name"
+          name="name"
+          placeholder="Jan Novák"
+          autocomplete="name"
+          required
+          aria-required="true"
+          aria-describedby="error-name"
+          class="focus:ring-accent-primary focus:ring-offset-background focus:border-accent-primary w-full rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 transition-all duration-200 placeholder:text-neutral-400 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+        />
+        <p
+          id="error-name"
+          role="alert"
+          class="mt-1 hidden text-xs text-red-600"
+        >
+        </p>
+      </div>
+
+      <div>
+        <label
+          for="contact-phone"
+          class="mb-1.5 block text-sm font-medium text-neutral-700"
+        >
+          Telefon <span class="font-normal text-neutral-500">(volitelně)</span>
+        </label>
+        <input
+          type="tel"
+          id="contact-phone"
+          name="phone"
+          placeholder="+420 123 456 789"
+          autocomplete="tel"
+          aria-describedby="error-phone"
+          class="focus:ring-accent-primary focus:ring-offset-background focus:border-accent-primary w-full rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 transition-all duration-200 placeholder:text-neutral-400 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+        />
+        <p
+          id="error-phone"
+          role="alert"
+          class="mt-1 hidden text-xs text-red-600"
+        >
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <label
+        for="contact-service"
+        class="mb-1.5 block text-sm font-medium text-neutral-700"
+      >
+        Typ služby <span class="text-accent-primary" aria-hidden="true">*</span>
+      </label>
+      <select
+        id="contact-service"
+        name="service"
+        required
+        aria-required="true"
+        aria-describedby="error-service"
+        class="focus:ring-accent-primary focus:ring-offset-background focus:border-accent-primary w-full rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 transition-all duration-200 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+      >
+        <option value="">— Vyberte službu —</option>
+        {
+          CONTACT_SERVICE_OPTIONS.map((service) => (
+            <option value={service}>{service}</option>
+          ))
+        }
+      </select>
+      <p
+        id="error-service"
+        role="alert"
+        class="mt-1 hidden text-xs text-red-600"
+      >
+      </p>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <label
+          for="contact-email"
+          class="mb-1.5 block text-sm font-medium text-neutral-700"
+        >
+          E-mail <span class="text-accent-primary" aria-hidden="true">*</span>
+        </label>
+        <input
+          type="email"
+          id="contact-email"
+          name="email"
+          placeholder="jan.novak@email.cz"
+          autocomplete="email"
+          required
+          aria-required="true"
+          aria-describedby="error-email"
+          class="focus:ring-accent-primary focus:ring-offset-background focus:border-accent-primary w-full rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 transition-all duration-200 placeholder:text-neutral-400 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+        />
+        <p
+          id="error-email"
+          role="alert"
+          class="mt-1 hidden text-xs text-red-600"
+        >
+        </p>
+      </div>
+
+      <div>
+        <label
+          for="contact-location"
+          class="mb-1.5 block text-sm font-medium text-neutral-700"
+        >
+          Lokalita <span class="text-accent-primary" aria-hidden="true">*</span>
+        </label>
+        <input
+          type="text"
+          id="contact-location"
+          name="location"
+          placeholder="Klatovy, okres Domažlice"
+          autocomplete="address-level2"
+          required
+          aria-required="true"
+          aria-describedby="error-location"
+          class="focus:ring-accent-primary focus:ring-offset-background focus:border-accent-primary w-full rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 transition-all duration-200 placeholder:text-neutral-400 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+        />
+        <p
+          id="error-location"
+          role="alert"
+          class="mt-1 hidden text-xs text-red-600"
+        >
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <label
+        for="contact-message"
+        class="mb-1.5 block text-sm font-medium text-neutral-700"
+      >
+        Zpráva <span class="text-accent-primary" aria-hidden="true">*</span>
+      </label>
+      <textarea
+        id="contact-message"
+        name="message"
+        rows="5"
+        placeholder="Popište váš požadavek nebo dotaz..."
+        required
+        aria-required="true"
+        aria-describedby="error-message"
+        class="focus:ring-accent-primary focus:ring-offset-background focus:border-accent-primary w-full resize-none rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 transition-all duration-200 placeholder:text-neutral-400 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+      ></textarea>
+      <p
+        id="error-message"
+        role="alert"
+        class="mt-1 hidden text-xs text-red-600"
+      >
+      </p>
+    </div>
+
+    <div
+      id="contact-turnstile"
+      class="cf-turnstile"
+      data-sitekey={turnstileSiteKey}
+      data-language="cs"
+      data-theme="light"
+      data-size="invisible"
+      aria-describedby="error-turnstile"
+    >
+    </div>
+    <p
+      id="error-turnstile"
+      role="alert"
+      class="mt-1 hidden text-xs text-red-600"
+    >
+    </p>
+
+    <div class="flex items-start gap-3">
+      <input
+        type="checkbox"
+        id="contact-privacy"
+        name="privacy"
+        value="on"
+        required
+        aria-required="true"
+        aria-describedby="error-privacy"
+        class="text-accent-primary focus:ring-accent-primary focus:ring-offset-background focus:border-accent-primary mt-1 h-4 w-4 cursor-pointer rounded border border-neutral-200 bg-white transition-all duration-200 focus:ring-2 focus:ring-offset-2"
+      />
+      <label
+        for="contact-privacy"
+        class="cursor-pointer text-sm leading-relaxed text-neutral-600"
+      >
+        Souhlasím se
+        <a
+          href="/ochrana-osobnich-udaju"
+          class="text-accent-primary hover:underline"
+          >zpracováním mých osobních údajů</a
+        >
+        dle GDPR
+        <span class="text-accent-primary" aria-hidden="true">*</span>
+      </label>
+    </div>
+    <p id="error-privacy" role="alert" class="mt-1 hidden text-xs text-red-600">
+    </p>
+
+    <button
+      id="contact-submit"
+      type="submit"
+      data-default-label="Odeslat zprávu →"
+      class="bg-accent-primary flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg px-6 py-4 text-sm font-semibold text-white transition-all duration-200 hover:brightness-110 active:scale-[0.99]"
+    >
+      Odeslat zprávu &nbsp;→
+    </button>
+  </form>
+
+  <div
+    id="contact-success"
+    role="status"
+    aria-live="polite"
+    class="animate-fade-up hidden rounded-lg border border-green-200 bg-green-50 p-6 text-center"
+  >
+    <div class="mb-3 flex justify-center">
+      <div
+        class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100"
+      >
+        <Check class="h-6 w-6 text-green-600" />
+      </div>
+    </div>
+    <h4 class="mb-2 text-lg font-bold text-green-900">Zpráva odeslána!</h4>
+    <p class="text-sm text-green-700">
+      Děkujeme za váš dotaz. Odpovíme vám během 24 hodin.
+    </p>
+  </div>
+</div>
+
+<script>
+  import "../../../scripts/contact-form";
+</script>
