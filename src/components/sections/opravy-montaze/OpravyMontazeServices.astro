@@ -1,6 +1,4 @@
 ---
-import SectionWrapper from "../../ui/SectionWrapper.astro";
-import ServiceCard from "../../ui/ServiceCard.astro";
 import {
   Phone,
   Bell,
@@ -9,6 +7,7 @@ import {
   Lightbulb,
   ToggleLeft,
 } from "@lucide/astro";
+import ServicesGridSection from "../shared/ServicesGridSection.astro";
 
 const services = [
   {
@@ -92,48 +91,9 @@ const services = [
 ];
 ---
 
-<SectionWrapper background="light" withGrid class="bg-background">
-  {/* Header */}
-  <div class="mb-12">
-    <div class="mb-4 flex items-center gap-3">
-      <span class="bg-accent-primary h-px w-8" aria-hidden="true"></span>
-      <p
-        class="text-accent-primary text-sm font-semibold tracking-widest uppercase"
-      >
-        Naše služby
-      </p>
-    </div>
-    <h2
-      class="font-sora mb-5 text-4xl leading-tight font-bold text-neutral-800 sm:text-5xl lg:text-6xl"
-    >
-      Opravy, montáže a vstupní systémy
-    </h2>
-    <p class="max-w-xl text-base leading-relaxed text-neutral-800/70">
-      Od havarijních oprav a výměny zásuvek až po montáž osvětlení a vstupních
-      systémů. Řešíme vše, co se týká elektra — pro domácnosti i firmy v
-      Klatovech a okolí.
-    </p>
-  </div>
-
-  {/* 2×3 grid */}
-  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    {
-      services.map((service) => {
-        const ServiceIcon = service.icon;
-        return (
-          <ServiceCard
-            number={service.number}
-            title={service.title}
-            description={service.description}
-            bullets={service.bullets}
-          >
-            <ServiceIcon
-              slot="icon"
-              class="text-accent-primary h-5 w-5 transition-transform duration-300 group-hover:scale-110"
-            />
-          </ServiceCard>
-        );
-      })
-    }
-  </div>
-</SectionWrapper>
+<ServicesGridSection
+  title="Opravy, montáže a vstupní systémy"
+  description="Od havarijních oprav a výměny zásuvek až po montáž osvětlení a vstupních systémů. Řešíme vše, co se týká elektra — pro domácnosti i firmy v Klatovech a okolí."
+  services={services}
+  columns="3"
+/>

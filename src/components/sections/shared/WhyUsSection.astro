@@ -1,0 +1,115 @@
+---
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import { ChevronRight } from "@lucide/astro";
+import SectionWrapper from "../../ui/SectionWrapper.astro";
+import Button from "../../ui/Button.astro";
+
+interface Feature {
+  title: string;
+  description: string;
+  icon: AstroComponentFactory;
+}
+
+interface Stat {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  features: Feature[];
+  stats: Stat[];
+  ctaHref?: string;
+  ctaLabel?: string;
+}
+
+const {
+  eyebrow = "NAŠE PŘEDNOSTI",
+  title = "Proč si vybrat právě nás?",
+  description,
+  features,
+  stats,
+  ctaHref = "/kontakt",
+  ctaLabel = "Nezávazná poptávka",
+} = Astro.props;
+---
+
+<SectionWrapper background="light" withGrid={true}>
+  <div class="mb-12">
+    <p
+      class="text-accent-primary mb-3 text-sm font-semibold tracking-wide uppercase"
+    >
+      {eyebrow}
+    </p>
+    <div class="grid items-start gap-8 md:grid-cols-2">
+      <h2
+        class="font-sora text-4xl leading-tight font-bold text-neutral-800 md:text-5xl"
+      >
+        {title}
+      </h2>
+      {
+        description && (
+          <div class="md:border-accent-primary md:border-l-2 md:pl-12">
+            <p class="text-lg leading-relaxed text-neutral-600">
+              {description}
+            </p>
+          </div>
+        )
+      }
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    {
+      features.map((feature) => {
+        const FeatureIcon = feature.icon;
+        return (
+          <div class="flex gap-4 rounded-xl border border-neutral-200 bg-white p-6 shadow-sm transition-shadow duration-200 hover:shadow-md">
+            <div class="bg-accent-primary/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg">
+              <FeatureIcon class="text-accent-primary h-5 w-5" />
+            </div>
+            <div>
+              <h3 class="font-semibold text-neutral-800">{feature.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-neutral-500">
+                {feature.description}
+              </p>
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+
+  <div
+    class="mt-10 flex flex-col items-center justify-between gap-10 border-t border-neutral-200 pt-8 lg:flex-row"
+  >
+    <div
+      class="grid w-full grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:gap-x-8 lg:flex-1"
+    >
+      {
+        stats.map((stat, index) => (
+          <div
+            class:list={[
+              "flex flex-col",
+              index > 0 && "md:border-l md:border-neutral-200 md:pl-8",
+            ]}
+          >
+            <span class="font-sora text-accent-primary text-2xl font-bold sm:text-3xl">
+              {stat.value}
+            </span>
+            <span class="text-xs font-semibold tracking-wide text-neutral-500 uppercase">
+              {stat.label}
+            </span>
+          </div>
+        ))
+      }
+    </div>
+
+    <Button href={ctaHref} variant="primaryLight" size="md">
+      {ctaLabel}
+      <ChevronRight class="h-4 w-4" />
+    </Button>
+  </div>
+</SectionWrapper>

@@ -1,7 +1,6 @@
 ---
-import SectionWrapper from "../../ui/SectionWrapper.astro";
-import ServiceCard from "../../ui/ServiceCard.astro";
 import { House, Grid2x2, Zap, LayoutList } from "@lucide/astro";
+import ServicesGridSection from "../shared/ServicesGridSection.astro";
 
 const services = [
   {
@@ -59,48 +58,8 @@ const services = [
 ];
 ---
 
-<SectionWrapper background="light" withGrid class="bg-background">
-  {/* Header */}
-  <div class="mb-12">
-    <div class="mb-4 flex items-center gap-3">
-      <span class="bg-accent-primary h-px w-8" aria-hidden="true"></span>
-      <p
-        class="text-accent-primary text-sm font-semibold tracking-widest uppercase"
-      >
-        Naše služby
-      </p>
-    </div>
-    <h2
-      class="font-sora mb-5 text-4xl leading-tight font-bold text-neutral-800 sm:text-5xl lg:text-6xl"
-    >
-      Revize
-    </h2>
-    <p class="max-w-xl text-base leading-relaxed text-neutral-800/70">
-      Komplexní služby v oblasti elektrorevizí pro domácnosti i firmy. Od
-      kontroly rozvaděčů až po měření hromosvodů a zpracování oficiální
-      dokumentace – přesně podle aktuálních norem.
-    </p>
-  </div>
-
-  {/* 2×2 grid */}
-  <div class="grid gap-4 sm:grid-cols-2">
-    {
-      services.map((service) => {
-        const ServiceIcon = service.icon;
-        return (
-          <ServiceCard
-            number={service.number}
-            title={service.title}
-            description={service.description}
-            bullets={service.bullets}
-          >
-            <ServiceIcon
-              slot="icon"
-              class="text-accent-primary h-5 w-5 transition-transform duration-300 group-hover:scale-110"
-            />
-          </ServiceCard>
-        );
-      })
-    }
-  </div>
-</SectionWrapper>
+<ServicesGridSection
+  title="Revize"
+  description="Komplexní služby v oblasti elektrorevizí pro domácnosti i firmy. Od kontroly rozvaděčů až po měření hromosvodů a zpracování oficiální dokumentace – přesně podle aktuálních norem."
+  services={services}
+/>
