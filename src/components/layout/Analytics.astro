@@ -1,0 +1,41 @@
+---
+const GA_ID = import.meta.env.PUBLIC_GA_ID ?? "";
+
+const gaBootstrapInlineScript = GA_ID
+  ? `window.dataLayer = window.dataLayer || [];
+function gtag(...args) {
+  dataLayer.push(args);
+}
+window.gtag = gtag;
+gtag("consent", "default", {
+  analytics_storage: "denied",
+  ad_storage: "denied",
+  ad_user_data: "denied",
+  ad_personalization: "denied",
+  wait_for_update: 500,
+});
+gtag("js", new Date());`
+  : "";
+
+const gaConfigInlineScript = GA_ID
+  ? `gtag("config", ${JSON.stringify(GA_ID)}, { anonymize_ip: true });`
+  : "";
+---
+
+{
+  GA_ID ? (
+    <>
+      <link rel="preconnect" href="https://www.googletagmanager.com" />
+      <link rel="preconnect" href="https://www.google-analytics.com" />
+
+      <script is:inline set:html={gaBootstrapInlineScript} />
+
+      <script
+        is:inline
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+      />
+      <script is:inline set:html={gaConfigInlineScript} />
+    </>
+  ) : null
+}
