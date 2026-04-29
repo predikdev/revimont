@@ -64,3 +64,20 @@ test("contact form shows validation errors on empty submit", async ({
   await expect(page.locator("#error-privacy")).not.toBeEmpty();
   await expect(page.locator("#error-turnstile")).toBeHidden();
 });
+
+test("project gallery lightbox opens and closes", async ({ page }) => {
+  await page.goto("/realizace/revize-rozvadece-susice");
+  await dismissCookieConsent(page);
+
+  await page.locator("[data-lightbox-src]").first().click();
+
+  const lightbox = page.locator("#lightbox");
+  await expect(lightbox).toBeVisible();
+  await expect(page.locator("#lightbox-img")).toHaveAttribute(
+    "src",
+    /\/_(astro|image)/,
+  );
+
+  await page.keyboard.press("Escape");
+  await expect(lightbox).toBeHidden();
+});

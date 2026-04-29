@@ -238,77 +238,8 @@ const structuredData = [
     />
   </div>
 
-  <script is:inline>
-    {
-      const lightbox = document.getElementById("lightbox");
-      const img = document.getElementById("lightbox-img");
-      const closeBtn = document.getElementById("lightbox-close");
-      let lastFocused = null;
-
-      const getFocusable = () =>
-        Array.from(
-          lightbox.querySelectorAll(
-            'button, [href], [tabindex]:not([tabindex="-1"])',
-          ),
-        );
-
-      const open = (src, alt) => {
-        lastFocused = document.activeElement;
-        img.src = src;
-        img.alt = alt;
-        lightbox.classList.remove("hidden");
-        lightbox.classList.add("flex");
-        document.documentElement.classList.add("no-scroll");
-        document.body.classList.add("no-scroll");
-        document.dispatchEvent(new CustomEvent("modal:open"));
-        closeBtn.focus();
-      };
-
-      const close = () => {
-        lightbox.classList.add("hidden");
-        lightbox.classList.remove("flex");
-        img.src = "";
-        document.documentElement.classList.remove("no-scroll");
-        document.body.classList.remove("no-scroll");
-        document.dispatchEvent(new CustomEvent("modal:close"));
-        if (lastFocused instanceof HTMLElement) lastFocused.focus();
-      };
-
-      document.querySelectorAll("[data-lightbox-src]").forEach((btn) => {
-        btn.addEventListener("click", () =>
-          open(btn.dataset.lightboxSrc, btn.dataset.lightboxAlt),
-        );
-      });
-
-      closeBtn.addEventListener("click", close);
-      lightbox.addEventListener("click", (e) => {
-        if (e.target === lightbox) close();
-      });
-      document.addEventListener("keydown", (e) => {
-        if (lightbox.classList.contains("hidden")) return;
-
-        if (e.key === "Escape") {
-          close();
-          return;
-        }
-
-        if (e.key !== "Tab") return;
-
-        const focusable = getFocusable();
-        if (!focusable.length) return;
-
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      });
-    }
+  <script>
+    import "../../scripts/project-lightbox";
   </script>
 
   <!-- Section 3: CTA -->
