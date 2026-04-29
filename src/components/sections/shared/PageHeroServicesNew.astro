@@ -14,11 +14,10 @@ interface Props {
   slot?: string;
   eyebrow?: string;
   title?: string;
-  titleHtml?: string;
+  titleLines?: string[];
   description?: string;
   primaryCta?: HeroLink;
   secondaryCta?: HeroLink;
-  link?: HeroLink;
   backgroundImage?: ImageMetadata;
   backgroundImageAlt?: string;
 }
@@ -28,13 +27,15 @@ const {
   slot,
   eyebrow = "SLUZBY",
   title = "Elektroinstalace",
-  titleHtml,
+  titleLines,
   description = "",
   primaryCta,
   secondaryCta,
   backgroundImage = electricImage,
   backgroundImageAlt = "Moderní elektroinstalace s přehledem naměřených hodnot",
 } = Astro.props;
+
+const resolvedTitleLines = titleLines ?? [title];
 ---
 
 <section
@@ -86,18 +87,11 @@ const {
           {eyebrow}
         </p>
 
-        {
-          titleHtml ? (
-            <h1
-              class="animate-fade-up animate-delay-100 font-sora mt-8 text-4xl leading-none font-semibold tracking-tight text-neutral-50 drop-shadow-lg sm:text-5xl lg:text-6xl"
-              set:html={titleHtml}
-            />
-          ) : (
-            <h1 class="animate-fade-up animate-delay-100 font-sora mt-8 text-4xl leading-none font-semibold tracking-tight text-neutral-50 drop-shadow-lg sm:text-5xl lg:text-6xl">
-              {title}
-            </h1>
-          )
-        }
+        <h1
+          class="animate-fade-up animate-delay-100 font-sora mt-8 text-4xl leading-none font-semibold tracking-tight text-neutral-50 drop-shadow-lg sm:text-5xl lg:text-6xl"
+        >
+          {resolvedTitleLines.map((line) => <span class="block">{line}</span>)}
+        </h1>
       </div>
 
       <div class="lg:ml-auto lg:pb-5">

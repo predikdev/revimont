@@ -20,7 +20,7 @@ interface Props {
   slot?: string;
   eyebrow?: string;
   title?: string;
-  titleHtml?: string;
+  titleLines?: string[];
   description?: string;
   primaryCta?: Cta;
   secondaryCta?: Cta;
@@ -34,7 +34,7 @@ const {
   slot,
   eyebrow,
   title,
-  titleHtml,
+  titleLines,
   description,
   primaryCta,
   secondaryCta,
@@ -83,6 +83,8 @@ const [cardOne, cardTwo, cardThree] = [
     value: "ČSN",
   },
 ];
+
+const resolvedTitleLines = titleLines ?? (title ? [title] : []);
 ---
 
 <section
@@ -129,14 +131,11 @@ const [cardOne, cardTwo, cardThree] = [
         }
 
         {
-          titleHtml ? (
-            <h1
-              class="animate-fade-up animate-delay-100 font-sora mt-4 text-4xl font-semibold text-neutral-50 sm:text-5xl xl:text-6xl"
-              set:html={titleHtml}
-            />
-          ) : title ? (
+          resolvedTitleLines.length > 0 ? (
             <h1 class="animate-fade-up animate-delay-100 font-sora mt-4 text-4xl font-semibold text-neutral-50 sm:text-5xl lg:text-6xl">
-              {title}
+              {resolvedTitleLines.map((line) => (
+                <span class="block">{line}</span>
+              ))}
             </h1>
           ) : null
         }

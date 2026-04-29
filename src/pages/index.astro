@@ -2,7 +2,7 @@
 import { getImage } from "astro:assets";
 import heroImage from "../assets/images/hero_image.jpg";
 
-const titleHtml = `Elektroinstalace a <br />revize bez starostí`;
+const titleLines = ["Elektroinstalace a", "revize bez starostí"];
 const description =
   "Provádíme elektroinstalace, revize, montáže a opravy elektrozařízení v Klatovech a okolí. Máme za sebou roky praxe, a tak víme, že nejdůležitější je kvalitní, bezpečná a poctivě odvedená práce.";
 
@@ -28,8 +28,6 @@ const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 
 <BaseLayout
   pageTitle="Elektroinstalace, revize a opravy v Klatovech"
   pageDescription={description}
-  ogImage={heroImage.src}
-  ogImageAlt="Revimont Klatovy - elektroinstalace - revize - servis"
 >
   <link
     slot="head"
@@ -44,7 +42,7 @@ const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 
     id="hero"
     slot="hero"
     eyebrow="SERVIS • MONTÁŽE • OPRAVY"
-    titleHtml={titleHtml}
+    titleLines={titleLines}
     description={description}
     primaryCta={{ label: "Prohlédnout služby", href: "#sluzby" }}
     secondaryCta={{ label: "+420 775 736 112", href: "tel:+420775736112" }}

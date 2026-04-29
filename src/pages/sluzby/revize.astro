@@ -7,9 +7,9 @@ import PageHeroServicesNew from "../../components/sections/shared/PageHeroServic
 import RevizeServicesV2 from "../../components/sections/revize/RevizeServicesV2.astro";
 import RevizeWhyUs from "../../components/sections/revize/RevizeWhyUs.astro";
 import revizeImage from "../../assets/images/revize.jpg";
-import { SITE_URL } from "../../data/company";
+import { createBreadcrumbSchema, createServiceSchema } from "../../lib/seo";
 
-const titleHtml = `Revizní činnost a kontroly`;
+const titleLines = ["Revizní činnost a kontroly"];
 const description =
   "Provádíme pečlivé výchozí i pravidelné revize elektroinstalací a hromosvodů v souladu s platnými normami. Odhalíme skrytá rizika a dodáme vám právně platný revizní protokol.";
 
@@ -20,41 +20,23 @@ const [img640, img1024, img1280] = await Promise.all([
 ]);
 const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 1280w`;
 
-const siteUrl = (Astro.site ?? new URL(SITE_URL)).toString().replace(/\/$/, "");
-const pageUrl = `${siteUrl}/sluzby/revize`;
-
 const structuredData = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
+  createServiceSchema(Astro.site, {
     serviceType: "Revize elektroinstalací",
     name: "Revize elektroinstalací a hromosvodů",
     description,
-    provider: { "@id": `${siteUrl}/#company` },
-    areaServed: { "@type": "AdministrativeArea", name: "Klatovy a okolí" },
-    url: pageUrl,
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Domů", item: `${siteUrl}/` },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Revize elektroinstalací",
-        item: pageUrl,
-      },
-    ],
-  },
+    path: "/sluzby/revize",
+  }),
+  createBreadcrumbSchema(Astro.site, [
+    { name: "Domů", path: "/" },
+    { name: "Revize elektroinstalací", path: "/sluzby/revize" },
+  ]),
 ];
 ---
 
 <BaseLayout
   pageTitle="Revize elektroinstalací a hromosvodů"
   pageDescription={description}
-  ogImage={revizeImage.src}
-  ogImageAlt="Revize elektroinstalace a rozvaděče"
   structuredData={structuredData}
 >
   <link
@@ -69,7 +51,7 @@ const structuredData = [
     id="hero"
     slot="hero"
     eyebrow="Revize Klatovy a okolí"
-    titleHtml={titleHtml}
+    titleLines={titleLines}
     description={description}
     primaryCta={{ label: "Nezávazná poptávka", href: "/kontakt" }}
     secondaryCta={{ label: "Naše realizace", href: "/realizace" }}

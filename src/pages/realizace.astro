@@ -5,9 +5,7 @@ import PageHeroServicesNew from "../components/sections/shared/PageHeroServicesN
 import ProjectsGrid from "../components/sections/realizace/ProjectsGrid.astro";
 import ContactSection from "../components/sections/shared/ContactSection.astro";
 import heroImage from "../assets/images/el_prace_3.jpeg";
-import { SITE_URL } from "../data/company";
-
-const siteUrl = (Astro.site ?? new URL(SITE_URL)).toString().replace(/\/$/, "");
+import { createBreadcrumbSchema } from "../lib/seo";
 
 const [img640, img1024, img1280] = await Promise.all([
   getImage({ src: heroImage, width: 640, format: "avif", quality: 75 }),
@@ -16,26 +14,15 @@ const [img640, img1024, img1280] = await Promise.all([
 ]);
 const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 1280w`;
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Domů", item: `${siteUrl}/` },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Realizace",
-      item: `${siteUrl}/realizace`,
-    },
-  ],
-};
+const structuredData = createBreadcrumbSchema(Astro.site, [
+  { name: "Domů", path: "/" },
+  { name: "Realizace", path: "/realizace" },
+]);
 ---
 
 <BaseLayout
   pageTitle="Naše realizace v praxi"
   pageDescription="Ukázky realizací Revimont Klatovy — elektroinstalace, revize a montáže v Klatovech a okolí. Přesvědčte se o kvalitě naší práce."
-  ogImage={heroImage.src}
-  ogImageAlt="Realizované projekty Revimont Klatovy"
   structuredData={structuredData}
 >
   <link
@@ -49,7 +36,7 @@ const structuredData = {
   <PageHeroServicesNew
     slot="hero"
     eyebrow="Reference Revimont"
-    titleHtml={`Ukázky naší<br /> práce`}
+    titleLines={["Ukázky naší", "práce"]}
     description="Každý projekt realizujeme s maximální pečlivostí. Prohlédněte si naše dokončené zakázky v Klatovech a okolí."
     primaryCta={{ label: "Kontaktujte nás", href: "/kontakt" }}
     backgroundImage={heroImage}

@@ -8,9 +8,9 @@ import ElektroWhyUs from "../../components/sections/elektroinstalace/ElektroWhyU
 import PortfolioShowcaseAlternating from "../../components/sections/shared/PortfolioShowcaseAlternating.astro";
 import ContactSection from "../../components/sections/shared/ContactSection.astro";
 import elektroImage from "../../assets/images/elektroinstalace.jpg";
-import { SITE_URL } from "../../data/company";
+import { createBreadcrumbSchema, createServiceSchema } from "../../lib/seo";
 
-const title = `Elektroinstalace <br /> pro váš domov i firmu`;
+const titleLines = ["Elektroinstalace", "pro váš domov i firmu"];
 const description =
   "Zajistíme kompletní a bezpečné elektroinstalace pro váš rodinný dům, byt i firmu. Od prvotního návrhu až po konečnou revizi, vše s maximálním důrazem na kvalitu.";
 
@@ -21,41 +21,23 @@ const [img640, img1024, img1280] = await Promise.all([
 ]);
 const preloadSrcset = `${img640.src} 640w, ${img1024.src} 1024w, ${img1280.src} 1280w`;
 
-const siteUrl = (Astro.site ?? new URL(SITE_URL)).toString().replace(/\/$/, "");
-const pageUrl = `${siteUrl}/sluzby/elektroinstalace`;
-
 const structuredData = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
+  createServiceSchema(Astro.site, {
     serviceType: "Elektroinstalace",
     name: "Elektroinstalace",
     description,
-    provider: { "@id": `${siteUrl}/#company` },
-    areaServed: { "@type": "AdministrativeArea", name: "Klatovy a okolí" },
-    url: pageUrl,
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Domů", item: `${siteUrl}/` },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Elektroinstalace",
-        item: pageUrl,
-      },
-    ],
-  },
+    path: "/sluzby/elektroinstalace",
+  }),
+  createBreadcrumbSchema(Astro.site, [
+    { name: "Domů", path: "/" },
+    { name: "Elektroinstalace", path: "/sluzby/elektroinstalace" },
+  ]),
 ];
 ---
 
 <BaseLayout
   pageTitle="Elektroinstalace v Klatovech"
   pageDescription={description}
-  ogImage={elektroImage.src}
-  ogImageAlt="Elektroinstalace v Klatovech a okolí"
   structuredData={structuredData}
 >
   <link
@@ -70,7 +52,7 @@ const structuredData = [
     slot="hero"
     id="hero"
     eyebrow="Elektro Klatovy a okolí"
-    titleHtml={title}
+    titleLines={titleLines}
     description={description}
     primaryCta={{ label: "Nezávazná poptávka", href: "/kontakt" }}
     secondaryCta={{ label: "Naše realizace", href: "/realizace" }}
