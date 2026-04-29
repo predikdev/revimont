@@ -6,7 +6,8 @@ import vercel from "@astrojs/vercel";
 // https://astro.build/config
 export default defineConfig({
   adapter: vercel(),
-  site: "https://revimont-klatovy.cz",
+  // site: "https://revimont-klatovy.cz",
+  site: "https://revimont.vercel.app/",
   vite: {
     plugins: [tailwindcss()],
   },

@@ -1,4 +1,4 @@
-export const SITE_URL = "https://revimont-klatovy.cz";
+export const SITE_URL = "https://revimont.vercel.app/";
 
 export const COMPANY = {
   name: "Revimont Klatovy",
