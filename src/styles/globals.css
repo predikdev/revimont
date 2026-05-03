@@ -138,6 +138,19 @@ body.no-scroll {
   animation-delay: 400ms;
 }
 
+.js main [data-animate-section] {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 700ms ease,
+    transform 700ms ease;
+}
+
+.js main [data-animate-section].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .is-visible {
   animation: fadeUp 0.5s ease-out both;
 }
