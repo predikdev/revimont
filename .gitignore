@@ -23,6 +23,9 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# agent notes
+MEMORY.md
+
 # claude
 .claude
 CLAUDE.md
