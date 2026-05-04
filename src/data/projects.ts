@@ -88,7 +88,7 @@ export const projects: Project[] = [
     },
     solution: {
       title: "Náš přístup",
-      text: "Rozvaděč byl osazen kvalitními prvky vhodných pro venkovní použití, všechny vodiče pečlivě označeny a zapojení provedeno podle schématu. Výsledkem je přehledné a bezpečné řešení, které umožňuje rychlé a bezchybné připojení navazujících zařízení.",
+      text: "Rozvaděč byl osazen kvalitními prvky vhodnými pro venkovní použití, všechny vodiče pečlivě označeny a zapojení provedeno podle schématu. Výsledkem je přehledné a bezpečné řešení, které umožňuje rychlé a bezchybné připojení navazujících zařízení.",
     },
     gallery: [Prace03],
   },

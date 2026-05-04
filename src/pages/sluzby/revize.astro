@@ -6,6 +6,7 @@ import ContactSection from "../../components/sections/shared/ContactSection.astr
 import PageHeroServicesNew from "../../components/sections/shared/PageHeroServicesNew.astro";
 import RevizeServicesV2 from "../../components/sections/revize/RevizeServicesV2.astro";
 import RevizeWhyUs from "../../components/sections/revize/RevizeWhyUs.astro";
+import PortfolioShowcaseAlternating from "../../components/sections/shared/PortfolioShowcaseAlternating.astro";
 import revizeImage from "../../assets/images/revize.jpg";
 import { createBreadcrumbSchema, createServiceSchema } from "../../lib/seo";
 
@@ -62,5 +63,10 @@ const structuredData = [
   <RevizeServicesV2 />
   <RevizeApproach />
   <RevizeWhyUs />
+  <PortfolioShowcaseAlternating
+    title="Ukázka revizní realizace"
+    description="Podívejte se na konkrétní příklad revize a servisu elektrického rozvaděče."
+    projectSlugs={["revize-rozvadece-susice"]}
+  />
   <ContactSection />
 </BaseLayout>
