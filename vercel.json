@@ -37,27 +37,5 @@
         }
       ]
     }
-  ],
-  "redirects": [
-    {
-      "source": "/ochrana-udaju",
-      "destination": "/ochrana-osobnich-udaju",
-      "permanent": true
-    },
-    {
-      "source": "/realizace/projekt-1",
-      "destination": "/realizace/elektroinstalace-haly-klatovy",
-      "permanent": true
-    },
-    {
-      "source": "/realizace/projekt-2",
-      "destination": "/realizace/revize-rozvadece-susice",
-      "permanent": true
-    },
-    {
-      "source": "/realizace/projekt-3",
-      "destination": "/realizace/venkovni-rozvadec-zelezna-ruda",
-      "permanent": true
-    }
   ]
 }
