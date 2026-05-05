@@ -6,6 +6,11 @@ import Footer from "../components/layout/Footer.astro";
 import Analytics from "../components/layout/Analytics.astro";
 import CookieConsent from "../components/ui/CookieConsent.astro";
 import { COMPANY, MAPS_SEARCH_URL, SITE_URL } from "../data/company";
+import {
+  INDEX_ROBOTS_CONTENT,
+  NOINDEX_ROBOTS_CONTENT,
+  SHOULD_INDEX_SITE,
+} from "../lib/site-env";
 
 type SchemaLike = Record<string, unknown>;
 
@@ -32,9 +37,8 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const ogImageUrl = new URL("/og-image.jpg", siteUrl).toString();
 const ogImageAlt = `${COMPANY.name} - elektroinstalace, revize a opravy v Klatovech`;
 const metaTitle = pageTitle ? `${pageTitle} | ${COMPANY.name}` : COMPANY.name;
-const robotsContent = noindex
-  ? "noindex,nofollow,noarchive,nosnippet"
-  : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
+const robotsContent =
+  noindex || !SHOULD_INDEX_SITE ? NOINDEX_ROBOTS_CONTENT : INDEX_ROBOTS_CONTENT;
 
 const globalSchemas: SchemaLike[] = [
   {
@@ -100,7 +104,11 @@ const allSchemas = [...globalSchemas, ...pageSchemas];
     <meta name="description" content={pageDescription} />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    {
+      SHOULD_INDEX_SITE && (
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+      )
+    }
 
     <meta property="og:locale" content="cs_CZ" />
     <meta property="og:site_name" content={COMPANY.name} />

@@ -1,5 +1,7 @@
 ---
-const GA_ID = import.meta.env.PUBLIC_GA_ID ?? "";
+import { SHOULD_INDEX_SITE } from "../../lib/site-env";
+
+const GA_ID = SHOULD_INDEX_SITE ? (import.meta.env.PUBLIC_GA_ID ?? "") : "";
 
 const gaBootstrapInlineScript = GA_ID
   ? `window.dataLayer = window.dataLayer || [];

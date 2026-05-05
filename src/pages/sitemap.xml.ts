@@ -1,8 +1,9 @@
 import type { APIRoute } from "astro";
 import { SITE_URL } from "../data/company";
 import { projects } from "../data/projects";
+import { NOINDEX_ROBOTS_CONTENT, SHOULD_INDEX_SITE } from "../lib/site-env";
 
-export const prerender = true;
+export const prerender = false;
 
 const buildDate = new Date().toISOString().split("T")[0];
 const astroPageFiles = Object.keys(import.meta.glob("./**/*.astro"));
@@ -117,6 +118,16 @@ const dedupeEntries = (entries: UrlEntry[]): UrlEntry[] => {
 };
 
 export const GET: APIRoute = ({ site }) => {
+  if (!SHOULD_INDEX_SITE) {
+    return new Response("Sitemap is disabled outside production.\n", {
+      status: 404,
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "X-Robots-Tag": NOINDEX_ROBOTS_CONTENT,
+      },
+    });
+  }
+
   const base = site ?? new URL(SITE_URL);
   const allEntries = dedupeEntries([
     ...getStaticEntries(),
