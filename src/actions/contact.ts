@@ -128,54 +128,118 @@ function buildContactEmailHtml(input: z.infer<typeof contactSchema>): string {
     day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
-    second: "2-digit",
   });
+
+  const row = (label: string, value: string, isLast = false) => `
+    <tr>
+      <td style="padding:14px 16px;color:#6b7280;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;width:140px;vertical-align:top;${isLast ? "" : "border-bottom:1px solid #f3f4f6;"}">${label}</td>
+      <td style="padding:14px 16px;color:#111827;font-size:15px;${isLast ? "" : "border-bottom:1px solid #f3f4f6;"}">${value}</td>
+    </tr>`;
 
   return `
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <style>
-    body { font-family: Arial, sans-serif; color: #333; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th { background-color: #f0f0f0; padding: 12px; text-align: left; font-weight: bold; border-bottom: 1px solid #ddd; }
-    td { padding: 12px; border-bottom: 1px solid #ddd; }
-    .header { color: #d97706; font-size: 24px; font-weight: bold; margin-bottom: 20px; }
-    .timestamp { color: #999; font-size: 12px; margin-top: 20px; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-  <div class="header">Nová poptávka ze webových stránek</div>
+<body style="margin:0;padding:0;background-color:#f9fafb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f9fafb;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;">
 
-  <table>
-    <tr>
-      <th>Jméno a příjmení</th>
-      <td>${escapeHtml(input.name)}</td>
-    </tr>
-    <tr>
-      <th>E-mail</th>
-      <td><a href="mailto:${escapeHtml(input.email)}">${escapeHtml(input.email)}</a></td>
-    </tr>
-    <tr>
-      <th>Telefon</th>
-      <td>${escapeHtml(input.phone || "—")}</td>
-    </tr>
-    <tr>
-      <th>Typ služby</th>
-      <td>${escapeHtml(input.service)}</td>
-    </tr>
-    <tr>
-      <th>Lokalita</th>
-      <td>${escapeHtml(input.location)}</td>
-    </tr>
-    <tr>
-      <th>Zpráva</th>
-      <td>${escapeHtml(input.message).replace(/\n/g, "<br>")}</td>
+          <!-- Header -->
+          <tr>
+            <td style="padding:0 0 24px 0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="border-left:4px solid #d97706;padding-left:16px;">
+                    <div style="font-size:20px;font-weight:700;color:#111827;line-height:1.3;">Nová poptávka</div>
+                    <div style="font-size:13px;color:#9ca3af;margin-top:4px;">${now}</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Card -->
+          <tr>
+            <td style="background-color:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+
+                <!-- Contact info -->
+                <tr>
+                  <td style="padding:20px 16px 12px 16px;">
+                    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#d97706;">Kontakt</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:0 16px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                      ${row("Jméno", escapeHtml(input.name))}
+                      ${row("E-mail", `<a href="mailto:${escapeHtml(input.email)}" style="color:#2563eb;text-decoration:none;">${escapeHtml(input.email)}</a>`)}
+                      ${row("Telefon", escapeHtml(input.phone || "—"), true)}
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Divider -->
+                <tr>
+                  <td style="padding:0 16px;">
+                    <div style="border-top:2px solid #f3f4f6;margin:8px 0;"></div>
+                  </td>
+                </tr>
+
+                <!-- Project info -->
+                <tr>
+                  <td style="padding:12px 16px 12px 16px;">
+                    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#d97706;">Poptávka</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:0 16px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                      ${row("Služba", escapeHtml(input.service))}
+                      ${row("Lokalita", escapeHtml(input.location), true)}
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Divider -->
+                <tr>
+                  <td style="padding:0 16px;">
+                    <div style="border-top:2px solid #f3f4f6;margin:8px 0;"></div>
+                  </td>
+                </tr>
+
+                <!-- Message -->
+                <tr>
+                  <td style="padding:12px 16px 12px 16px;">
+                    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#d97706;">Zpráva</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:0 16px 24px 16px;">
+                    <div style="background-color:#f9fafb;border-radius:8px;padding:16px;font-size:15px;color:#111827;line-height:1.6;">${escapeHtml(input.message).replace(/\n/g, "<br>")}</div>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 0 0 0;text-align:center;">
+              <div style="font-size:12px;color:#9ca3af;">revimont-klatovy.cz</div>
+            </td>
+          </tr>
+
+        </table>
+      </td>
     </tr>
   </table>
-
-  <div class="timestamp">Obdrženo: ${now}</div>
 </body>
 </html>
       `;
