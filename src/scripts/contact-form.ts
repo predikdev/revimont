@@ -314,6 +314,8 @@ if (
 
       const result = await actions.poptavka(formData);
 
+      console.log("[contact-form] result:", JSON.stringify(result));
+
       if (result.error) {
         if (isInputError(result.error)) {
           const firstErrorRef = { element: null as HTMLElement | null };
@@ -336,6 +338,7 @@ if (
         errorText.textContent = result.data.message;
         errorBanner.classList.remove("hidden");
       } else if (result.data?.success) {
+        console.log("[contact-form] success → firing generate_lead");
         trackEvent("generate_lead", {
           event_category: "lead",
           event_label: "contact_form",
