@@ -5,6 +5,7 @@
   src:
     url("/fonts/Inter.woff2") format("woff2"),
     url("/fonts/Inter.ttf") format("truetype");
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -14,6 +15,7 @@
   src:
     url("/fonts/Sora.woff2") format("woff2"),
     url("/fonts/Sora.ttf") format("truetype");
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
