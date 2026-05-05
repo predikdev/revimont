@@ -9,8 +9,7 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   adapter: vercel(),
 
-  // site: "https://revimont-klatovy.cz",
-  site: "https://revimont.vercel.app/",
+  site: "https://www.revimont-klatovy.cz",
 
   vite: {
     plugins: [tailwindcss()],

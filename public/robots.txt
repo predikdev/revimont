@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://revimont-klatovy.cz/sitemap.xml
+Sitemap: https://www.revimont-klatovy.cz/sitemap.xml
