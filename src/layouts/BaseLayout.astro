@@ -163,6 +163,7 @@ const allSchemas = [...globalSchemas, ...pageSchemas];
     <Analytics />
   </head>
   <body class="text-neutral-800">
+    <Analytics placement="body" />
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded focus:bg-neutral-900 focus:px-4 focus:py-2 focus:text-white"
@@ -176,6 +177,9 @@ const allSchemas = [...globalSchemas, ...pageSchemas];
     </main>
     <Footer eyebrow="Kde nás najdete" />
     <CookieConsent />
+    <script>
+      import "../scripts/analytics-events";
+    </script>
     <script>
       const animatedSections = document.querySelectorAll<HTMLElement>(
         "main [data-animate-section]",

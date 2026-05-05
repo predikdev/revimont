@@ -1,12 +1,17 @@
 ---
 import { SHOULD_INDEX_SITE } from "../../lib/site-env";
 
-const GA_ID = SHOULD_INDEX_SITE ? (import.meta.env.PUBLIC_GA_ID ?? "") : "";
+interface Props {
+  placement?: "head" | "body";
+}
 
-const gaBootstrapInlineScript = GA_ID
+const { placement = "head" } = Astro.props;
+const GTM_ID = SHOULD_INDEX_SITE ? (import.meta.env.PUBLIC_GTM_ID ?? "") : "";
+
+const consentInlineScript = GTM_ID
   ? `window.dataLayer = window.dataLayer || [];
-function gtag(...args) {
-  dataLayer.push(args);
+function gtag() {
+  dataLayer.push(arguments);
 }
 window.gtag = gtag;
 gtag("consent", "default", {
@@ -15,29 +20,38 @@ gtag("consent", "default", {
   ad_user_data: "denied",
   ad_personalization: "denied",
   wait_for_update: 500,
-});
-gtag("js", new Date());`
+});`
   : "";
 
-const gaConfigInlineScript = GA_ID
-  ? `gtag("config", ${JSON.stringify(GA_ID)}, { anonymize_ip: true });`
+const gtmInlineScript = GTM_ID
+  ? `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer',${JSON.stringify(GTM_ID)});`
   : "";
 ---
 
 {
-  GA_ID ? (
+  GTM_ID && placement === "head" ? (
     <>
       <link rel="preconnect" href="https://www.googletagmanager.com" />
       <link rel="preconnect" href="https://www.google-analytics.com" />
-
-      <script is:inline set:html={gaBootstrapInlineScript} />
-
-      <script
-        is:inline
-        async
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-      />
-      <script is:inline set:html={gaConfigInlineScript} />
+      <script is:inline set:html={consentInlineScript} />
+      <script is:inline set:html={gtmInlineScript} />
     </>
+  ) : null
+}
+
+{
+  GTM_ID && placement === "body" ? (
+    <noscript>
+      <iframe
+        src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      />
+    </noscript>
   ) : null
 }

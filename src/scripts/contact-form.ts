@@ -4,6 +4,7 @@ import {
   CONTACT_SERVICE_OPTIONS,
   CZECH_PHONE_REGEX,
 } from "../data/contact-form";
+import { trackEvent } from "./analytics";
 
 type TurnstileRenderOptions = {
   sitekey: string;
@@ -335,6 +336,14 @@ if (
         errorText.textContent = result.data.message;
         errorBanner.classList.remove("hidden");
       } else if (result.data?.success) {
+        trackEvent("generate_lead", {
+          event_category: "lead",
+          event_label: "contact_form",
+          form_name: "contact_form",
+          service: readStringField(formData, "service"),
+          page_path: window.location.pathname,
+        });
+
         form.classList.add("hidden");
         successPanel.classList.remove("hidden");
         successPanel.scrollIntoView({

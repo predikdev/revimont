@@ -96,12 +96,6 @@ import "vanilla-cookieconsent/dist/cookieconsent.css";
     },
   });
 
-  declare global {
-    interface Window {
-      gtag: (...args: unknown[]) => void;
-    }
-  }
-
   function updateGoogleConsent(
     preferences: ReturnType<typeof CookieConsent.getUserPreferences>,
   ) {
